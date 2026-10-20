@@ -1,0 +1,14 @@
+{
+  "endpoint": "https://YOUR-RESOURCE.cognitiveservices.azure.com",
+  "subscription": "",
+  "decision_deployment": "YOUR-DECISION-DEPLOYMENT",
+  "baseline_deployment": "YOUR-SOL-OR-ASTRA-DEPLOYMENT",
+  "baseline_reasoning_effort": "medium",
+  "timeout_seconds": 120,
+  "max_calls": 500,
+  "pricing": {
+    "source": "2026-10-19 USD/million: Decision-1 https://commandline.microsoft.com/microsoft-decision-1-model-foundry/; GPT-6 Sol Global Standard https://www.azurespeed.com/AzureAiModelPricing/Models/openai-gpt-6-sol",
+    "decision": {"input": 0.042, "output": 0},
+    "baseline": {"input": 2.0, "output": 10.0, "cached_input": 0.20}
+  }
+}

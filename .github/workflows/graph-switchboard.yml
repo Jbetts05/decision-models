@@ -1,0 +1,47 @@
+name: Graph Switchboard
+
+on:
+  push:
+    paths:
+      - "demos/graph-switchboard/**"
+      - ".github/workflows/graph-switchboard.yml"
+      - "README.md"
+      - ".gitignore"
+      - ".gitattributes"
+  pull_request:
+    paths:
+      - "demos/graph-switchboard/**"
+      - ".github/workflows/graph-switchboard.yml"
+      - "README.md"
+      - ".gitignore"
+      - ".gitattributes"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: demos/graph-switchboard
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install into a virtual environment
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -r requirements.txt
+      - name: Validate frozen dataset
+        run: .venv/bin/python -m traversal validate
+      - name: Python regressions and shareable docs
+        run: .venv/bin/python -m unittest discover -s tests
+      - name: Browser logic regressions
+        run: node --test tests/execution-timing.test.cjs

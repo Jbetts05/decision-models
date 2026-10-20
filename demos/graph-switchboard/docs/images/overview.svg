@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="570" viewBox="0 0 1200 570" role="img" aria-labelledby="title description">
+  <title id="title">Graph Switchboard</title>
+  <desc id="description">A customer problem and available observations go to two independent lanes. MD1 selects a published entry and diagnostic branches using fixed Python-controlled Cypher. Sol generates its own read-only Cypher queries. Both read the same PostgreSQL database with Apache AGE and return an inspectable next check, clarification, workshop handoff or supported finding. Animation illustrates data flow, not measured performance.</desc>
+  <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#20334b" stroke-width=".6"/>
+    </pattern>
+    <linearGradient id="surface" x2="0" y2="1">
+      <stop stop-color="#102238"/>
+      <stop offset="1" stop-color="#0b192b"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="m1 1 5 3-5 3" fill="none" stroke="#879bb3" stroke-width="1.3"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Segoe UI", Arial, sans-serif; fill: #eaf2fa; }
+      .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2px; fill: #93a9c0; }
+      .heading { font-size: 19px; font-weight: 650; letter-spacing: -.3px; }
+      .body { font-size: 13px; fill: #adbed0; }
+      .mono { font-family: Consolas, "Courier New", monospace; font-size: 11px; fill: #93a9c0; }
+      .panel { fill: url(#surface); stroke: #304761; }
+      .wire { fill: none; stroke: #405975; stroke-width: 1.4; marker-end: url(#arrow); }
+      .flow { fill: none; stroke-width: 2; stroke-dasharray: 4 14; animation: travel 3s linear infinite; }
+      .cyan { stroke: #6de3ef; }
+      .amber { stroke: #ffc36b; animation-delay: -.8s; }
+      .pulse { animation: pulse 4s ease-in-out infinite; }
+      .late { animation-delay: -2s; }
+      @keyframes travel { to { stroke-dashoffset: -72; } }
+      @keyframes pulse { 0%, 100% { opacity: .5; } 50% { opacity: 1; } }
+      @media (prefers-reduced-motion: reduce) {
+        .flow, .pulse { animation: none; }
+      }
+    </style>
+  </defs>
+
+  <rect x=".5" y=".5" width="1199" height="569" rx="18" fill="#08121f" stroke="#263a51"/>
+  <rect x="1" y="1" width="1198" height="568" rx="18" fill="url(#grid)" opacity=".45"/>
+  <text x="40" y="40" class="eyebrow">DECISION MODELS / DEMO 01</text>
+  <text x="40" y="80" font-size="34" font-weight="650" letter-spacing="-1">Graph Switchboard</text>
+  <text x="40" y="106" font-size="15" fill="#adbed0">One problem in. Two independent approaches. A recommendation you can inspect.</text>
+  <g transform="translate(950 31)">
+    <rect width="210" height="27" rx="13.5" fill="#102a32" stroke="#28505a"/>
+    <circle cx="14" cy="13.5" r="3" fill="#6de3ef"/>
+    <text x="25" y="18" font-size="11" fill="#a9eaf0">Real graph. Fictional guidance.</text>
+  </g>
+
+  <path class="wire" d="M232 304H263V212H296"/>
+  <path class="wire" d="M232 304H263V416H296"/>
+  <path class="wire" d="M556 212H588V274H620"/>
+  <path class="wire" d="M556 416H588V354H620"/>
+  <path class="wire" d="M884 314H948"/>
+  <path class="flow cyan" d="M232 304H263V212H296M556 212H588V274H620"/>
+  <path class="flow amber" d="M232 304H263V416H296M556 416H588V354H620"/>
+  <path class="flow cyan late" d="M884 314H948"/>
+
+  <rect x="40" y="230" width="192" height="148" rx="12" class="panel"/>
+  <text x="58" y="256" class="eyebrow">01 / INPUT</text>
+  <text x="58" y="287" class="heading">Customer problem</text>
+  <text x="58" y="314" class="body">Selected vehicle</text>
+  <text x="58" y="337" class="body">Available observations</text>
+  <text x="58" y="360" class="mono">All supplied upfront</text>
+
+  <rect x="296" y="146" width="260" height="132" rx="12" class="panel"/>
+  <path d="M309 146H543" stroke="#6de3ef" stroke-width="2"/>
+  <text x="314" y="173" class="eyebrow">02 / DECISION LANE</text>
+  <text x="314" y="203" class="heading">MD1 + Python controller</text>
+  <text x="314" y="228" class="body">Select applicable published entry</text>
+  <text x="314" y="249" class="body">Choose supported diagnostic branches</text>
+  <circle class="pulse" cx="537" cy="169" r="4" fill="#6de3ef"/>
+  <text x="296" y="300" class="mono">Fixed, parameterised Cypher</text>
+
+  <rect x="296" y="350" width="260" height="132" rx="12" class="panel"/>
+  <path d="M309 350H543" stroke="#ffc36b" stroke-width="2"/>
+  <text x="314" y="377" class="eyebrow">02 / LLM LANE</text>
+  <text x="314" y="407" class="heading">Independent Sol</text>
+  <text x="314" y="432" class="body">Generate Cypher and inspect results</text>
+  <text x="314" y="453" class="body">Query further or return an answer path</text>
+  <circle class="pulse late" cx="537" cy="373" r="4" fill="#ffc36b"/>
+  <text x="296" y="504" class="mono">Model-generated, read-only Cypher</text>
+
+  <rect x="620" y="205" width="264" height="218" rx="12" class="panel"/>
+  <text x="638" y="232" class="eyebrow">03 / SHARED GRAPH</text>
+  <text x="638" y="260" class="heading">PostgreSQL + Apache AGE</text>
+  <g fill="none" stroke-width="1.5">
+    <path d="M652 307H703L752 286H805" stroke="#6de3ef"/>
+    <path d="M703 307 752 334H805" stroke="#ffc36b"/>
+    <path d="M752 334 788 361H838" stroke="#405975"/>
+  </g>
+  <g fill="#0b192b" stroke-width="1.5">
+    <circle cx="652" cy="307" r="7" stroke="#6de3ef"/>
+    <rect x="696" y="300" width="14" height="14" rx="3" stroke="#6de3ef"/>
+    <circle cx="752" cy="286" r="7" stroke="#6de3ef"/>
+    <rect x="798" y="279" width="14" height="14" rx="3" stroke="#6de3ef"/>
+    <circle cx="752" cy="334" r="7" stroke="#ffc36b"/>
+    <rect x="798" y="327" width="14" height="14" rx="3" stroke="#ffc36b"/>
+    <circle cx="838" cy="361" r="7" stroke="#5e7690"/>
+  </g>
+  <text x="638" y="392" class="mono">Conditions / Actions / Root causes</text>
+  <text x="638" y="409" class="mono">Published procedures + provenance</text>
+
+  <rect x="948" y="230" width="212" height="148" rx="12" class="panel"/>
+  <text x="966" y="256" class="eyebrow">04 / RECOMMENDATION</text>
+  <text x="966" y="287" class="heading">What to do next</text>
+  <text x="966" y="314" class="body">Next check or clarification</text>
+  <text x="966" y="337" class="body">Handoff or supported finding</text>
+  <text x="966" y="360" class="mono">One result per lane</text>
+
+  <path d="M40 530H1160" stroke="#263a51"/>
+  <text x="40" y="552" class="mono">LIVE IN THE APP: retrieved graph / selected route / source evidence / time / estimated cost</text>
+  <text x="1160" y="552" text-anchor="end" class="mono">Architecture, not a benchmark</text>
+</svg>

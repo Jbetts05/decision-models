@@ -1,0 +1,191 @@
+[
+  {
+    "id": "slow-crank", "title": "The engine turns over slowly before it starts", "guide": "G5", "vehicle": "b21",
+    "turns": [
+      {"question": "When I try to start the car, the engine turns over really slowly before it catches. Once it starts it runs smoothly. What should the technician look at first?",
+       "records": [{"check": "Job card", "observation": "Current job SC-201. Complaint: slow cranking before starting; normal running afterwards. No current diagnostic checks recorded."}],
+       "expected": {"route": [], "stop": "G5.2", "status": "next_action"}},
+      {"question": "The workshop has sent the battery report. What does this tell us to check next?",
+       "records": [{"check": "Battery load-voltage report", "observation": "SC-201, current completed applicable load protocol: battery LOAD voltage 9.1 V while the slow cranking was reproduced. This is not resting voltage."}],
+       "expected": {"route": [["G5.2", "load voltage below 9.5 V"]], "stop": "G5.3", "status": "next_action"}},
+      {"question": "It spun normally with another battery. Is that enough to tell the customer the original one caused it?",
+       "records": [{"check": "Battery comparison", "observation": "SC-201, battery-only comparison: A original battery gives slow rotation; B reference battery gives normal rotation. Starter, cables, temperature and test conditions are verified unchanged. The original battery return observation has not been recorded."}],
+       "expected": {"route": [["G5.2", "load voltage below 9.5 V"]], "stop": "G5.3", "status": "clarify"}},
+      {"question": "The technician has now completed the return observation. What can we say to the customer?",
+       "records": [{"check": "Battery comparison completion", "observation": "SC-201 completion of the same battery-only comparison: A2 original battery restored slow rotation. Only the battery changed through A, B and A2. Starter, cables, temperature and test conditions were verified unchanged throughout. All observations belong to this current job."}],
+       "expected": {"route": [["G5.2", "load voltage below 9.5 V"], ["G5.3", "repeatable battery-only improvement"]], "stop": "G5.7", "status": "root_cause"}}
+    ],
+    "contrasts": [
+      {"id": "return-does-not-recur", "base_turn": 3, "replacements": [{"check": "Battery comparison completion", "observation": "SC-201 complete A2 observation: original battery also gave normal rotation. All A-B-A2 controls and unchanged conditions passed; only the battery changed. Slow cranking did not recur."}],
+       "expected": {"route": [["G5.2", "load voltage below 9.5 V"], ["G5.3", "complete battery comparison does not localise"]], "stop": "G5.6", "status": "next_action"}},
+      {"id": "missing-load-unit", "base_turn": 1, "replacements": [{"check": "Battery load-voltage report", "observation": "SC-201 current completed battery load report: reading 9.1. The unit is omitted."}],
+       "expected": {"route": [], "stop": "G5.2", "status": "clarify"}},
+      {"id": "adequate-boundary-and-return-boundary", "base_turn": 1, "replacements": [{"check": "Battery load-voltage report", "observation": "SC-201 current completed applicable load protocol: battery LOAD voltage 9.5 V."}], "records": [{"check": "Return-path voltage drop", "observation": "SC-201 completed current cranking return-path drop 0.3 V. No component localisation is recorded."}],
+       "expected": {"route": [["G5.2", "load voltage at least 9.5 V"], ["G5.4", "return-path drop at most 0.3 V"]], "stop": "G5.6", "status": "next_action"}},
+      {"id": "return-connection-isolated", "base_turn": 1, "replacements": [{"check": "Battery load-voltage report", "observation": "SC-201 completed current applicable load protocol: battery LOAD voltage 10.2 V."}], "records": [{"check": "Return-path voltage drop", "observation": "SC-201 completed current cranking return-path drop 0.6 V."}, {"check": "Independent connection survey", "observation": "SC-201 slow cranking reproduced. The complete independent return-path survey identifies the same engine return connection with a high drop across that connection, and normal drops across every other return-path section. All observations are for the current job."}],
+       "expected": {"route": [["G5.2", "load voltage at least 9.5 V"], ["G5.4", "return-path drop exceeds 0.3 V"], ["G5.5", "one return connection affirmatively isolated"]], "stop": "G5.8", "status": "root_cause"}},
+      {"id": "return-survey-not-localised", "base_turn": 1, "replacements": [{"check": "Battery load-voltage report", "observation": "SC-201 completed current applicable load protocol: battery LOAD voltage 10.2 V."}], "records": [{"check": "Return-path voltage drop", "observation": "SC-201 completed current cranking return-path drop 0.6 V."}, {"check": "Independent connection survey", "observation": "SC-201 complete current independent survey, with slow cranking reproduced and every return-path section reported: several sections have elevated drop; no single connection is isolated."}],
+       "expected": {"route": [["G5.2", "load voltage at least 9.5 V"], ["G5.4", "return-path drop exceeds 0.3 V"], ["G5.5", "complete return-path survey does not localise"]], "stop": "G5.6", "status": "next_action"}}
+    ]
+  },
+  {
+    "id": "charging-warning", "title": "The charging light comes on while driving", "guide": "G6", "vehicle": "c22",
+    "turns": [
+      {"question": "The battery-shaped warning comes on after the engine is already running, then goes away. Starting feels normal. What information should I give the technician?",
+       "records": [{"check": "Job card", "observation": "Current job CH-302. Intermittent charging warning during otherwise normal engine running. No current drive inspection or charging log supplied."}],
+       "expected": {"route": [], "stop": "G6.2", "status": "next_action"}},
+      {"question": "The workshop has checked the drive and logged the warning episode. Where does that point us next?",
+       "records": [{"check": "Charging drive inspection", "observation": "CH-302 current completed workshop report verifies intact charging-drive engagement throughout the reported warning episode."}, {"check": "Warning-episode voltage log", "observation": "CH-302 current completed applicable charging-voltage log covers the reproduced warning episode: 12.4 V during the warning, with the measurement context confirmed."}],
+       "expected": {"route": [["G6.2", "charging drive verified intact"], ["G6.3", "charging voltage outside 13.6-14.8 V"]], "stop": "G6.4", "status": "next_action"}},
+      {"question": "The warning disappeared with the reference charging unit. Can we conclude anything yet?",
+       "records": [{"check": "Charging-unit comparison", "observation": "CH-302 current comparison: A original unit has the warning and 12.4 V; B reference unit has no warning and 14.2 V. Wiring, battery, drive, load and measurement context are verified unchanged; only the charging unit changes. A2 return observation is still missing."}],
+       "expected": {"route": [["G6.2", "charging drive verified intact"], ["G6.3", "charging voltage outside 13.6-14.8 V"]], "stop": "G6.4", "status": "clarify"}},
+      {"question": "The original unit's return result is attached. What is the supported customer answer?",
+       "records": [{"check": "Charging-unit comparison completion", "observation": "CH-302 same comparison A2: original charging unit returned, warning recurred and charging voltage returned to 12.4 V. All A-B-A2 wiring, battery, drive, load and measurement-context controls were verified unchanged; only the charging unit changed."}],
+       "expected": {"route": [["G6.2", "charging drive verified intact"], ["G6.3", "charging voltage outside 13.6-14.8 V"], ["G6.4", "repeatable charging-unit fault"]], "stop": "G6.6", "status": "root_cause"}}
+    ],
+    "contrasts": [
+      {"id": "drive-not-intact", "base_turn": 0, "records": [{"check": "Charging drive inspection", "observation": "CH-302 completed current inspection reports failed charging-drive engagement during the warning episode."}],
+       "expected": {"route": [["G6.2", "charging drive not intact"]], "stop": "G6.5", "status": "next_action"}},
+      {"id": "lower-inclusive-boundary", "base_turn": 1, "replacements": [{"check": "Warning-episode voltage log", "observation": "CH-302 complete applicable current charging-voltage log throughout the warning episode: 13.6 V; measurement context verified. The entire log stays at this value."}],
+       "expected": {"route": [["G6.2", "charging drive verified intact"], ["G6.3", "charging voltage inside 13.6-14.8 V"]], "stop": "G6.5", "status": "next_action"}},
+      {"id": "upper-inclusive-boundary", "base_turn": 1, "replacements": [{"check": "Warning-episode voltage log", "observation": "CH-302 complete applicable current charging-voltage log throughout the warning episode: 14.8 V; measurement context verified. The entire log stays at this value."}],
+       "expected": {"route": [["G6.2", "charging drive verified intact"], ["G6.3", "charging voltage inside 13.6-14.8 V"]], "stop": "G6.5", "status": "next_action"}},
+      {"id": "return-remains-normal", "base_turn": 3, "replacements": [{"check": "Charging-unit comparison completion", "observation": "CH-302 complete same-job A2: returned original unit gives no warning and 14.2 V. All wiring, battery, drive, load and measurement controls were verified unchanged; only the unit changed. The original abnormal pattern did not recur."}],
+       "expected": {"route": [["G6.2", "charging drive verified intact"], ["G6.3", "charging voltage outside 13.6-14.8 V"], ["G6.4", "complete charging comparison does not localise"]], "stop": "G6.5", "status": "next_action"}}
+    ]
+  },
+  {
+    "id": "idle-temperature", "title": "Engine temperature rises in traffic", "guide": "G7", "vehicle": "d22",
+    "turns": [
+      {"question": "The engine temperature climbs when I'm sitting in traffic but settles again once the car is moving. This isn't about the cabin heater. What does the technician need first?",
+       "records": [{"check": "Job card", "observation": "Current job CT-402. Reported engine temperature rise at idle and in stationary traffic. No current fan assessment is supplied."}],
+       "expected": {"route": [], "stop": "G7.2", "status": "next_action"}},
+      {"question": "The workshop recorded a fan command and assessed the motor and supply. What is the next supported check?",
+       "records": [{"check": "Cooling-fan command and response", "observation": "CT-402 complete current reproduced temperature-rise episode: fan commanded on, actual fan stationary."}, {"check": "Cooling-fan supply and motor assessment", "observation": "CT-402 completed current assessment verifies demand, all connections and ground. Relay output is absent; an independent motor assessment passes. All report fields are complete."}],
+       "expected": {"route": [["G7.2", "fan commanded on but stationary"], ["G7.3", "relay output absent and motor independently passes"]], "stop": "G7.4", "status": "next_action"}},
+      {"question": "The reference relay made the fan work. Is the report complete enough to name the cause?",
+       "records": [{"check": "Relay comparison", "observation": "CT-402 same-job relay-only comparison: A original relay gives no fan operation under verified on command; B reference relay gives fan operation. Command, supply, motor, connections and ground passed and remained unchanged. Only the relay changes; A2 original-relay return record is absent."}],
+       "expected": {"route": [["G7.2", "fan commanded on but stationary"], ["G7.3", "relay output absent and motor independently passes"]], "stop": "G7.4", "status": "clarify"}},
+      {"question": "The technician has added the original relay's return observation. What can we tell the customer?",
+       "records": [{"check": "Relay comparison completion", "observation": "CT-402 same-job A2: original relay returned and no fan operation recurred under the verified on command. Across A-B-A2 the supply, motor, connections and ground passed and remained unchanged; only the relay changed."}],
+       "expected": {"route": [["G7.2", "fan commanded on but stationary"], ["G7.3", "relay output absent and motor independently passes"], ["G7.4", "repeatable relay-only fan failure"]], "stop": "G7.6", "status": "root_cause"}}
+    ],
+    "contrasts": [
+      {"id": "fan-already-responds", "base_turn": 0, "records": [{"check": "Cooling-fan command and response", "observation": "CT-402 complete current reproduced temperature-rise episode: fan commanded on and actually rotating as commanded."}],
+       "expected": {"route": [["G7.2", "fan operates when commanded"]], "stop": "G7.5", "status": "next_action"}},
+      {"id": "motor-isolated", "base_turn": 1, "replacements": [{"check": "Cooling-fan supply and motor assessment", "observation": "CT-402 complete current independent assessment verifies motor supply, ground, demand and connections under the recorded on command, and affirmatively isolates failed fan-motor operation. Required motor supply is present; no relay-output absence is reported."}],
+       "expected": {"route": [["G7.2", "fan commanded on but stationary"], ["G7.3", "supplied motor affirmatively isolated as failed"]], "stop": "G7.7", "status": "root_cause"}},
+      {"id": "assessment-not-localised", "base_turn": 1, "replacements": [{"check": "Cooling-fan supply and motor assessment", "observation": "CT-402 all current assessment fields complete: demand present, connection survey shows intermittent drop at several points, ground passes, relay output present, independent motor assessment inconclusive. Neither relay nor motor is affirmatively isolated."}],
+       "expected": {"route": [["G7.2", "fan commanded on but stationary"], ["G7.3", "complete assessment does not localise"]], "stop": "G7.5", "status": "next_action"}},
+      {"id": "relay-return-also-works", "base_turn": 3, "replacements": [{"check": "Relay comparison completion", "observation": "CT-402 complete same-job A2: original relay returned and fan now operates under verified command. Supply, motor, connections and ground passed and remained unchanged throughout; only the relay changed. Failure did not recur."}],
+       "expected": {"route": [["G7.2", "fan commanded on but stationary"], ["G7.3", "relay output absent and motor independently passes"], ["G7.4", "complete relay comparison does not localise"]], "stop": "G7.5", "status": "next_action"}}
+    ]
+  },
+  {
+    "id": "warm-vents", "title": "The fan blows strongly but the air stays warm", "guide": "G8", "vehicle": "e23",
+    "turns": [
+      {"question": "Air comes out strongly on every fan setting, but it stays warm when I select cooling. It's not a missing fan-speed problem. What should the workshop review first?",
+       "records": [{"check": "Job card", "observation": "Current job AC-503. Strong airflow at all settings, insufficient cooling with cooling requested. No current temperature report supplied."}],
+       "expected": {"route": [], "stop": "G8.2", "status": "next_action"}},
+      {"question": "The temperature and door-position reports are attached. Which check follows from those?",
+       "records": [{"check": "Cooling-demand vent temperature", "observation": "AC-503 completed applicable current workshop report: cooling demand verified, conditions applicable, vent temperature 24 degC."}, {"check": "Blend-door command and position", "observation": "AC-503 complete current report: valid cold command, actual blend door remains in warm position. Position-feedback and connection checks passed."}],
+       "expected": {"route": [["G8.2", "vent temperature above 12 degC"], ["G8.3", "door remains warm despite valid cold command"]], "stop": "G8.4", "status": "next_action"}},
+      {"question": "The vents cooled with the reference actuator. Can we name the faulty part yet?",
+       "records": [{"check": "Blend-actuator comparison", "observation": "AC-503 same-job actuator-only comparison: A original actuator leaves warm door position and 24 degC vents; B reference actuator reaches cold and 8 degC vents. Command, door mechanism, feedback, connections and remaining cooling system are verified unchanged; only the actuator changes. A2 original-actuator return is not yet recorded."}],
+       "expected": {"route": [["G8.2", "vent temperature above 12 degC"], ["G8.3", "door remains warm despite valid cold command"]], "stop": "G8.4", "status": "clarify"}},
+      {"question": "The original actuator was returned and that result is recorded. What is the supported customer explanation?",
+       "records": [{"check": "Blend-actuator comparison completion", "observation": "AC-503 same-job A2 original actuator returned: door stays warm again and vents return to 24 degC. All A-B-A2 command, door-mechanism, feedback, connection and remaining cooling-system controls passed and stayed unchanged; only the actuator changed."}],
+       "expected": {"route": [["G8.2", "vent temperature above 12 degC"], ["G8.3", "door remains warm despite valid cold command"], ["G8.4", "repeatable actuator-only warm-air fault"]], "stop": "G8.6", "status": "root_cause"}}
+    ],
+    "contrasts": [
+      {"id": "temperature-at-boundary", "base_turn": 0, "records": [{"check": "Cooling-demand vent temperature", "observation": "AC-503 complete applicable current workshop cooling-demand record, conditions verified: vent temperature 12 degC."}],
+       "expected": {"route": [["G8.2", "vent temperature at most 12 degC"]], "stop": "G8.5", "status": "next_action"}},
+      {"id": "door-follows-command", "base_turn": 1, "replacements": [{"check": "Blend-door command and position", "observation": "AC-503 complete current report: valid cold command, actual door reaches requested cold position. Feedback and connections pass."}],
+       "expected": {"route": [["G8.2", "vent temperature above 12 degC"], ["G8.3", "door reaches requested cold position"]], "stop": "G8.5", "status": "next_action"}},
+      {"id": "return-remains-cold", "base_turn": 3, "replacements": [{"check": "Blend-actuator comparison completion", "observation": "AC-503 complete same-job A2: returned original actuator also reaches cold and vents remain 8 degC. All command, mechanism, feedback, connection and remaining system controls pass and remain unchanged; only the actuator changed. Fault did not recur."}],
+       "expected": {"route": [["G8.2", "vent temperature above 12 degC"], ["G8.3", "door remains warm despite valid cold command"], ["G8.4", "complete actuator comparison does not localise"]], "stop": "G8.5", "status": "next_action"}}
+    ]
+  },
+  {
+    "id": "dead-window", "title": "One door window will not move", "guide": "G9", "vehicle": "f23",
+    "turns": [
+      {"question": "The passenger door window doesn't move when I press its switch. The other windows work. What information should I get for the technician?",
+       "records": [{"check": "Job card", "observation": "Current job PW-603. One passenger door window does not move under its local switch request. No current permission or command report is supplied."}],
+       "expected": {"route": [], "stop": "G9.2", "status": "next_action"}},
+      {"question": "The workshop checked permission and compared both switches. What should happen next?",
+       "records": [{"check": "Window permission", "observation": "PW-603 completed current report: operation permitted, window-lock and inhibition features inactive."}, {"check": "Local and master commands", "observation": "PW-603 complete current report for the same affected window: local request produces no valid command and no movement; master request produces valid command and normal movement. Connections pass."}],
+       "expected": {"route": [["G9.2", "window movement permitted"], ["G9.3", "local command absent but master command moves window"]], "stop": "G9.4", "status": "next_action"}},
+      {"question": "The reference switch works. Is that enough to explain it to the customer?",
+       "records": [{"check": "Local-switch comparison", "observation": "PW-603 same-job local-switch-only comparison: A original local switch gives no command or movement; B reference local switch gives valid command and movement. Master operation, permission, connections, motor and mechanism are verified unchanged. Only the local switch changes. A2 original-switch return result is missing."}],
+       "expected": {"route": [["G9.2", "window movement permitted"], ["G9.3", "local command absent but master command moves window"]], "stop": "G9.4", "status": "clarify"}},
+      {"question": "The technician has finished the return check. What is our supported answer?",
+       "records": [{"check": "Local-switch comparison completion", "observation": "PW-603 same-job A2 original local switch returned: no command and no movement recur. Throughout A-B-A2, master operation, permission, connections, motor and mechanism were verified unchanged; only the local switch changed."}],
+       "expected": {"route": [["G9.2", "window movement permitted"], ["G9.3", "local command absent but master command moves window"], ["G9.4", "repeatable local-switch-only failure"]], "stop": "G9.7", "status": "root_cause"}}
+    ],
+    "contrasts": [
+      {"id": "movement-inhibited", "base_turn": 0, "records": [{"check": "Window permission", "observation": "PW-603 completed current report: window operation is intentionally inhibited by the active window-lock feature."}],
+       "expected": {"route": [["G9.2", "window movement intentionally inhibited"]], "stop": "G9.6", "status": "next_action"}},
+      {"id": "other-command-pattern", "base_turn": 1, "replacements": [{"check": "Local and master commands", "observation": "PW-603 complete current same-window report, connections pass: both local and master requests give valid commands and normal movement. The stationary-window complaint does not recur."}],
+       "expected": {"route": [["G9.2", "window movement permitted"], ["G9.3", "complete command records show another pattern"]], "stop": "G9.6", "status": "next_action"}},
+      {"id": "motor-isolated", "base_turn": 1, "replacements": [{"check": "Local and master commands", "observation": "PW-603 complete current same-window report: both local and master commands are valid but the window remains stationary; connections pass."}], "records": [{"check": "Independent motor and mechanism assessment", "observation": "PW-603 complete current independent report verifies supply, ground, operation permission, valid commands and a free mechanism; failed motor operation is affirmatively isolated."}],
+       "expected": {"route": [["G9.2", "window movement permitted"], ["G9.3", "both commands valid but window stationary"], ["G9.5", "supplied motor affirmatively isolated with mechanism free"]], "stop": "G9.8", "status": "root_cause"}},
+      {"id": "motor-not-isolated", "base_turn": 1, "replacements": [{"check": "Local and master commands", "observation": "PW-603 complete current same-window report: both commands valid but window stationary; connections pass."}], "records": [{"check": "Independent motor and mechanism assessment", "observation": "PW-603 all current independent assessment fields complete: supply and ground pass, commands and permission valid, mechanism binds, motor assessment passes. No motor fault is isolated."}],
+       "expected": {"route": [["G9.2", "window movement permitted"], ["G9.3", "both commands valid but window stationary"], ["G9.5", "complete motor assessment does not localise"]], "stop": "G9.6", "status": "next_action"}},
+      {"id": "return-switch-also-works", "base_turn": 3, "replacements": [{"check": "Local-switch comparison completion", "observation": "PW-603 complete same-job A2: original local switch returned and now also gives valid command and movement. All master, permission, connection, motor and mechanism controls passed and remained unchanged; only the local switch changed. The fault did not recur."}],
+       "expected": {"route": [["G9.2", "window movement permitted"], ["G9.3", "local command absent but master command moves window"], ["G9.4", "complete switch comparison does not localise"]], "stop": "G9.6", "status": "next_action"}}
+    ]
+  },
+  {
+    "id": "weak-washers", "title": "The washers dribble even though the pump makes a noise", "guide": "G10", "vehicle": "g24",
+    "turns": [
+      {"question": "The windscreen washers only dribble when I ask for a wash. I can hear a pump sound, and the wipers move. What should the technician check first?",
+       "records": [{"check": "Job card", "observation": "Current job WW-704. Weak windscreen-washer fluid delivery, pump sound reported, normal wiper movement. No current fluid or delivery-path report supplied."}],
+       "expected": {"route": [], "stop": "G10.2", "status": "next_action"}},
+      {"question": "The fluid, delivery path and pressure reports are now attached. What follows?",
+       "records": [{"check": "Washer-fluid supply", "observation": "WW-704 complete current report: adequate applicable fluid supply, no empty or frozen reservoir condition."}, {"check": "Washer delivery path", "observation": "WW-704 complete current report independently verifies the delivery line and jets are unrestricted and all connections intact."}, {"check": "Washer-pump output pressure", "observation": "WW-704 completed applicable current pump-output-pressure report: 0.4 bar. Adequate fluid and unrestricted-path prerequisites confirmed, with electrical supply and ground verified."}],
+       "expected": {"route": [["G10.2", "fluid supply verified adequate"], ["G10.3", "line and jet path verified unrestricted"], ["G10.4", "pump output below 0.8 bar"]], "stop": "G10.5", "status": "next_action"}},
+      {"question": "The reference pump gives a normal spray. Can we already say the old pump was the cause?",
+       "records": [{"check": "Washer-pump comparison", "observation": "WW-704 same-job pump-only comparison: A original pump gives weak delivery and 0.4 bar; B reference pump gives normal delivery and 1.1 bar. Fluid, delivery path, electrical supply, ground and wash request are verified unchanged; only the pump changes. A2 original-pump return is not recorded yet."}],
+       "expected": {"route": [["G10.2", "fluid supply verified adequate"], ["G10.3", "line and jet path verified unrestricted"], ["G10.4", "pump output below 0.8 bar"]], "stop": "G10.5", "status": "clarify"}},
+      {"question": "The original pump's return result is recorded now. What can we tell the customer?",
+       "records": [{"check": "Washer-pump comparison completion", "observation": "WW-704 same-job A2: original pump returned and weak delivery with 0.4 bar recurred. Throughout A-B-A2 fluid, delivery path, electrical supply, ground and request were verified unchanged; only the pump changed."}],
+       "expected": {"route": [["G10.2", "fluid supply verified adequate"], ["G10.3", "line and jet path verified unrestricted"], ["G10.4", "pump output below 0.8 bar"], ["G10.5", "repeatable washer-pump-only weak output"]], "stop": "G10.7", "status": "root_cause"}}
+    ],
+    "contrasts": [
+      {"id": "empty-reservoir", "base_turn": 0, "records": [{"check": "Washer-fluid supply", "observation": "WW-704 complete current report: reservoir empty; applicable fluid supply is not available."}],
+       "expected": {"route": [["G10.2", "fluid supply not adequate"]], "stop": "G10.6", "status": "next_action"}},
+      {"id": "delivery-restricted", "base_turn": 1, "replacements": [{"check": "Washer delivery path", "observation": "WW-704 complete current line-and-jet report identifies a delivery-path restriction, connections intact."}, {"check": "Washer-pump output pressure", "observation": "No applicable unrestricted-path pressure record exists for WW-704; restriction prerequisites are not satisfied."}],
+       "expected": {"route": [["G10.2", "fluid supply verified adequate"], ["G10.3", "delivery-path restriction recorded"]], "stop": "G10.6", "status": "next_action"}},
+      {"id": "pressure-inclusive-boundary", "base_turn": 1, "replacements": [{"check": "Washer-pump output pressure", "observation": "WW-704 complete applicable current pump-output-pressure report: 0.8 bar, adequate fluid and unrestricted-path prerequisites verified, electrical supply and ground verified."}],
+       "expected": {"route": [["G10.2", "fluid supply verified adequate"], ["G10.3", "line and jet path verified unrestricted"], ["G10.4", "pump output at least 0.8 bar"]], "stop": "G10.6", "status": "next_action"}},
+      {"id": "return-pump-also-normal", "base_turn": 3, "replacements": [{"check": "Washer-pump comparison completion", "observation": "WW-704 complete same-job A2: returned original pump also gives normal delivery and 1.1 bar. All fluid, path, electrical supply, ground and request controls passed and remained unchanged; only the pump changed. Weak output did not recur."}],
+       "expected": {"route": [["G10.2", "fluid supply verified adequate"], ["G10.3", "line and jet path verified unrestricted"], ["G10.4", "pump output below 0.8 bar"], ["G10.5", "complete pump comparison does not localise"]], "stop": "G10.6", "status": "next_action"}}
+    ]
+  },
+  {
+    "id": "patchy-demister", "title": "One stripe of the rear window will not demist", "guide": "G11", "vehicle": "h24",
+    "turns": [
+      {"question": "When I turn on the rear-window demister, most of the glass clears but one horizontal stripe stays misted. The cabin fan works. What should the workshop review?",
+       "records": [{"check": "Job card", "observation": "Current job RD-805. Patchy rear-window demisting after demist request. No current heating map or continuity survey is supplied."}],
+       "expected": {"route": [], "stop": "G11.2", "status": "next_action"}},
+      {"question": "The workshop mapped the heating. What evidence do we need next?",
+       "records": [{"check": "Rear-window heating map", "observation": "RD-805 complete current map for the same glass under a verified demist request: strip 4 consistently cold, both adjacent strips 3 and 5 heating. No other cold strip is recorded."}],
+       "expected": {"route": [["G11.2", "one strip cold with adjacent strips heating"]], "stop": "G11.3", "status": "next_action"}},
+      {"question": "The technician can see a mark on that strip. Is that sufficient to explain the stripe?",
+       "records": [{"check": "Cold-strip survey", "observation": "RD-805 current survey identifies a visible gap on strip 4, the same cold strip in the heating map. Independent continuity, adjoining portions, supply contacts and adjacent-strip control observations have not yet been provided."}],
+       "expected": {"route": [["G11.2", "one strip cold with adjacent strips heating"]], "stop": "G11.3", "status": "clarify"}},
+      {"question": "The full independent survey is attached. What can we now tell the customer?",
+       "records": [{"check": "Cold-strip survey completion", "observation": "RD-805 complete current independent survey of the same glass and strip 4: open conductor exactly at the matching visible gap, continuity on both adjoining portions, intact supply contacts, and continuity on adjacent working strips 3 and 5. All recorded checks agree with the current heating map's same cold strip."}],
+       "expected": {"route": [["G11.2", "one strip cold with adjacent strips heating"], ["G11.3", "same cold strip has independently isolated conductor break"]], "stop": "G11.5", "status": "root_cause"}}
+    ],
+    "contrasts": [
+      {"id": "whole-grid-cold", "base_turn": 0, "records": [{"check": "Rear-window heating map", "observation": "RD-805 complete current map, same glass, verified demist request: entire grid cold, including every adjacent strip."}],
+       "expected": {"route": [["G11.2", "entire grid cold"]], "stop": "G11.4", "status": "next_action"}},
+      {"id": "pattern-does-not-recur", "base_turn": 0, "records": [{"check": "Rear-window heating map", "observation": "RD-805 complete current map, same glass under verified demist request: all strips heat normally; no repeatable cold strip."}],
+       "expected": {"route": [["G11.2", "complete map shows no repeatable cold strip"]], "stop": "G11.4", "status": "next_action"}},
+      {"id": "complete-survey-not-localised", "base_turn": 3, "replacements": [{"check": "Cold-strip survey completion", "observation": "RD-805 complete current independent survey of the same glass: strip 4 has continuity through the visible mark, continuity on both adjoining portions, intact supply contacts and continuity on adjacent strips 3 and 5. No conductor break is isolated despite the complete survey."}],
+       "expected": {"route": [["G11.2", "one strip cold with adjacent strips heating"], ["G11.3", "complete continuity survey does not localise"]], "stop": "G11.4", "status": "next_action"}}
+    ]
+  }
+]

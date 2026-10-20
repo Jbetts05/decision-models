@@ -1,0 +1,114 @@
+{
+  "dataset_version": "4.2.0",
+  "generator": "traversal.journeys.generate",
+  "graph_sha256": "1754a4eb0db87434ada6f1ebd8e36af42c726fe9ac73a11f061f26572b381b77",
+  "queries_sha256": "e13bc0b6b287664b914773617ef055b031fd65c918a521b85dd6b7f0fa537546",
+  "oracle_sha256": "bd2bead6c79ad3e87696cfb713358787c4d57ebbe370f86fc4abaa54c45a41ff",
+  "nodes": {
+    "VehicleModel": 10,
+    "Procedure": 37,
+    "Condition": 160,
+    "Action": 160,
+    "RootCause": 50
+  },
+  "relationships": {
+    "APPLIES_TO": 37,
+    "NEXT_ACTION": 160,
+    "ENTRY_POINT": 37,
+    "RESULT": 189
+  },
+  "queries": 143,
+  "demonstrations": 10,
+  "journey_turns": 40,
+  "adversarial_evaluation": 103,
+  "problem_families": 10,
+  "applicability_evaluation": {
+    "cases": 72,
+    "vehicles": 10,
+    "published_procedures": 30,
+    "matched_pressure_groups": 2,
+    "independent_test_set": false,
+    "matched_order_pattern_cases": 6,
+    "variant_negative_paths": 6,
+    "model_entry_selection": "Entry selection is evaluated separately from corpus construction; the application records its workflow per run."
+  },
+  "sources": {
+    "SG-01-cylinder-misfire.md": "3b05de6f8b232685c25f8dd6a4f779db93417ab32d2d7e98939455ea942d7c9f",
+    "SG-02-lean-idle.md": "ac6b2cde9746033db7e7021db7665532da24c33f10878b3501258906187946fe",
+    "SG-03-cabin-airflow.md": "eb01ea7c71ce955e300348ed05791e5ee3f7b91bab44d0e415776c9a66c264da",
+    "SG-04-vehicle-applicability.md": "1b099f7264fcb42d5a58297542f3d9fb48618e1d973573af5c4b42f068835b98",
+    "SG-05-slow-cranking.md": "924c5992a87ef591b9d44f5e2558304afd87730f5e063e7b8033a1918d8406e3",
+    "SG-06-intermittent-charging.md": "3fd96da6594a6fb4a0dafcdc06b27c0542486a8b87f96bde259c90e4f1729005",
+    "SG-07-idle-cooling.md": "8139221674ac83d0be7122247708b2afda47055627f56184e699cded6daaa585",
+    "SG-08-warm-cooling-air.md": "24da0c61e624bfb21accbfadae944744b107d891b6e1cda87ab9e59f9407faaa",
+    "SG-09-power-window.md": "4194e36d688c304656d0f9eb3e9dc90a054afea302a5b81a6f224ceeb81667eb",
+    "SG-10-weak-washer-flow.md": "c47fd633ba60fd3184685287f734d71de5ebdef8125901eef714165d829e891d",
+    "SG-11-patchy-demister.md": "21f24ff8ab15a021217380a94c81b7d7b7f0763403fe9e51ae0efc4dbf7b3b70"
+  },
+  "journey_pack_sha256": "75aa3b9f9956d132ad59ee274ff56af1caae9e9e96682e860cc9f015fb9ca430",
+  "problem_pack_sha256": "2e0fd85eedd7fa49e18fe562e8738b8d9668f4228881e993a911d51b847ddc12",
+  "provenance": {
+    "graph": "Derived from ten fictional diagnostic guides and an explicit vehicle-variant source schedule.",
+    "expert_validation": false,
+    "external_vehicle_data": false,
+    "oracle": "Reviewer-authored source-linked paths, not model-scored ground truth."
+  },
+  "review": {
+    "model": "claude-opus-5.5",
+    "verdict": "Historical v4.1.1 only: conditionally fit after four blocking findings were corrected. Not a review of the expanded corpus.",
+    "scope": "Historical v4.1.1 review only: three original families and vehicle variants. The seven new v4.2.0 families have not received this model review.",
+    "change_policy": "Freeze sources and artifact hashes. Model failures alone do not justify changing evidence or expected outcomes."
+  },
+  "prior_versions": [
+    {
+      "version": "4.2.0-preflight",
+      "published": false,
+      "graph_sha256": "05a2ad4a165f5eab961b14b4790811e3200f04458d15f4264d93521be570611f",
+      "queries_sha256": "e13bc0b6b287664b914773617ef055b031fd65c918a521b85dd6b7f0fa537546",
+      "oracle_sha256": "bd2bead6c79ad3e87696cfb713358787c4d57ebbe370f86fc4abaa54c45a41ff",
+      "correction": "New procedures inherited a Model A safety notice. The final notice names each actual applicable vehicle; no diagnostic source, public input, branch rule or expected path changed."
+    },
+    {
+      "version": "4.1.2",
+      "published": true,
+      "graph_sha256": "190d0dd03193a3d3e264d80a8b2bfe82c6d57d54468aab20d263ed34fec33a41",
+      "queries_sha256": "e603d5946b06add90d89f5aa3a804b993b9d6f17be32824b7bd4ca9cd047b85b",
+      "oracle_sha256": "e8004df1eef40bc031da106100dc766ce0c5967057c68c453183222f29889f79"
+    },
+    {
+      "version": "4.1.1",
+      "published": true,
+      "graph_sha256": "640b47bb0c2ffb92c416f5ec665af4b8fb4489400d88b715240e44103e4f7a36",
+      "queries_sha256": "53bdc88a87e3d43c6f5d7d0541f7f24be1514150b0fe37bf9e3ae743c53bcd1b",
+      "oracle_sha256": "e8004df1eef40bc031da106100dc766ce0c5967057c68c453183222f29889f79"
+    },
+    {
+      "version": "4.0.0",
+      "published": true,
+      "graph_sha256": "7d733d6a09bb4c95944ad8e80622105e69f5f5ada19a6cb4ce3953e04e6cb311",
+      "queries_sha256": "d2fd7f5a9e31b74f982d8f3f8499654c59acaf0064d6cc0568f75a44c1dc7390",
+      "oracle_sha256": "896ebcbd68bb25f7b3f9f3a8bca454e6213c2217a6d2db7419c379923b306397"
+    },
+    {
+      "version": "4.1.0",
+      "published": false,
+      "graph_sha256": "dcaf146a80416064770b76191bc182d37f4c8bb431b6737dc239af62ce45a423",
+      "queries_sha256": "3856a110e30f0753697c7b00fc3675deadffcd0c6edb0b8318c0f003bc2b700e",
+      "oracle_sha256": "6c84329b8de6e02d99541be33f3a5a75660cf7b8998deff0717bddf38b6e02fd"
+    }
+  ],
+  "input_revision": {
+    "reason": "User-requested diagnostic variety, not a response to model accuracy.",
+    "changes": "Seven independently authored fictional problem families; repeated applicability cases move into the evaluation picker.",
+    "unchanged": "All 87 historical public inputs, source rules, graph nodes/edges and expected paths; only their demo presentation flag changes."
+  },
+  "comparison_compatibility": "v4.2.0 adds entry candidates and new authored families. Historical accuracy/timing results are not comparable and do not establish performance on this expanded graph.",
+  "limitations": [
+    "All Brand X vehicles, procedures and reference values in this dataset are fictional; review supplied records only, not real vehicle work.",
+    "Ten fictional vehicles and thirty-seven procedures; not manufacturer or expert-validated guidance.",
+    "Thirty procedures are correlated variants of three families; seven additional families each have one explicitly applicable vehicle. There are ten diagnostic families, not thirty-seven independent ones.",
+    "Matched vehicle cases are authored counterfactuals, not independent real workshop jobs or a held-out accuracy benchmark.",
+    "Numeric limits and controlled comparison criteria are invented.",
+    "INDICATES is supported by the schema but not invented where the sources do not need it."
+  ]
+}

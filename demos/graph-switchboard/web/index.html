@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Graph Switchboard</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme = param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <script>document.documentElement.setAttribute("data-theme", "light");</script>
+  <link rel="stylesheet" href="/style.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <header class="header">
+    <a class="wordmark" href="/" aria-label="Graph Switchboard home">
+      <svg width="25" height="25" viewBox="0 0 25 25" aria-hidden="true">
+        <path d="M5 5L19 12L5 20M5 5V20" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="5" cy="5" r="3" fill="currentColor"/><circle cx="19" cy="12" r="3" fill="currentColor"/>
+        <circle cx="5" cy="20" r="3" fill="currentColor"/>
+      </svg>
+      Graph Switchboard
+    </a>
+    <div class="connection"><span id="connection-dot" class="dot"></span><span id="connection">Connecting to Apache AGE</span></div>
+    <span class="header-note">Decision models / graph traversal</span>
+  </header>
+  <main>
+    <section class="heading">
+      <div><h1>Live model comparison</h1></div>
+      <div class="dataset"><span class="synthetic">SYNTHETIC DATA</span>
+        <p id="dataset-counts">Loading dataset</p></div>
+    </section>
+
+    <section class="case-panel" aria-label="Problem case">
+      <div class="vehicle-picker" aria-label="Vehicle filters">
+        <label for="vehicle-make">Make<select id="vehicle-make" disabled><option value="">Unknown</option></select></label>
+        <label for="vehicle-model">Model<input id="vehicle-model" type="search" list="vehicle-models" placeholder="Search models" autocomplete="off" disabled><datalist id="vehicle-models"></datalist></label>
+        <label for="vehicle-year">Year<select id="vehicle-year" disabled><option value="">Unknown</option></select></label>
+        <label for="vehicle-configuration">Configuration<select id="vehicle-configuration" disabled><option value="">Unknown</option></select></label>
+      </div>
+      <label class="case-select-label example-picker" for="case-select"><span>Example problem</span>
+        <select id="case-select" disabled><option>Loading cases...</option></select></label>
+      <label class="problem-label" for="question">What is the problem?</label>
+      <textarea id="question" rows="2" spellcheck="false" disabled></textarea>
+      <div class="case-toolbar">
+        <span id="vehicle-context" class="muted">Select what you know</span>
+        <button id="new-problem" class="quiet" disabled>New problem</button>
+        <button id="run" class="primary" disabled><span id="run-label">Get recommendation</span> <span aria-hidden="true">&#8599;</span></button>
+      </div>
+      <details id="scenario-details" class="input-details"><summary>Evidence &amp; sources <span id="evidence-count" class="muted">Observations</span></summary>
+      <div class="case-toolbar">
+        <label class="adversarial-toggle"><input id="show-adversarial" type="checkbox"> Challenge cases</label>
+      </div>
+      <details id="sources-details"><summary>Read the fictional source guides and vehicle schedule</summary>
+        <div id="source-documents"><p class="muted">Source text loads when opened. No graph is prefetched.</p></div>
+      </details>
+      <p class="synthetic-notice">Fictional guidance, not real service information or repair advice.</p>
+      <div class="case-bottom">
+        <details id="evidence-details"><summary>View or edit records</summary>
+          <div id="observations"></div></details>
+        <span id="case-note" class="muted">Both methods receive the same question and observations.</span>
+      </div>
+      </details>
+    </section>
+
+    <div class="run-status" role="status" aria-live="polite"><span id="status">Choose a problem case, then run both live models.</span>
+      <span class="muted mono" id="run-clock"></span></div>
+
+    <section id="answer-summary" class="answer-summary" aria-live="polite" hidden>
+      <span class="eyebrow" id="answer-label">RECOMMENDATION</span>
+      <h2 id="answer-title"></h2><div id="answer-body"></div>
+    </section>
+
+    <details id="entry-stage" class="shared-entry" aria-label="MD1 entry selection">
+      <summary class="entry-heading">Entry selection details <span class="lane-state" id="entry-state">Ready</span></summary>
+      <p class="entry-cost-note">Python retrieves eligible entries; MD1 selects using the submitted problem and observations. Both lanes start independently from this input. All calls are included in their totals.</p>
+      <p class="execution-note">Python is the controller, not an LLM. Sol-only independently queries the graph from the same original input. Recorded requests and responses are shown, not provider-internal reasoning.</p>
+      <div class="operation" role="status" aria-live="polite">
+        <span class="operation-dot" id="entry-operation-dot" aria-hidden="true"></span>
+        <div><span id="entry-operation-meta" class="eyebrow">MD1 ENTRY</span><strong id="entry-operation">Ready to select an entry</strong></div>
+      </div>
+      <div class="entry-workspace" role="region" aria-label="Live intake inputs, queries and candidates">
+        <section class="entry-workspace-section" aria-labelledby="entry-input-title">
+          <h3 id="entry-input-title">1. MD1 input and selection</h3>
+          <div id="entry-requests" class="entry-content"></div>
+        </section>
+        <section class="entry-workspace-section" aria-labelledby="entry-query-title">
+          <h3 id="entry-query-title">2. Fixed Cypher and eligible entries</h3>
+          <div id="entry-queries" class="entry-content"></div>
+        </section>
+        <section class="entry-handoff" aria-labelledby="entry-handoff-title">
+          <h3 id="entry-handoff-title">3. Verified starting node for Decision-1</h3>
+          <div id="entry-selection"></div>
+        </section>
+      </div>
+      <details id="entry-details"><summary>Entry timeline and metrics</summary>
+        <div class="metrics" id="entry-metrics" aria-label="MD1 entry phase metrics"></div>
+        <div class="entry-trace">
+          <section class="execution" id="entry-execution" aria-label="MD1 entry execution timeline">
+            <div class="execution-header"><h3>Key execution <span id="entry-step-count" class="muted mono">0 steps</span></h3>
+              <button class="quiet all-events" data-method="entry" aria-pressed="false">All events</button>
+              <button class="quiet follow" data-method="entry" aria-pressed="true" aria-label="Follow latest entry step">Follow latest</button></div>
+            <ol id="entry-steps" class="execution-steps"></ol>
+          </section>
+          <div class="inspector"><div class="inspector-title"><h3 id="entry-inspector-title">Step details</h3><span id="entry-time" class="mono muted">Select a step</span></div>
+            <div id="entry-inspector" class="inspector-body"></div></div>
+        </div>
+      </details>
+    </details>
+
+    <section class="comparison" aria-label="Live model comparison">
+      <article class="lane" id="decision-lane">
+        <div class="lane-header"><div class="model-glyph decision-glyph" aria-hidden="true">&#9671;</div>
+          <div><h2>Decision-1</h2><p>Select entries and branches</p></div><span class="lane-state" id="decision-state">Ready</span></div>
+        <div class="metrics" id="decision-metrics" aria-label="Decision-1 metrics"></div>
+        <div class="operation" role="status" aria-live="polite" aria-atomic="true">
+          <span class="operation-dot" id="decision-operation-dot" aria-hidden="true"></span>
+          <div><span id="decision-operation-meta" class="eyebrow">LIVE EXECUTION</span><strong id="decision-operation">Ready to read the starting node</strong></div>
+          <a href="#decision-execution">See steps &#8595;</a>
+        </div>
+        <div class="outcome" id="decision-outcome"><span class="eyebrow">RESULT</span><p>Not run</p></div>
+        <div class="graph-bar"><span class="eyebrow">LIVE TRAVERSAL</span><span class="mono" id="decision-progress">0 hops</span>
+          <button class="quiet graph-context" data-method="decision" aria-pressed="false" disabled title="Show all retrieved candidates and vehicle-applicability links">All retrieved</button>
+          <button class="quiet fit" data-method="decision" aria-label="Reset Decision-1 graph zoom">Fit graph</button></div>
+        <div class="graph" id="decision-graph" aria-label="Decision-1 procedural graph"></div>
+        <div class="graph-key"><span><i class="key-node read"></i>Retrieved, not followed</span><span><i class="key-node active"></i>Current / selected</span><span><i class="key-line"></i>Traversed edge</span></div>
+        <section class="execution" id="decision-execution" aria-label="Decision-1 execution timeline">
+          <div class="execution-header"><h3>Key execution <span id="decision-step-count" class="muted mono">0 steps</span></h3>
+            <button class="quiet all-events" data-method="decision" aria-pressed="false">All events</button>
+            <button class="quiet follow" data-method="decision" aria-pressed="true" aria-label="Follow latest Decision-1 step">Follow latest</button></div>
+          <button class="shared-intake-step" data-method="decision" disabled><strong>1. MD1 entry selection</strong><span>Not started</span></button>
+          <ol id="decision-steps" class="execution-steps" aria-label="Decision-1 execution steps" title="Elapsed time from the start of this Decision-1 run."></ol>
+        </section>
+        <div class="inspector">
+          <div class="inspector-title"><h3 id="decision-inspector-title">Step details</h3><span id="decision-time" class="mono muted">Select a step</span></div>
+          <div id="decision-inspector" class="inspector-body"><p class="empty-note">Option probabilities and the selected transition appear here as each decision completes.</p></div>
+        </div>
+      </article>
+
+      <article class="lane" id="llm-cypher-lane">
+        <div class="lane-header"><div class="model-glyph" aria-hidden="true">&#10035;</div>
+          <div><h2 id="llm-name">Sol-only</h2><p>Generate Cypher and answer</p></div><span class="lane-state" id="llm-cypher-state">Ready</span></div>
+        <div class="metrics" id="llm-cypher-metrics" aria-label="Foundry metrics"></div>
+        <div class="operation" role="status" aria-live="polite" aria-atomic="true">
+          <span class="operation-dot" id="llm-cypher-operation-dot" aria-hidden="true"></span>
+          <div><span id="llm-cypher-operation-meta" class="eyebrow">LIVE EXECUTION</span><strong id="llm-cypher-operation">Ready to read the starting node</strong></div>
+          <a href="#llm-cypher-execution">See steps &#8595;</a>
+        </div>
+        <div class="outcome" id="llm-cypher-outcome"><span class="eyebrow">RESULT</span><p>Not run</p></div>
+        <div class="graph-bar"><span class="eyebrow">GRAPH QUERIES</span><span class="mono" id="llm-cypher-progress">0 reads</span>
+          <button class="quiet graph-context" data-method="llm-cypher" aria-pressed="false" disabled title="Show all retrieved candidates and vehicle-applicability links">All retrieved</button>
+          <button class="quiet fit" data-method="llm-cypher" aria-label="Reset LLM graph zoom">Fit graph</button></div>
+        <div class="graph" id="llm-cypher-graph" aria-label="LLM procedural graph"></div>
+        <div class="graph-key"><span><i class="key-node read"></i>Retrieved, not followed</span><span><i class="key-line"></i>Final answer path</span><span>Reads are not traversal hops</span></div>
+        <section class="execution" id="llm-cypher-execution" aria-label="Sol execution timeline">
+          <div class="execution-header"><h3>Key execution <span id="llm-cypher-step-count" class="muted mono">0 steps</span></h3>
+            <button class="quiet all-events" data-method="llm-cypher" aria-pressed="false">All events</button>
+            <button class="quiet follow" data-method="llm-cypher" aria-pressed="true" aria-label="Follow latest Sol step">Follow latest</button></div>
+          <ol id="llm-cypher-steps" class="execution-steps" aria-label="Sol execution steps" title="Elapsed time from the start of this LLM run."></ol>
+        </section>
+        <div class="inspector">
+          <div class="inspector-title"><h3 id="llm-cypher-inspector-title">Step details</h3><span id="llm-cypher-time" class="mono muted">Select a step</span></div>
+          <div id="llm-cypher-inspector" class="inspector-body"><p class="empty-note">Actual generated Cypher and database results appear here. Queries run read-only in Apache AGE.</p></div>
+        </div>
+      </article>
+    </section>
+
+    <details class="expected-panel"><summary>Expected output <span class="muted"> / evaluation only, never sent to either model</span></summary>
+      <div id="expected"></div></details>
+    <div class="footer"><span>PostgreSQL + Apache AGE <span class="divider">/</span> Live Foundry inference <span class="divider">/</span> Graphs grow only from returned data</span>
+      <button id="download" class="quiet" disabled>Download run JSON &#8595;</button></div>
+  </main>
+  <noscript>This comparison application requires JavaScript.</noscript>
+</body>
+</html>
