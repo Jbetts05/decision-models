@@ -64,18 +64,3 @@ dependencies, configuration examples and tests with the demo; add it to the
 catalogue when it is runnable. Do not present proposals as working applications.
 
 The [live vision proposal](docs/proposals/live-vision.md) is design-only.
-
-## Before sharing or running
-
-AI Switchboard was imported from
-[its original public repository](https://github.com/Jbetts05/decision-model-demo),
-which remains intact and continues to host the existing deployment workflow.
-The copy here is maintained independently; it does not replace that repository.
-
-These are experiments, not production products. Use synthetic inputs only.
-Live model calls incur charges; check each demo's prerequisites and limits.
-Credentials, local configuration, deployment state and run artifacts are
-excluded from Git. Never add them to a commit.
-
-This repository is currently private. Colleagues need repository access to
-clone it; sharing a link does not grant access.
