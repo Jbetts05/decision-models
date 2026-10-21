@@ -31,13 +31,6 @@ invokes live models and incurs charges; use fictional inputs only.
 
 [![Graph Switchboard: MD1 selects published entries and branches; Sol generates Cypher independently. The animation illustrates the architecture, not measured speed.](demos/graph-switchboard/docs/images/overview.svg)](https://graph-switchboard.example.invalid/)
 
-## Demos
-
-| Demo | What it explores | Status |
-| --- | --- | --- |
-| **[AI Switchboard](demos/ai-switchboard/README.md)** | Start here: compare MD1 with three LLMs on predefined classification tasks, with answers, latency and tokens. | Working demo |
-| **[Graph Switchboard](demos/graph-switchboard/README.md)** | MD1 and Sol independently use a PostgreSQL / Apache AGE troubleshooting graph to recommend what to do next. | Working demo |
-
 ## Get the source
 
 ```powershell

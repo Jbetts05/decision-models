@@ -10,9 +10,14 @@ test('AI Switchboard is the first demo and the hosted entry point in the central
   const readme = readFileSync(join(root, 'README.md'), 'utf8');
   assert.match(readme, /## Start here: AI Switchboard/);
   assert.match(readme, /https:\/\/ai-switchboard\.example\.invalid/);
-  const rows = readme.split('\n').filter(line => line.startsWith('| **['));
-  assert.ok(rows[0].includes('[AI Switchboard]'));
-  assert.ok(rows[1].includes('[Graph Switchboard]'));
+  const headings = readme.split(/\r?\n/).filter(line => line.startsWith('## '));
+  assert.deepEqual(headings.slice(0, 4), [
+    '## Start here: AI Switchboard',
+    '## Next: Graph Switchboard',
+    '## Get the source',
+    '## Repository layout',
+  ]);
+  assert.ok(!headings.includes('## Demos'));
 });
 
 test('central and AI Switchboard guides have resolvable local links', () => {
