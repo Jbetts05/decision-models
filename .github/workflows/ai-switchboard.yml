@@ -1,0 +1,67 @@
+name: AI Switchboard
+
+on:
+  push:
+    paths:
+      - "demos/ai-switchboard/**"
+      - ".github/workflows/ai-switchboard.yml"
+      - "README.md"
+      - ".gitignore"
+      - ".gitattributes"
+  pull_request:
+    paths:
+      - "demos/ai-switchboard/**"
+      - ".github/workflows/ai-switchboard.yml"
+      - "README.md"
+      - ".gitignore"
+      - ".gitattributes"
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy to your configured Static Web App
+        type: boolean
+        default: false
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: demos/ai-switchboard
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Offline API and repository tests
+        run: node --test
+
+  deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require a deliberately configured deployment target
+        env:
+          DEPLOYMENT_TOKEN: ${{ secrets.AI_SWITCHBOARD_DEPLOYMENT_TOKEN }}
+        run: |
+          if [ -z "$DEPLOYMENT_TOKEN" ]; then
+            echo "Configure AI_SWITCHBOARD_DEPLOYMENT_TOKEN for your intended Static Web App."
+            exit 1
+          fi
+      - name: Deploy page and API
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AI_SWITCHBOARD_DEPLOYMENT_TOKEN }}
+          action: upload
+          app_location: demos/ai-switchboard/web
+          api_location: demos/ai-switchboard/api
+          output_location: ""
+          skip_app_build: true

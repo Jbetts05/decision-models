@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Switchboard</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <script>document.documentElement.setAttribute("data-theme", "light");</script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+    }
+    .page { position: relative; isolation: isolate; overflow: hidden; min-height: 100vh; }
+    .page::before, .page::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 680px;
+      height: 680px;
+      border: 1px solid var(--cp-border);
+      border-radius: 50%;
+      opacity: 0.4;
+      pointer-events: none;
+      top: -420px;
+      left: calc(50% - 340px);
+    }
+    .page::after { width: 840px; height: 840px; top: -500px; left: calc(50% - 420px); }
+    header, main { max-width: 1120px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; gap: 16px; }
+    .wordmark { font-size: 0.9375rem; font-weight: 650; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    .mark { width: 12px; height: 12px; border-radius: 4px; background: var(--cp-accent); }
+    .model-count { font-size: 0.8125rem; color: var(--cp-text-soft); }
+    .hero { text-align: center; padding: 56px 0 32px; }
+    h1 { font-size: clamp(2rem, 5.4vw, 3.5rem); font-weight: 650; letter-spacing: -0.055em; line-height: 1.1; margin: 0; }
+    .hero p { margin: 16px 0 0; color: var(--cp-text-muted); font-size: 1rem; }
+    form {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 28px 32px;
+      background: var(--cp-surface);
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+    }
+    button, select, textarea { font: inherit; }
+    button, select { min-height: 44px; border-radius: 0.625rem; }
+    select {
+      width: 100%;
+      max-width: 340px;
+      border: 1px solid var(--cp-border);
+      padding: 8px 12px;
+      color: var(--cp-text);
+      background: var(--cp-bg-elevated);
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    label { display: block; font-size: 0.8125rem; font-weight: 600; }
+    .example-label { color: var(--cp-text-muted); margin-bottom: 8px; }
+    #question { margin: 24px 0 12px; font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.025em; line-height: 1.35; }
+    .labels { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 20px; }
+    .labels-caption { color: var(--cp-text-soft); font-size: 0.75rem; margin-right: 4px; }
+    .chip { font-size: 0.75rem; background: var(--cp-accent-soft); color: var(--cp-accent); border-radius: 6px; padding: 4px 8px; }
+    .input-label { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 8px; }
+    #character-count { color: var(--cp-text-soft); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 104px;
+      resize: vertical;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      padding: 12px 16px;
+      color: var(--cp-text);
+      background: var(--cp-bg-elevated);
+      font-size: 0.9375rem;
+      line-height: 1.65;
+    }
+    textarea::placeholder { color: var(--cp-text-soft); }
+    .actions { display: flex; align-items: center; gap: 16px; margin-top: 20px; }
+    #run {
+      flex-shrink: 0;
+      border: 1px solid var(--cp-accent);
+      padding: 10px 20px;
+      color: var(--cp-accent-fg);
+      background: var(--cp-accent);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    #run:hover:not(:disabled) { background: var(--cp-accent-hover); border-color: var(--cp-accent-hover); }
+    :focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+    button:disabled { opacity: 0.55; cursor: not-allowed; }
+    select:disabled, textarea:disabled { opacity: 0.7; cursor: wait; }
+    #status, #catalog-status { margin: 0; font-size: 0.8125rem; color: var(--cp-text-muted); }
+    #catalog-status:not(:empty) { margin-top: 12px; }
+    .results { margin-top: 36px; padding-bottom: 48px; }
+    .results-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .results-title h2 { margin: 0; font-size: 0.8125rem; font-weight: 600; color: var(--cp-text-muted); }
+    .results-title p { margin: 0; font-size: 0.75rem; color: var(--cp-text-soft); }
+    .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: start; }
+    .cards:has(.inspect[open]) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { min-width: 0; display: flex; flex-direction: column; padding: 20px; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; }
+    .card:has(.inspect[open]) { grid-column: 1 / -1; }
+    .card:has(.inspect[open]) .metrics { max-width: 320px; }
+    .card h3 { margin: 0; font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.02em; }
+    .deployment { margin: 4px 0 24px; color: var(--cp-text-soft); font-size: 0.6875rem; overflow-wrap: anywhere; }
+    .answer { flex: 1; margin: 0 0 24px; min-height: 42px; font-size: 1.5rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.03em; overflow-wrap: anywhere; white-space: pre-wrap; }
+    .answer.waiting { color: var(--cp-text-soft); font-size: 0.9375rem; font-weight: 400; letter-spacing: 0; }
+    .metrics { margin: 0; border-top: 1px solid var(--cp-border); padding-top: 12px; font-size: 0.75rem; }
+    .metric { display: flex; justify-content: space-between; gap: 8px; margin-top: 4px; }
+    dt { color: var(--cp-text-soft); }
+    dd { margin: 0; font-variant-numeric: tabular-nums; text-align: right; }
+    .inspect { margin-top: 16px; border-top: 1px solid var(--cp-border); padding-top: 12px; }
+    .inspect summary { cursor: pointer; color: var(--cp-text-muted); font-size: 0.75rem; }
+    .inspect-note { color: var(--cp-text-soft); font-size: 0.6875rem; margin: 12px 0; }
+    .inspect h4 { margin: 16px 0 8px; font-size: 0.75rem; font-weight: 600; }
+    .inspect-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .inspect-grid > div { min-width: 0; }
+    .inspect pre {
+      max-height: 220px;
+      overflow: auto;
+      margin: 0;
+      padding: 12px;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-bg-elevated);
+      color: var(--cp-text);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.6875rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    [hidden] { display: none !important; }
+    .error, #status.error, #catalog-status.error { color: var(--cp-danger); }
+    .answer.error { font-size: 0.8125rem; font-weight: 400; letter-spacing: 0; }
+    noscript { display: block; margin: 24px; text-align: center; }
+    @media (max-width: 900px) {
+      .cards, .cards:has(.inspect[open]) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .inspect-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 540px) {
+      header, main { padding-left: 16px; padding-right: 16px; }
+      header { padding-top: 20px; }
+      .hero { padding-top: 40px; }
+      .hero p { font-size: 0.875rem; }
+      form { padding: 20px; }
+      select { max-width: none; }
+      .actions { align-items: flex-start; flex-direction: column; gap: 12px; }
+      .results { margin-top: 28px; }
+      .results-title { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .cards, .cards:has(.inspect[open]) { grid-template-columns: minmax(0, 1fr); }
+      .card { padding: 16px; }
+      .answer { font-size: 1.25rem; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .card[aria-busy="true"] .answer { animation: breathe 1.5s ease-in-out infinite; }
+      @keyframes breathe { 50% { opacity: 0.45; } }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="wordmark"><span class="mark" aria-hidden="true"></span>AI Switchboard</div>
+      <span class="model-count">4 models · side by side</span>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="title">
+        <h1 id="title">One case. Four models.</h1>
+        <p>Compare the label, response time and token usage.</p>
+      </section>
+      <form id="prompt-form">
+        <label class="example-label" for="example">Choose a case</label>
+        <select id="example" disabled aria-describedby="catalog-status">
+          <option>Loading cases…</option>
+        </select>
+        <p id="catalog-status" role="status" aria-live="polite"></p>
+        <h2 id="question">Which label fits this case?</h2>
+        <div id="labels" class="labels" aria-label="Allowed answer labels"></div>
+        <div class="input-label">
+          <label for="prompt">Case text</label>
+          <span id="character-count">0 / 6,000</span>
+        </div>
+        <textarea id="prompt" name="text" maxlength="6000" required disabled aria-describedby="question labels character-count" placeholder="Choose a case, then make it your own." spellcheck="true"></textarea>
+        <div class="actions">
+          <button id="run" type="submit" disabled>Run comparison <span aria-hidden="true">↗</span></button>
+          <p id="status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+      <section class="results" aria-labelledby="results-heading">
+        <div class="results-title">
+          <h2 id="results-heading">Model responses</h2>
+          <p>Same case. Same permitted labels.</p>
+        </div>
+        <div id="cards" class="cards"></div>
+      </section>
+      <noscript>JavaScript is required to load cases and run the models.</noscript>
+    </main>
+  </div>
+  <script>
+    (() => {
+      "use strict";
+      const modelOrder = ["decision", "astra", "sol", "luna"];
+      const initialNames = ["Decision One", "GPT-6 Astra", "GPT-6 Sol", "GPT-6 Luna"];
+      const form = document.getElementById("prompt-form");
+      const prompt = document.getElementById("prompt");
+      const example = document.getElementById("example");
+      const question = document.getElementById("question");
+      const labels = document.getElementById("labels");
+      const runButton = document.getElementById("run");
+      const status = document.getElementById("status");
+      const catalogStatus = document.getElementById("catalog-status");
+      const characterCount = document.getElementById("character-count");
+      const cards = new Map();
+      let models = [];
+      let scenarios = [];
+      let scenarioId = null;
+      let running = false;
+
+      function element(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+      }
+
+      modelOrder.forEach((id, index) => {
+        const card = element("article", "card");
+        const heading = element("h3", "", initialNames[index]);
+        heading.id = "model-" + id;
+        card.setAttribute("aria-labelledby", heading.id);
+        const deployment = element("p", "deployment", "—");
+        const answer = element("p", "answer waiting", "Ready to compare");
+        answer.setAttribute("aria-live", "polite");
+        const metrics = element("dl", "metrics");
+        const values = {};
+        [["latency", "Response time"], ["input", "Input tokens"], ["output", "Output tokens"]].forEach(([key, label]) => {
+          const row = element("div", "metric");
+          const value = element("dd", "", "—");
+          values[key] = value;
+          row.append(element("dt", "", label), value);
+          metrics.append(row);
+        });
+        const inspect = element("details", "inspect");
+        inspect.hidden = true;
+        inspect.append(element("summary", "", "Context · schema · output"));
+        inspect.append(element("p", "inspect-note", "Actual API payloads, not internal reasoning."));
+        const detailGrid = element("div", "inspect-grid");
+        const detailValues = {};
+        [["context", "Context"], ["schema", "Schema"], ["output", "Output"]].forEach(([key, label]) => {
+          const title = element("h4", "", label);
+          title.id = "detail-" + id + "-" + key;
+          const value = element("pre");
+          value.tabIndex = 0;
+          value.setAttribute("aria-labelledby", title.id);
+          detailValues[key] = value;
+          const section = element("div");
+          section.append(title, value);
+          detailGrid.append(section);
+        });
+        inspect.append(detailGrid);
+        card.append(heading, deployment, answer, metrics, inspect);
+        document.getElementById("cards").append(card);
+        cards.set(id, { card, heading, deployment, answer, values, inspect, detailValues });
+      });
+
+      function updateControls() {
+        const ready = models.length === 4 && Boolean(scenarioId);
+        runButton.disabled = running || !ready || !prompt.value.trim();
+        runButton.textContent = running ? "Comparing…" : "Run comparison ↗";
+        example.disabled = running || !ready;
+        prompt.disabled = running || !ready;
+      }
+
+      function updateCount() {
+        characterCount.textContent = prompt.value.length.toLocaleString() + " / 6,000";
+      }
+
+      function clearDetails(view) {
+        view.inspect.hidden = true;
+        view.inspect.open = false;
+        Object.values(view.detailValues).forEach(value => { value.textContent = ""; });
+      }
+
+      function clearResults() {
+        models.forEach(model => {
+          const view = cards.get(model.id);
+          view.heading.textContent = model.name;
+          view.deployment.textContent = model.deployment || "—";
+          view.answer.className = "answer waiting";
+          view.answer.textContent = "Ready to compare";
+          view.card.setAttribute("aria-busy", "false");
+          Object.values(view.values).forEach(value => { value.textContent = "—"; });
+          clearDetails(view);
+        });
+        status.className = "";
+        status.textContent = "";
+      }
+
+      function selectScenario() {
+        if (running) return;
+        const scenario = scenarios.find(item => item.id === example.value);
+        if (!scenario) return;
+        scenarioId = scenario.id;
+        question.textContent = scenario.question || "Which label fits this case?";
+        labels.replaceChildren(element("span", "labels-caption", "Allowed labels"));
+        Object.keys(scenario.criteria).forEach(label => labels.append(element("span", "chip", label)));
+        prompt.value = scenario.text;
+        updateCount();
+        clearResults();
+        updateControls();
+      }
+      example.addEventListener("change", selectScenario);
+      prompt.addEventListener("input", () => {
+        if (running) return;
+        updateCount();
+        clearResults();
+        updateControls();
+      });
+
+      async function requestJson(url, options = {}, timeoutMs = 15000) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+        try {
+          const response = await fetch(url, { ...options, signal: controller.signal });
+          let data;
+          try {
+            data = await response.json();
+          } catch {
+            throw new Error(response.ok ? "The server returned an invalid response." : "Request failed (" + response.status + ").");
+          }
+          if (!response.ok) {
+            throw new Error(typeof data?.error === "string" ? data.error : "Request failed (" + response.status + ").");
+          }
+          return data;
+        } catch (error) {
+          if (error.name === "AbortError") throw new Error("Request timed out. Run comparison to try again.");
+          throw error;
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+
+      async function loadCatalog() {
+        try {
+          const data = await requestJson("/api/catalog");
+          if (!Array.isArray(data?.models) || !Array.isArray(data?.scenarios)) {
+            throw new Error("The catalog is invalid.");
+          }
+          const ordered = modelOrder.map(id => data.models.find(model => model.id === id));
+          if (ordered.some(model => !model || typeof model.name !== "string" || typeof model.deployment !== "string")) {
+            throw new Error("The catalog must include all four models.");
+          }
+          if (data.scenarios.length !== 8 || data.scenarios.some(scenario =>
+            typeof scenario.id !== "string" || typeof scenario.title !== "string" ||
+            typeof scenario.text !== "string" || scenario.text.length > 6000 ||
+            !scenario.criteria || typeof scenario.criteria !== "object" ||
+            Array.isArray(scenario.criteria) || !Object.keys(scenario.criteria).length ||
+            (scenario.question !== undefined && typeof scenario.question !== "string"))) {
+            throw new Error("The catalog must include eight valid cases and their labels.");
+          }
+          models = ordered;
+          scenarios = data.scenarios;
+          example.replaceChildren();
+          scenarios.forEach(scenario => {
+            const option = element("option", "", scenario.title);
+            option.value = scenario.id;
+            example.append(option);
+          });
+          example.value = scenarios[0].id;
+          selectScenario();
+          catalogStatus.textContent = "";
+        } catch (error) {
+          models = [];
+          catalogStatus.className = "error";
+          catalogStatus.textContent = "Could not load cases: " + error.message + " Reload to try again.";
+        }
+        updateControls();
+      }
+
+      function metric(value, suffix = "") {
+        return typeof value === "number" && Number.isFinite(value) && value >= 0
+          ? value.toLocaleString(undefined, { maximumFractionDigits: 0 }) + suffix
+          : "—";
+      }
+
+      async function runModel(model, selectedScenarioId, text) {
+        const view = cards.get(model.id);
+        try {
+          const data = await requestJson("/api/run", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ modelId: model.id, scenarioId: selectedScenarioId, text })
+          }, 50000);
+          if (data?.modelId !== model.id || typeof data.answer !== "string") {
+            throw new Error("The server returned an invalid model response.");
+          }
+          view.heading.textContent = typeof data.model === "string" ? data.model : model.name;
+          view.deployment.textContent = typeof data.deployment === "string" ? data.deployment : model.deployment;
+          view.answer.className = "answer";
+          view.answer.textContent = data.answer;
+          view.values.latency.textContent = metric(data.latencyMs, " ms");
+          view.values.input.textContent = metric(data.inputTokens);
+          view.values.output.textContent = metric(data.outputTokens);
+          if (data.details && ["context", "schema", "output"].every(key =>
+            data.details[key] !== null && typeof data.details[key] === "object")) {
+            Object.keys(view.detailValues).forEach(key => {
+              view.detailValues[key].textContent = JSON.stringify(data.details[key], null, 2);
+            });
+            view.inspect.hidden = false;
+          }
+        } catch (error) {
+          clearDetails(view);
+          view.answer.className = "answer error";
+          view.answer.textContent = error.message || "Request failed. Please try again.";
+          throw error;
+        } finally {
+          view.card.setAttribute("aria-busy", "false");
+        }
+      }
+
+      form.addEventListener("submit", async event => {
+        event.preventDefault();
+        if (running || models.length !== 4 || !scenarioId) return;
+        const text = prompt.value;
+        if (!text.trim() || text.length > 6000) {
+          status.className = "error";
+          status.textContent = "Enter case text of 1–6,000 characters.";
+          prompt.focus();
+          return;
+        }
+        const selectedScenarioId = scenarioId;
+        running = true;
+        updateControls();
+        status.className = "";
+        status.textContent = "Comparing all four models…";
+        for (const view of cards.values()) {
+          view.card.setAttribute("aria-busy", "true");
+          view.answer.className = "answer waiting";
+          view.answer.textContent = "Classifying…";
+          Object.values(view.values).forEach(value => { value.textContent = "—"; });
+          clearDetails(view);
+        }
+        try {
+          const results = await Promise.allSettled(models.map(model => runModel(model, selectedScenarioId, text)));
+          const failures = results.filter(result => result.status === "rejected").length;
+          status.className = failures ? "error" : "";
+          status.textContent = failures
+            ? failures + " of 4 requests failed. Completed responses are preserved."
+            : "All four responses are ready.";
+        } finally {
+          running = false;
+          updateControls();
+        }
+      });
+
+      loadCatalog();
+    })();
+  </script>
+</body>
+</html>

@@ -35,7 +35,7 @@
 
   <rect x=".5" y=".5" width="1199" height="569" rx="18" fill="#08121f" stroke="#263a51"/>
   <rect x="1" y="1" width="1198" height="568" rx="18" fill="url(#grid)" opacity=".45"/>
-  <text x="40" y="40" class="eyebrow">DECISION MODELS / DEMO 01</text>
+  <text x="40" y="40" class="eyebrow">DECISION MODELS / GRAPH TRAVERSAL</text>
   <text x="40" y="80" font-size="34" font-weight="650" letter-spacing="-1">Graph Switchboard</text>
   <text x="40" y="106" font-size="15" fill="#adbed0">One problem in. Two independent approaches. A recommendation you can inspect.</text>
   <g transform="translate(950 31)">

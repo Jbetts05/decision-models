@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img" aria-labelledby="title description">
+  <title id="title">The AI Switchboard: one case, four models</title>
+  <desc id="description">An illustrative loop sends a fictional duplicate-charge ticket to Microsoft Decision One, GPT-6 Astra, GPT-6 Sol and GPT-6 Luna in parallel. All four display Billing. Animation timing is illustrative, not measured model performance.</desc>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+    }
+    text { font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; fill: var(--cp-text); }
+    .background { fill: var(--cp-bg); stroke: var(--cp-border); }
+    .surface { fill: var(--cp-surface); stroke: var(--cp-border); }
+    .soft { fill: var(--cp-surface-soft); }
+    .accent-soft { fill: var(--cp-accent-soft); }
+    .accent { fill: var(--cp-accent); }
+    .muted { fill: var(--cp-text-muted); }
+    .subtle { fill: var(--cp-text-soft); }
+    .on-accent { fill: var(--cp-accent-fg); }
+    .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 2px; }
+    .heading { font-size: 38px; font-weight: 600; letter-spacing: -1px; }
+    .subtitle { font-size: 19px; }
+    .label { font-size: 12px; font-weight: 600; letter-spacing: 1px; }
+    .body { font-size: 17px; }
+    .model { font-size: 17px; font-weight: 600; }
+    .answer { font-size: 30px; font-weight: 600; letter-spacing: -0.5px; }
+    .small { font-size: 13px; }
+    .line { fill: none; stroke: var(--cp-border); stroke-width: 2; }
+    .icon { fill: none; stroke: var(--cp-accent); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .packet { fill: none; stroke: var(--cp-accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 10 300; opacity: 0; animation: route 10s linear infinite; }
+    .result { animation: reveal 10s ease-in-out infinite; }
+    .pending { opacity: 0; animation: pending 10s ease-in-out infinite; }
+    .run-ring { fill: none; stroke: var(--cp-accent-fg); stroke-width: 1.5; opacity: 0; animation: pulse 10s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes route {
+      0%, 12% { stroke-dashoffset: 12; opacity: 0; }
+      16% { opacity: 1; }
+      34% { stroke-dashoffset: -290; opacity: 1; }
+      36%, 100% { stroke-dashoffset: -290; opacity: 0; }
+    }
+    @keyframes reveal {
+      0%, 35% { opacity: 0; transform: translateY(4px); }
+      43%, 88% { opacity: 1; transform: translateY(0); }
+      96%, 100% { opacity: 0; transform: translateY(4px); }
+    }
+    @keyframes pending {
+      0%, 7% { opacity: 0; }
+      13%, 32% { opacity: 1; }
+      38%, 100% { opacity: 0; }
+    }
+    @keyframes pulse {
+      0%, 7% { opacity: 0; transform: scale(1); }
+      10% { opacity: 0.65; transform: scale(1); }
+      22% { opacity: 0; transform: scale(2.5); }
+      100% { opacity: 0; transform: scale(2.5); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .packet, .pending, .run-ring { animation: none; opacity: 0; }
+      .result { animation: none; opacity: 1; transform: none; }
+    }
+  </style>
+
+  <rect class="background" x="1" y="1" width="1118" height="618" rx="20"/>
+  <rect class="accent-soft" x="40" y="34" width="32" height="32" rx="10"/>
+  <path class="icon" d="M49 44h7v12m0-6h7m-14 6h7m7-12v12"/>
+  <text class="eyebrow muted" x="86" y="55">A SMALL DEMO OF A BIG IDEA</text>
+  <text class="heading" x="40" y="112">The AI Switchboard</text>
+  <text class="subtitle muted" x="40" y="145">One case. Four models. Side by side.</text>
+
+  <rect class="surface" x="40" y="178" width="1040" height="122" rx="16"/>
+  <text class="label muted" x="64" y="205">WHICH TEAM SHOULD HANDLE THIS TICKET?</text>
+  <text class="body" x="64" y="238">The Moonbeam Museum charged me twice for one midnight dinosaur tour.</text>
+  <text class="body muted" x="64" y="265">Both payments cleared, but I received only one ticket. Please refund the duplicate charge.</text>
+  <rect class="accent" x="944" y="202" width="112" height="40" rx="10"/>
+  <circle class="run-ring" cx="967" cy="222" r="5"/>
+  <path d="m963 217 8 5-8 5z" class="on-accent"/>
+  <text class="body on-accent" x="983" y="228">Run</text>
+  <text class="small subtle" x="944" y="270">8 editable cases</text>
+
+  <path class="line" d="M560 300v24H164v32M560 324H428v32M560 324h132v32M560 324h396v32"/>
+  <path class="packet" pathLength="280" d="M560 300v24H164v32"/>
+  <path class="packet" pathLength="280" d="M560 300v24H428v32"/>
+  <path class="packet" pathLength="280" d="M560 300v24h132v32"/>
+  <path class="packet" pathLength="280" d="M560 300v24h396v32"/>
+  <circle class="accent" cx="560" cy="324" r="4"/>
+
+  <g transform="translate(40 356)">
+    <rect class="surface" width="248" height="184" rx="16"/>
+    <text class="model" x="20" y="35">Microsoft Decision One</text>
+    <text class="small subtle" x="20" y="58">Decision-1</text>
+    <text class="body muted pending" x="20" y="109">Classifying...</text>
+    <g class="result">
+      <text class="answer" x="20" y="109">Billing</text>
+      <rect class="accent-soft" x="20" y="122" width="110" height="23" rx="6"/>
+      <text class="small accent" x="31" y="138">Selected label</text>
+    </g>
+    <text class="small muted" x="20" y="166">Latency + input / output tokens</text>
+  </g>
+  <g transform="translate(304 356)">
+    <rect class="surface" width="248" height="184" rx="16"/>
+    <text class="model" x="20" y="35">GPT-6 Astra</text>
+    <text class="small subtle" x="20" y="58">gpt-6-astra</text>
+    <text class="body muted pending" x="20" y="109">Classifying...</text>
+    <g class="result">
+      <text class="answer" x="20" y="109">Billing</text>
+      <rect class="accent-soft" x="20" y="122" width="110" height="23" rx="6"/>
+      <text class="small accent" x="31" y="138">Selected label</text>
+    </g>
+    <text class="small muted" x="20" y="166">Latency + input / output tokens</text>
+  </g>
+  <g transform="translate(568 356)">
+    <rect class="surface" width="248" height="184" rx="16"/>
+    <text class="model" x="20" y="35">GPT-6 Sol</text>
+    <text class="small subtle" x="20" y="58">gpt-6-sol</text>
+    <text class="body muted pending" x="20" y="109">Classifying...</text>
+    <g class="result">
+      <text class="answer" x="20" y="109">Billing</text>
+      <rect class="accent-soft" x="20" y="122" width="110" height="23" rx="6"/>
+      <text class="small accent" x="31" y="138">Selected label</text>
+    </g>
+    <text class="small muted" x="20" y="166">Latency + input / output tokens</text>
+  </g>
+  <g transform="translate(832 356)">
+    <rect class="surface" width="248" height="184" rx="16"/>
+    <text class="model" x="20" y="35">GPT-6 Luna</text>
+    <text class="small subtle" x="20" y="58">gpt-6-luna</text>
+    <text class="body muted pending" x="20" y="109">Classifying...</text>
+    <g class="result">
+      <text class="answer" x="20" y="109">Billing</text>
+      <rect class="accent-soft" x="20" y="122" width="110" height="23" rx="6"/>
+      <text class="small accent" x="31" y="138">Selected label</text>
+    </g>
+    <text class="small muted" x="20" y="166">Latency + input / output tokens</text>
+  </g>
+
+  <text class="small muted" x="40" y="575">Ticket routing / Complaint classification / Agent selection</text>
+  <text class="small subtle" x="40" y="598">Illustrative animation. Open the live demo for measured results. No scores. No winners.</text>
+  <rect class="soft" x="944" y="563" width="136" height="28" rx="8"/>
+  <text class="small muted" x="958" y="582">No sign-in needed</text>
+</svg>

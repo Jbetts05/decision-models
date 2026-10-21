@@ -1,0 +1,16 @@
+{
+  "name": "decision-model-demo-api",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/{index.js,functions/*.js}",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "start": "func start",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.11.0"
+  }
+}

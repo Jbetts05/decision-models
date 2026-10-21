@@ -1,0 +1,7 @@
+node_modules/
+test/
+local.settings.json
+.env
+.env.*
+.git*
+README.md
