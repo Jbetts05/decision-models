@@ -17,6 +17,20 @@ No installation or sign-in is needed to try the hosted demo. Selecting
 
 [![AI Switchboard: one case, four models, side by side. The animation is illustrative, not a benchmark.](demos/ai-switchboard/docs/switchboard.svg)](https://ai-switchboard.example.invalid)
 
+## Next: Graph Switchboard
+
+Go beyond classification: give **MD1 and Sol** a customer problem and available
+observations, then inspect how they independently use a real **PostgreSQL /
+Apache AGE** troubleshooting graph to recommend what to do next.
+
+**[Open the live demo](https://graph-switchboard.example.invalid/)** |
+**[Source and setup](demos/graph-switchboard/README.md)**
+
+No local setup is needed to try the hosted demo. Selecting **Get recommendation**
+invokes live models and incurs charges; use fictional inputs only.
+
+[![Graph Switchboard: MD1 selects published entries and branches; Sol generates Cypher independently. The animation illustrates the architecture, not measured speed.](demos/graph-switchboard/docs/images/overview.svg)](https://graph-switchboard.example.invalid/)
+
 ## Demos
 
 | Demo | What it explores | Status |
