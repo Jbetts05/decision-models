@@ -26,6 +26,9 @@ The deliverable today is an implementation brief. Do not build speculative adapt
 
 Source: [Seth Nuzum's Jev's Eye demo post on X](https://x.com/Sethnuzum/status/2110753767150981509).
 
+This reference is a demo shared on X using Jev to classify objects in live webcam
+footage.
+
 Reference image: the user-supplied screenshot is preserved in this repository at
 [`jevs-eye-reference.png`](../images/jevs-eye-reference.png), so the
 visual reference remains available without access to this conversation.
