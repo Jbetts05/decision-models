@@ -42,8 +42,6 @@ Model disagreement remains visible, including an observed MD1 clarification
 where the supplied lean-running records support Sol's workshop handoff. A
 finished comparison is not a guarantee that either model chose the right route.
 
-**[Open the live Graph Switchboard](https://graph-switchboard.example.invalid)**.
-
 The side-by-side UI follows the existing
 [AI Switchboard demo](https://github.com/Jbetts05/decision-model-demo)
 (`web/index.html`, reference commit `b153122d5892428fcbdfd9b42e0658c14ae43615`):

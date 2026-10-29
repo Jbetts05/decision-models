@@ -6,13 +6,12 @@ Compare **Microsoft Decision-1 (MD1)** with **Sol** against a real troubleshooti
 graph in **PostgreSQL with Apache AGE**. See the database reads, selected graph
 routes, supporting evidence, response time and estimated token cost side by side.
 
-**[Open the live demo](https://graph-switchboard.example.invalid/)** |
 **[Run locally](#get-started)**
 
-No local setup is needed for the hosted demo. Selecting **Get recommendation**
-invokes live models and incurs charges; use fictional inputs only.
+Run your own instance using the instructions below. Selecting **Get recommendation**
+invokes your configured models and incurs charges; use fictional inputs only.
 
-[![Architecture overview: MD1 selects published entries and branches; Sol generates Cypher independently; both read the same PostgreSQL / AGE graph and return evidence-backed recommendations.](docs/images/overview.svg)](https://graph-switchboard.example.invalid/)
+![Architecture overview: MD1 selects published entries and branches; Sol generates Cypher independently; both read the same PostgreSQL / AGE graph and return evidence-backed recommendations.](docs/images/overview.svg)
 
 *The animation illustrates the architecture, not measured speed or a recorded
 model run. The application visualises actual returned graph data.*

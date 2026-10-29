@@ -6,10 +6,10 @@ const { dirname, join, resolve } = require('node:path');
 const demo = resolve(__dirname, '..', '..');
 const root = resolve(demo, '..', '..');
 
-test('AI Switchboard is the first demo and the hosted entry point in the central catalogue', () => {
+test('AI Switchboard is the first demo in the source-first central catalogue', () => {
   const readme = readFileSync(join(root, 'README.md'), 'utf8');
   assert.match(readme, /## Start here: AI Switchboard/);
-  assert.match(readme, /https:\/\/ai-switchboard\.example\.invalid/);
+  assert.match(readme, /\[Source and setup\]\(demos\/ai-switchboard\/README\.md\)/);
   const headings = readme.split(/\r?\n/).filter(line => line.startsWith('## '));
   assert.deepEqual(headings.slice(0, 4), [
     '## Start here: AI Switchboard',
@@ -18,6 +18,19 @@ test('AI Switchboard is the first demo and the hosted entry point in the central
     '## Repository layout',
   ]);
   assert.ok(!headings.includes('## Demos'));
+});
+
+test('public guides do not link to maintainer-hosted demo instances', () => {
+  for (const path of [
+    join(root, 'README.md'), join(demo, 'README.md'),
+    join(demo, 'docs', 'deployment.md'),
+    join(root, 'demos', 'graph-switchboard', 'README.md'),
+    join(root, 'demos', 'graph-switchboard', 'docs', 'graph-switchboard-history.md'),
+  ]) {
+    const readme = readFileSync(path, 'utf8');
+    assert.doesNotMatch(readme, /https:\/\/[^\s)]+(?:azurestaticapps\.net|azurecontainerapps\.io)/);
+    assert.doesNotMatch(readme, /Open the live/);
+  }
 });
 
 test('central and AI Switchboard guides have resolvable local links', () => {

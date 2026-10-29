@@ -2,8 +2,7 @@
 
 **Start here: the simplest demo in the Decision models collection.**
 
-**[Open the live demo](https://ai-switchboard.example.invalid)**.
-No installation or sign-in is needed. Choose an example and select
+Use the setup instructions below to run your own instance. Choose an example and select
 **Run comparison** to make four billable model requests; use fictional inputs only.
 
 ![An animated illustration of one ticket classified by Microsoft Decision One, GPT-6 Astra, GPT-6 Sol and GPT-6 Luna in parallel](docs/switchboard.svg)

@@ -1,7 +1,6 @@
 # Deploy your own AI Switchboard
 
-To try the demo, use the [existing hosted app](https://ai-switchboard.example.invalid).
-Deploy only if you want a separate instance with your own models and billing.
+Deploy a separate instance with your own models and billing using this guide.
 The original repository and deployment are not modified by the central import.
 
 ## 1. Prepare Azure
