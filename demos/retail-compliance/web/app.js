@@ -263,7 +263,7 @@ function renderResult(r) {
         el("span", { text: `${verdict.failed.length} failed · ${verdict.unassessed.length} need review` }),
         el("span", { class: verdict.match ? "match" : "mismatch", text: verdict.match ? "Matches expected" : `Expected ${LABEL[verdict.expected]}` })),
       el("ol", { class: "checks" }, rows.map((k) => {
-        const p = k.probabilities ? k.probabilities[k.outcome] : null;
+        const p = k.probabilities ? k.probabilities[k.model_leaning || k.outcome] : null; // gated rows show the answer the model leaned to
         const source = k.reason ? k.reason : `${k.photos.join(" + ")}${k.reference ? " + lookbook" : ""} · ${k.rule}`;
         return el("li", { class: `check ${k.outcome}`, title: k.probabilities ? Object.entries(k.probabilities).map(([o, v]) => `${o}: ${(v * 100).toFixed(1)}%`).join("\n") : "" },
           el("span", { class: "icon", "aria-hidden": "true", text: OUTCOME[k.outcome].icon }),
