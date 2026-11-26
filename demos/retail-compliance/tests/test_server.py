@@ -156,11 +156,18 @@ class ServerTests(unittest.TestCase):
                 extra.close()
                 self.assertTrue(closed(slow))  # dropped at the request deadline
                 slow.close()
-                time.sleep(0.2)
-                ok = socket.create_connection(address, timeout=5)
-                ok.sendall(b"GET /healthz HTTP/1.0\r\n\r\n")
-                self.assertTrue(ok.recv(100).startswith(b"HTTP/1.0 200"))
-                ok.close()
+                for _ in range(40):  # the dropped handler frees its slot shortly after
+                    ok = socket.create_connection(address, timeout=5)
+                    try:
+                        ok.sendall(b"GET /healthz HTTP/1.0\r\n\r\n")
+                        reply = ok.recv(100)
+                    except OSError:
+                        reply = b""
+                    ok.close()
+                    if reply:
+                        break
+                    time.sleep(0.05)
+                self.assertTrue(reply.startswith(b"HTTP/1.0 200"))
         finally:
             httpd.shutdown()
             httpd.server_close()

@@ -56,18 +56,19 @@ questions change: no new model, labels or training.
 
 ## The web demo
 
-Each scenario shows its live campaign documents and three visits, chosen as clear
-examples of a correct build, a real-world fault and, where possible, a visit the
-model must refer to a person:
+Each scenario shows its live campaign documents and three visits, chosen to show
+what the model can see: one correct build and two real-world faults. Every visit
+has all its photos, so every check is answered by Decision-1.1:
 
 | Scenario | Live campaigns (audit date) | Visits |
 |---|---|---|
 | **Drinks fridge** | Fizzwell Zero Sugar Summer (10 June 2027) | Built to the brief · Competitor water in the cooler · Door sticker missing |
-| **Coffee shelf** | Brightmoor Summer Saver + Hollin 2 for £7 (3 June 2027) | Both built correctly · A Hollin pack inside the Brightmoor block · Wrong price, and no top-shelf close-up |
-| **Clothing display** | Harlow & Pine Winter Sale (27 December 2027) | Changed over correctly · Sign changed, mannequin not · Only a table close-up uploaded |
+| **Coffee shelf** | Brightmoor Summer Saver + Hollin 2 for £7 (3 June 2027) | Both built correctly · A Hollin pack inside the Brightmoor block · A crushed pack left on the shelf |
+| **Clothing display** | Harlow & Pine Autumn Edit (2 September 2027) | Dressed to the lookbook · Scarf missing · Untidy jumper table |
 
 All 12 campaign verdicts on these visits matched the expected output in three
-repeat runs, at about 0.6 to 1.1 s per request. **They were picked because they
+repeat runs, at about 0.8 to 1.8 s per request. Individual checks below the 50%
+confidence gate still show as *needs review* (one, on the crushed-pack visit). **They were picked because they
 work**, and two of the questions were edited while choosing them (see
 [development](#how-the-questions-and-labels-were-developed)). The full evaluation
 set below includes the cases the model gets wrong. The live campaigns and visits are

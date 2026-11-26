@@ -251,7 +251,7 @@ function renderResult(r) {
     metric("Model latency", fmtMs(r.latency_ms)), metric("Input tokens", fmtInt(r.usage.input_tokens)),
     metric("Output tokens", fmtInt(r.usage.output_tokens)), metric("Est. cost", fmtUsd(r.estimated_cost_usd)),
     metric("Model calls", r.questions_asked ? "1" : "0"), metric("Questions asked", String(r.questions_asked)),
-    metric("No photo, not asked", String(r.questions_skipped))));
+    r.questions_skipped ? metric("No photo, not asked", String(r.questions_skipped)) : null));
   const order = { not_compliant: 0, cannot_assess: 1, compliant: 2 };
   $("campaigns").replaceChildren(...scenario().campaigns.map((c) => {
     const verdict = r.campaigns[c.id];
