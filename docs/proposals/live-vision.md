@@ -1,14 +1,76 @@
 # Live vision decision demo
 
-Status: design only. No application, model integration, or Azure resources are implemented by this document.
+Status: application design, with a completed initial live capability probe
+(2026-11-25). Microsoft-Decision-1.1 was deployed alongside the existing
+Decision-1 deployment for this probe. No webcam application or web hosting has
+been implemented.
 
 ## Goal
 
-Recreate the essential Jev's Eye experience as a simple, shareable, live webcam demo powered exclusively by a future image-capable Microsoft decision model deployed in a Microsoft Foundry resource in the owner's Microsoft tenant.
+Recreate the essential Jev's Eye experience as a simple, shareable, live webcam demo powered exclusively by Microsoft-Decision-1.1 deployed in a Microsoft Foundry resource in the owner's Microsoft tenant.
 
-The future model's public name, API, image support, localization support, and performance are not yet known. "Decision Two" is a working description, not an announced product name or integration contract.
+The originally anticipated "Decision Two" arrived as **Microsoft-Decision-1.1**,
+announced generally available on 2026-11-17 with image input. Image-based typed
+decisions now have a documented API and have been exercised against a real
+deployment. Native object bounding boxes are not part of the documented answer
+types and were not returned by the probe.
 
-The deliverable today is an implementation brief. Do not build speculative adapters, mock endpoints, or simulated inference. Begin implementation when a suitable model is available, following the release-day runbook below.
+This remains an implementation brief, accompanied by a
+[reproducible live probe](../../demos/live-vision/README.md).
+Do not build speculative adapters, mock endpoints, or simulated inference.
+Resolve the localization scope gate below before implementing the webcam UI.
+
+## Verified model integration and initial probe
+
+Sources checked on 2026-11-25:
+
+- [Microsoft's release announcement, 2026-11-17](https://commandline.microsoft.com/microsoft-decision-model-ga/).
+- [Official deployment and decision API documentation](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision).
+
+The deployed model is `Microsoft-Decision-1.1`, version `1`, using
+`GlobalStandard`. The resource is in Sweden Central; Global Standard does not
+restrict inference to Sweden or to the EU. The existing Decision-1 deployment
+and applications were left unchanged.
+
+The documented integration is:
+
+- POST to `<resource-endpoint>/providers/microsoft/v1/systemone`.
+- Set `model` to the deployment name, not necessarily the underlying model name.
+- Include base64 image data in `assets`, using `type: image`, `format: png`,
+  and `data_base64`, then reference `image:frame.png` in state or questions.
+- Supply named `noul`, `choice`, or `score` questions.
+- Authenticate server-side using Microsoft Entra ID or an API key.
+
+The live probe sent nine requests: three synthetic 640 x 360 shape cards, each
+repeated three times, with the same three questions per request. Image contents
+were a red circle on the left, a red square on the right, and no colored shapes;
+the first two also contained a blue distractor. Prompts did not disclose scene
+names or expected answers. All 27 simple presence/position/shape checks matched
+the expected answers.
+
+| Observation | Result |
+| --- | --- |
+| Returned model | `microsoft-decision-1.1` |
+| Request latency, median | 463.1 ms |
+| Request latency, min / max | 415.7 / 822.9 ms |
+| First request latency | 822.9 ms |
+| Sequential completed requests / second | 1.845 across this run |
+| Usage per request | 402 input tokens, 3 output tokens |
+| Returned top-level fields | `answers`, `model`, `usage` |
+| Answer fields observed | `noul`; `choice`, `probabilities`, and `confidence` |
+| Native object boxes | Not returned; no documented bounding-box answer type |
+
+These are real API measurements, not simulated outputs. However, three synthetic
+cards are not a real-world object-detection benchmark, a calibration study, or a
+test of person/hand/phone/eyeglasses recognition. Latency includes network and
+response reading over fresh HTTP connections from the probing machine. Four
+requests per second has **not** been demonstrated; neither these latencies nor
+this throughput should be presented as isolated model inference performance.
+
+Next implementation gate: confirm real-photo performance on the intended
+everyday objects, and explicitly choose a label-only first version or wait for
+usable native localization. Do not draw invented boxes or introduce another
+model to make the demo appear feature-equivalent.
 
 ## Confirmed scope
 
@@ -62,7 +124,8 @@ Reuse that page's light appearance, spacing, typography, restrained borders, car
 
 ## Page design
 
-Working title: **Live vision decisions**. Display the actual configured model name once known; do not hard-code "Decision Two" as a released product.
+Working title: **Live vision decisions**. Display the configured model name,
+currently Microsoft-Decision-1.1; do not label it "Decision Two."
 
 Use a compact header with the title, model name, and connection state. Keep the camera and results immediately visible rather than add a large marketing hero.
 
@@ -161,7 +224,11 @@ Use hosting-level controls or a reliable shared limiter if needed; do not add a 
 - Bound request timeouts and retries. Respect throttling; do not create a rapid retry loop or silently amplify paid requests.
 - Treat model responses as untrusted data: validate labels, scores, and coordinates, and render text safely.
 
-## Release-day implementation runbook
+## Implementation runbook
+
+The initial model-discovery and synthetic-image probe portions of steps 1-3 are
+complete as recorded above. Real-photo object checks, deployment-specific limits,
+and data-handling review remain outstanding. Step 4 is still an explicit scope gate.
 
 1. Identify the released Microsoft model and verify that it is deployable in the intended tenant, Foundry resource, region, and available quota.
 2. Read its official image-input, authentication, request/response, task-type, service-limit, pricing, and data-handling documentation. Record the model version and documentation sources.

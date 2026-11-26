@@ -1,0 +1,277 @@
+{
+  "campaign": "A",
+  "extraction": {
+    "model": "gpt-6-sol-2026-09-22",
+    "deployment_role": "extraction",
+    "reasoning_effort": "high",
+    "extracted_at": "2026-11-25T23:57:56+00:00",
+    "source_sha256_prefix": {
+      "brief": "c813eaa36ce03f08",
+      "standards": "96a7d5b0477dc087"
+    },
+    "usage": {
+      "input_tokens": 1958,
+      "output_tokens": 4614
+    },
+    "latency_ms": 29551.7
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_on": "2026-11-25",
+    "notes": [
+      "summer_door_sticker: removed 'eye level on the handle side'. That positional detail is not reliably judged from a photo; the brief was amended to match.",
+      "clean_door_glass: added that reflections and glare are not dirt.",
+      "After GPT-6.2 Sol data review: bottom_cola_bottles: checks the bottle format, not '500 ml', which a photo cannot read.",
+      "After GPT-6.2 Sol data review: forward_facing: a can hidden behind the sticker is not misorientation.",
+      "After GPT-6.2 Sol data review: top_promo_label, summer_door_sticker: also accept the full cooler photo, since the close-up is optional."
+    ]
+  },
+  "checks": [
+    {
+      "id": "top_zero_cans",
+      "rule": "Brief: Cooler planogram",
+      "requirement": "The top shelf contains Fizzwell Zero cans (black).",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check which product occupies the top shelf.",
+      "compliant": "Fizzwell Zero cans (black) occupy the top shelf.",
+      "not_compliant": "The top shelf contains a different product or is missing Fizzwell Zero cans."
+    },
+    {
+      "id": "second_cola_cans",
+      "rule": "Brief: Cooler planogram",
+      "requirement": "The second shelf contains Fizzwell Cola cans (red).",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check which product occupies the second shelf.",
+      "compliant": "Fizzwell Cola cans (red) occupy the second shelf.",
+      "not_compliant": "The second shelf contains a different product or is missing Fizzwell Cola cans."
+    },
+    {
+      "id": "third_orange_cans",
+      "rule": "Brief: Cooler planogram",
+      "requirement": "The third shelf contains Fizzwell Orange cans (orange).",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check which product occupies the third shelf.",
+      "compliant": "Fizzwell Orange cans (orange) occupy the third shelf.",
+      "not_compliant": "The third shelf contains a different product or is missing Fizzwell Orange cans."
+    },
+    {
+      "id": "bottom_cola_bottles",
+      "rule": "Brief: Cooler planogram",
+      "requirement": "Fizzwell Cola bottles occupy the bottom shelf.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check which product occupies the bottom shelf.",
+      "compliant": "Fizzwell Cola bottles occupy the bottom shelf.",
+      "not_compliant": "The bottom shelf contains a different product or is missing Fizzwell Cola bottles."
+    },
+    {
+      "id": "no_unplanned_products",
+      "rule": "Standards 1.1; Brief: Cooler planogram",
+      "requirement": "The cooler contains only the four specified campaign products, with no other brands' products.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Look throughout the cooler for other brands' products or Fizzwell products outside this campaign's range.",
+      "compliant": "Only the four specified Fizzwell products are present; no other brand's product is in the cooler.",
+      "not_compliant": "Any other brand's product or any Fizzwell product outside the specified range is in the cooler."
+    },
+    {
+      "id": "full_shelves",
+      "rule": "Standards 2.1",
+      "requirement": "Every shelf has a full-width front row without gaps.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check every shelf for missing products in its front row.",
+      "compliant": "The front row fills the width of every shelf, with no shelf surface or cooler back visible through a gap.",
+      "not_compliant": "A missing front-row product leaves a visible gap on any shelf."
+    },
+    {
+      "id": "forward_facing",
+      "rule": "Standards 2.2",
+      "requirement": "Products face forward with their brand names readable through the door.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check whether products across the shelves face forward and show the Fizzwell brand name. A can partly hidden behind the door sticker is not turned away.",
+      "compliant": "Products face forward with the Fizzwell brand name visible.",
+      "not_compliant": "One or more products are turned so the Fizzwell brand name does not face shoppers."
+    },
+    {
+      "id": "product_condition",
+      "rule": "Standards 2.1–2.2",
+      "requirement": "Products are upright and presentable, with none visibly fallen or damaged.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Look across the cooler for fallen or visibly damaged products.",
+      "compliant": "Products are upright, with no visibly fallen or damaged cans or bottles.",
+      "not_compliant": "A product has fallen over or is visibly damaged."
+    },
+    {
+      "id": "cooler_lights",
+      "rule": "Standards 3.1",
+      "requirement": "The interior lights and illuminated FIZZWELL header are on.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check the cooler's interior lights and FIZZWELL header illumination.",
+      "compliant": "The interior lights and FIZZWELL header are illuminated.",
+      "not_compliant": "The interior lights or the illuminated FIZZWELL header are off."
+    },
+    {
+      "id": "clean_door_glass",
+      "rule": "Standards 3.3",
+      "requirement": "The door glass is clean.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Look for visible dirt, smears or residue on the door glass. Reflections and light glare on the glass are not dirt.",
+      "compliant": "The door glass has no visible dirt, smears or residue.",
+      "not_compliant": "Visible dirt, smears or residue are on the door glass."
+    },
+    {
+      "id": "summer_door_sticker",
+      "rule": "Brief: Door sticker; Standards 3.3",
+      "requirement": "One round black-and-yellow ZERO SUGAR SUMMER sticker is on the door glass.",
+      "photos": [
+        "cooler",
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Check the door sticker's number, appearance and wording.",
+      "compliant": "Exactly one round black-and-yellow sticker reading ZERO SUGAR SUMMER is on the door glass.",
+      "not_compliant": "The sticker is missing, duplicated, or has different artwork or wording."
+    },
+    {
+      "id": "top_promo_label",
+      "rule": "Brief: Cooler planogram; Standards 4.1–4.2",
+      "requirement": "The top shelf has a yellow promotional price label reading 2 for £2 on its front edge.",
+      "photos": [
+        "cooler",
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Read the top shelf's front-edge price label and check its colour.",
+      "compliant": "A yellow front-edge promotional label reads 2 for £2.",
+      "not_compliant": "The label is missing, is not yellow, is not on the shelf's front edge, or gives different offer wording."
+    },
+    {
+      "id": "second_cola_price",
+      "rule": "Brief: Cooler planogram; Standards 4.1–4.2",
+      "requirement": "The second shelf has a white £1.20 price label on its front edge.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check the second shelf's front-edge price label for its colour and price.",
+      "compliant": "A white front-edge label shows £1.20.",
+      "not_compliant": "The label is missing, is not white, is not on the shelf's front edge, or shows a price other than £1.20."
+    },
+    {
+      "id": "third_orange_price",
+      "rule": "Brief: Cooler planogram; Standards 4.1–4.2",
+      "requirement": "The third shelf has a white £1.20 price label on its front edge.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check the third shelf's front-edge price label for its colour and price.",
+      "compliant": "A white front-edge label shows £1.20.",
+      "not_compliant": "The label is missing, is not white, is not on the shelf's front edge, or shows a price other than £1.20."
+    },
+    {
+      "id": "bottom_cola_price",
+      "rule": "Brief: Cooler planogram; Standards 4.1–4.2",
+      "requirement": "The bottom shelf has a white £1.80 price label on its front edge.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check the bottom shelf's front-edge price label for its colour and price.",
+      "compliant": "A white front-edge label shows £1.80.",
+      "not_compliant": "The label is missing, is not white, is not on the shelf's front edge, or shows a price other than £1.80."
+    },
+    {
+      "id": "no_old_campaign_material",
+      "rule": "Standards 3.3; Standards 5.1",
+      "requirement": "No earlier-campaign stickers, shelf labels or other campaign material remain on the cooler.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Look across the door and shelves for campaign material other than the specified Zero Sugar Summer sticker and current price labels.",
+      "compliant": "Only the specified door sticker and current shelf labels are displayed.",
+      "not_compliant": "An earlier-campaign sticker or label, or other non-current campaign material, remains displayed."
+    }
+  ],
+  "not_checkable": [
+    {
+      "rule": "Standards 2.3",
+      "requirement": "Rotate stock by date.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Standards 3.2",
+      "requirement": "Keep products below 5 °C.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Standards 3.1",
+      "requirement": "Keep the lights and header on whenever the store is open, beyond the photographed moment.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Standards 5.1",
+      "requirement": "Remove earlier-campaign material on the day that campaign ends.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Standards 6.1",
+      "requirement": "The field rep takes the required full-cooler photograph on each visit.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Objective",
+      "requirement": "Increase Fizzwell Zero's share of cold drinks and achieve the target of 25% more Zero cans sold.",
+      "reason": "not_visible_in_photos"
+    },
+    {
+      "rule": "Brief: Store terms",
+      "requirement": "Pay stores £20 for each compliant audit.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Store terms",
+      "requirement": "Restock the cooler before the lunchtime peak every day.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Store terms",
+      "requirement": "Head office reviews sell-out data weekly.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Standards 4.2; Brief: Cooler planogram",
+      "requirement": "Cornerstop sets its selling prices and Fizzwell funds the agreed promotion.",
+      "reason": "not_visible_in_photos"
+    }
+  ]
+}

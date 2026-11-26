@@ -1,0 +1,220 @@
+{
+  "campaign": "B",
+  "extraction": {
+    "model": "gpt-6-sol-2026-09-22",
+    "deployment_role": "extraction",
+    "reasoning_effort": "high",
+    "extracted_at": "2026-11-25T23:58:21+00:00",
+    "source_sha256_prefix": {
+      "brief": "4d6a9721b3affca0",
+      "standards": "96a7d5b0477dc087"
+    },
+    "usage": {
+      "input_tokens": 1982,
+      "output_tokens": 3548
+    },
+    "latency_ms": 24533.9
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_on": "2026-11-25",
+    "notes": [
+      "door_glass_clear: added that reflections and glare are not dirt.",
+      "After GPT-6.2 Sol data review: shelf_planogram: checks the bottle format, not '500 ml'.",
+      "After GPT-6.2 Sol data review: products_face_forward: a can hidden behind the sticker is not misorientation.",
+      "After GPT-6.2 Sol data review: top_price_label: also accepts the full cooler photo."
+    ]
+  },
+  "checks": [
+    {
+      "id": "shelf_planogram",
+      "rule": "Brief: Cooler planogram",
+      "requirement": "Stock the four shelves with the specified products in order.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check which product is on each shelf.",
+      "compliant": "The top shelf has orange Fizzwell Orange cans, the second has red Fizzwell Cola cans, the third has black Fizzwell Zero cans, and the bottom has Fizzwell Cola bottles.",
+      "not_compliant": "A shelf has a different product, or a specified product is on the wrong shelf."
+    },
+    {
+      "id": "no_other_brands",
+      "rule": "Standards 1.1",
+      "requirement": "Keep other brands' products out of the Fizzwell cooler.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Look for any product that is not Fizzwell anywhere in the cooler.",
+      "compliant": "Every visible product is Fizzwell.",
+      "not_compliant": "Any other brand's product is in the cooler."
+    },
+    {
+      "id": "no_extra_fizzwell_products",
+      "rule": "Brief: Cooler planogram",
+      "requirement": "Stock only the Fizzwell products specified for Orange Refresh.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Look for Fizzwell products other than the four specified shelf products.",
+      "compliant": "There are no additional Fizzwell varieties or formats in the cooler.",
+      "not_compliant": "A Fizzwell variety or format not specified in the planogram is in the cooler."
+    },
+    {
+      "id": "shelves_full",
+      "rule": "Standards 2.1",
+      "requirement": "Keep every shelf stocked across its full width.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check the front row across the full width of every shelf for gaps.",
+      "compliant": "Products fill the front row across every shelf, with no gaps showing the shelf or back of the cooler.",
+      "not_compliant": "A missing front-row product leaves a visible gap on any shelf."
+    },
+    {
+      "id": "products_face_forward",
+      "rule": "Standards 2.2",
+      "requirement": "Face products forward with their brand names readable through the door.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check whether the products face forward and show their brand names. A can partly hidden behind the door sticker is not turned away.",
+      "compliant": "Products face forward with their Fizzwell branding visible through the door.",
+      "not_compliant": "Products are turned away so their branding does not face shoppers."
+    },
+    {
+      "id": "cooler_lights",
+      "rule": "Standards 3.1",
+      "requirement": "Switch on the interior lights and illuminated FIZZWELL header.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check the cooler's interior lights and illuminated FIZZWELL header.",
+      "compliant": "The interior lights and FIZZWELL header are lit.",
+      "not_compliant": "The interior lights or FIZZWELL header are off."
+    },
+    {
+      "id": "top_price_label",
+      "rule": "Standards 4.1–4.2; Brief: Cooler planogram",
+      "requirement": "Show a yellow “3 for £3” promotional label on the top shelf's front edge.",
+      "photos": [
+        "cooler",
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Read the top shelf's front-edge price label and check its colour.",
+      "compliant": "A readable yellow promotional label on the top shelf's front edge says “3 for £3”.",
+      "not_compliant": "The label is missing, is not yellow, or shows different price wording."
+    },
+    {
+      "id": "second_price_label",
+      "rule": "Standards 4.1–4.2; Brief: Cooler planogram",
+      "requirement": "Show a white £1.20 label on the second shelf's front edge.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Read the second shelf's front-edge price label and check its colour.",
+      "compliant": "A readable white label on the second shelf's front edge says “£1.20”.",
+      "not_compliant": "The label is missing, is not white, or shows a different price."
+    },
+    {
+      "id": "third_price_label",
+      "rule": "Standards 4.1–4.2; Brief: Cooler planogram",
+      "requirement": "Show a white £1.20 label on the third shelf's front edge.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Read the third shelf's front-edge price label and check its colour.",
+      "compliant": "A readable white label on the third shelf's front edge says “£1.20”.",
+      "not_compliant": "The label is missing, is not white, or shows a different price."
+    },
+    {
+      "id": "bottom_price_label",
+      "rule": "Standards 4.1–4.2; Brief: Cooler planogram",
+      "requirement": "Show a white £1.80 label on the bottom shelf's front edge.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Read the bottom shelf's front-edge price label and check its colour.",
+      "compliant": "A readable white label on the bottom shelf's front edge says “£1.80”.",
+      "not_compliant": "The label is missing, is not white, or shows a different price."
+    },
+    {
+      "id": "orange_refresh_sticker",
+      "rule": "Brief: Door sticker; Standards 5.1",
+      "requirement": "Display one round orange-and-white ORANGE REFRESH door sticker instead of the ZERO SUGAR SUMMER sticker.",
+      "photos": [
+        "cooler",
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Check the door sticker's number, shape, colours and wording, and look for the old sticker.",
+      "compliant": "There is one round orange-and-white sticker reading “ORANGE REFRESH”, with no visible “ZERO SUGAR SUMMER” sticker.",
+      "not_compliant": "The ORANGE REFRESH sticker is missing or differs in shape, colours or wording; there is more than one; or the old sticker remains visible."
+    },
+    {
+      "id": "door_glass_clear",
+      "rule": "Standards 3.3",
+      "requirement": "Keep the door glass clean and free of anything other than the current door sticker.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Check the door glass for dirt, marks or other attached material. Reflections and light glare on the glass are not dirt.",
+      "compliant": "The glass is clean and has no attached material besides the ORANGE REFRESH sticker.",
+      "not_compliant": "The glass is visibly dirty or has another sticker, notice or attached material."
+    },
+    {
+      "id": "no_obsolete_labels",
+      "rule": "Brief: Cooler planogram; Standards 5.1",
+      "requirement": "Remove earlier campaign shelf labels, including any “2 for £2” label.",
+      "photos": [
+        "cooler"
+      ],
+      "uses_reference": false,
+      "question": "Look throughout the cooler for obsolete campaign labels or any “2 for £2” label.",
+      "compliant": "Only Orange Refresh shelf labels are displayed, and no “2 for £2” label remains.",
+      "not_compliant": "An earlier campaign label or any “2 for £2” label remains anywhere in the cooler."
+    }
+  ],
+  "not_checkable": [
+    {
+      "rule": "Standards 2.3",
+      "requirement": "Rotate stock by date.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Standards 3.2",
+      "requirement": "Keep products below 5 °C.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Brief: Door sticker",
+      "requirement": "Place the new sticker in the old sticker's exact position.",
+      "reason": "not_visible_in_photos"
+    },
+    {
+      "rule": "Brief: Door sticker",
+      "requirement": "Remove the old sticker rather than concealing it beneath the new one.",
+      "reason": "not_visible_in_photos"
+    },
+    {
+      "rule": "Brief: Store terms",
+      "requirement": "Have the planogram in place by store opening on 5 July.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Store terms",
+      "requirement": "Pay £20 for each compliant audit.",
+      "reason": "timing_or_process"
+    }
+  ]
+}

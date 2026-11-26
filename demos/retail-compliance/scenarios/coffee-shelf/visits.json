@@ -1,0 +1,337 @@
+{
+  "scenario": "Coffee shelf",
+  "note": "Generated images (not camera photos), checked by hand. 'shows' records what each image actually contains. Close-ups are crops of the generated bay image; in a real audit they would be separate, more detailed photos.",
+  "campaigns": {
+    "A": {
+      "name": "Brightmoor Summer Saver",
+      "brief": "policies/campaign-a-summer-saver.md",
+      "standards": "policies/execution-standards.md"
+    },
+    "B": {
+      "name": "Brightmoor Hazelnut launch",
+      "brief": "policies/campaign-b-hazelnut-launch.md",
+      "standards": "policies/execution-standards.md"
+    },
+    "C": {
+      "name": "Hollin 2 for £7",
+      "brief": "policies/campaign-c-hollin-multibuy.md"
+    }
+  },
+  "photo_types": {
+    "bay": "Full bay, straight on: every shelf and shelf edge. For placement, order, facings, gaps, brand blocking, competitor products and damaged packs.",
+    "mid": "Close-up of the shelf edge of the shelf holding the Brightmoor range: price labels and point-of-sale material on that shelf, close enough to read.",
+    "top": "Close-up of the top shelf: Hollin products, the top shelf-edge label and the header card, close enough to read.",
+    "detail": "Optional close-up of a specific problem, such as a damaged pack."
+  },
+  "crops": {
+    "top_shelf": [
+      380,
+      0,
+      1160,
+      380
+    ],
+    "middle_shelf": [
+      40,
+      380,
+      1500,
+      830
+    ],
+    "bottom_shelf": [
+      40,
+      620,
+      1500,
+      1024
+    ],
+    "top_shelf_removed": [
+      0,
+      365,
+      1536,
+      1024
+    ]
+  },
+  "visits": [
+    {
+      "id": "01",
+      "setup": "Summer Saver built as specified; Hollin compliant",
+      "source": "images/generated/01-summer-saver-compliant.jpg",
+      "shows": "Top: 4 Hollin Classic, '2 for £7' header card and yellow '2 for £7' label. Middle: 3 Original Roast (yellow £3.50, 'Summer Saver' wobbler), 2 Dark Roast (white £4.00), 2 Decaf (white £4.00). Bottom: unbranded jars, white £3.00 labels.",
+      "photos": [
+        {
+          "type": "bay"
+        },
+        {
+          "type": "mid",
+          "crop": "middle_shelf"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf"
+        }
+      ],
+      "expected": {
+        "A": "pass",
+        "B": "fail",
+        "C": "pass"
+      }
+    },
+    {
+      "id": "02",
+      "setup": "As 01 with a gap in the Brightmoor block",
+      "source": "images/generated/02-gap.jpg",
+      "shows": "As 01, except the middle shelf has 2 Original Roast, an empty gap about two packs wide, 1 Dark Roast, 2 Decaf. Labels and wobbler unchanged.",
+      "photos": [
+        {
+          "type": "bay"
+        },
+        {
+          "type": "mid",
+          "crop": "middle_shelf"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail",
+        "C": "pass"
+      }
+    },
+    {
+      "id": "03",
+      "setup": "As 01 with a Hollin pack inside the Brightmoor block",
+      "source": "images/generated/03-hollin-in-brightmoor-block.jpg",
+      "shows": "Top: 3 Hollin Classic, header card and '2 for £7' label. Middle: 3 Original Roast, 1 Hollin Classic, 2 Dark Roast, 2 Decaf. Labels and wobbler as 01.",
+      "photos": [
+        {
+          "type": "bay"
+        },
+        {
+          "type": "mid",
+          "crop": "middle_shelf"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail",
+        "C": "fail"
+      }
+    },
+    {
+      "id": "04",
+      "setup": "As 01 with the wrong Original Roast price; no top close-up",
+      "source": "images/generated/04-wrong-original-price.jpg",
+      "shows": "As 01, except the label under Original Roast is white £4.00. Wobbler still present.",
+      "photos": [
+        {
+          "type": "bay"
+        },
+        {
+          "type": "mid",
+          "crop": "middle_shelf"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail",
+        "C": "cannot_assess"
+      }
+    },
+    {
+      "id": "05",
+      "setup": "As 01 with a crushed pack",
+      "source": "images/generated/05-crushed-pack.jpg",
+      "shows": "As 01, except the first Dark Roast pack is crumpled and torn at the top.",
+      "photos": [
+        {
+          "type": "bay"
+        },
+        {
+          "type": "mid",
+          "crop": "middle_shelf"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf"
+        },
+        {
+          "type": "detail",
+          "crop": [
+            590,
+            380,
+            880,
+            690
+          ]
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail",
+        "C": "pass"
+      }
+    },
+    {
+      "id": "06",
+      "setup": "As 01 with the Brightmoor range on the bottom shelf",
+      "source": "images/generated/06-brightmoor-bottom-shelf.jpg",
+      "shows": "Top as 01. Middle: unbranded jars, white £3.00 labels. Bottom: 3 Original Roast (yellow £3.50, wobbler), 2 Dark Roast (white £4.00), 2 Decaf (white £4.00). The shelf-edge close-up is of the bottom shelf, which holds the Brightmoor range.",
+      "photos": [
+        {
+          "type": "bay"
+        },
+        {
+          "type": "mid",
+          "crop": "bottom_shelf"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail",
+        "C": "pass"
+      }
+    },
+    {
+      "id": "07",
+      "setup": "Hazelnut launch built as specified; Hollin compliant",
+      "source": "images/generated/07-hazelnut-compliant.jpg",
+      "shows": "Top as 01. Middle: 2 Original Roast (white £4.00), 2 Hazelnut (yellow £3.00 and red 'NEW' strip), 2 Dark Roast (white £4.00), 2 Decaf (white £4.00). No wobbler.",
+      "photos": [
+        {
+          "type": "bay"
+        },
+        {
+          "type": "mid",
+          "crop": "middle_shelf"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "pass",
+        "C": "pass"
+      }
+    },
+    {
+      "id": "08",
+      "setup": "As 07 with the Summer Saver wobbler left in place; no top close-up",
+      "source": "images/generated/08-leftover-wobbler.jpg",
+      "shows": "As 07, plus a 'Summer Saver' wobbler under Original Roast.",
+      "photos": [
+        {
+          "type": "bay"
+        },
+        {
+          "type": "mid",
+          "crop": "middle_shelf"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail",
+        "C": "cannot_assess"
+      }
+    },
+    {
+      "id": "09",
+      "setup": "As 07 with Hazelnut at the far right",
+      "source": "images/generated/09-hazelnut-far-right.jpg",
+      "shows": "As 07, except the middle shelf order is Original Roast, Dark Roast, Decaf, Hazelnut, with labels moved accordingly.",
+      "photos": [
+        {
+          "type": "bay"
+        },
+        {
+          "type": "mid",
+          "crop": "middle_shelf"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail",
+        "C": "pass"
+      }
+    },
+    {
+      "id": "10",
+      "setup": "As 07 with the Hollin header card missing and a Hollin facing short; no middle close-up",
+      "source": "images/generated/10-hollin-header-missing.jpg",
+      "shows": "As 07, except the top shelf has 3 Hollin Classic with an empty space and no header card. The '2 for £7' label remains.",
+      "photos": [
+        {
+          "type": "bay"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "cannot_assess",
+        "C": "fail"
+      }
+    },
+    {
+      "id": "11",
+      "setup": "As 01, but the bay photo is blurred",
+      "source": "images/generated/01-summer-saver-compliant.jpg",
+      "shows": "01 with the bay photo heavily blurred; the close-ups are sharp.",
+      "photos": [
+        {
+          "type": "bay",
+          "blur": 9
+        },
+        {
+          "type": "mid",
+          "crop": "middle_shelf"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf"
+        }
+      ],
+      "expected": {
+        "A": "cannot_assess",
+        "B": "fail",
+        "C": "cannot_assess"
+      }
+    },
+    {
+      "id": "12",
+      "setup": "As 01, with the top shelf cropped out of the bay photo",
+      "source": "images/generated/01-summer-saver-compliant.jpg",
+      "shows": "01 with the bay photo cropped to the middle and bottom shelves; no top-shelf close-up. With the top shelf cropped out, the photo cannot show which shelf of the bay holds the Brightmoor range.",
+      "photos": [
+        {
+          "type": "bay",
+          "crop": "top_shelf_removed"
+        },
+        {
+          "type": "mid",
+          "crop": "middle_shelf"
+        }
+      ],
+      "expected": {
+        "A": "cannot_assess",
+        "B": "fail",
+        "C": "cannot_assess"
+      }
+    }
+  ]
+}

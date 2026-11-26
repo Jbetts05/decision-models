@@ -1,0 +1,156 @@
+{
+  "scenario": "Drinks fridge",
+  "note": "Generated images (not camera photos), checked by hand. 'shows' records what each image actually contains. Close-ups are crops of the generated cooler image.",
+  "campaigns": {
+    "A": {
+      "name": "Fizzwell Zero Sugar Summer",
+      "brief": "policies/campaign-a-zero-sugar-summer.md",
+      "standards": "policies/cooler-agreement.md"
+    },
+    "B": {
+      "name": "Fizzwell Orange Refresh",
+      "brief": "policies/campaign-b-orange-refresh.md",
+      "standards": "policies/cooler-agreement.md"
+    }
+  },
+  "photo_types": {
+    "cooler": "Whole cooler, straight on, door closed: header, every shelf, price labels and door sticker.",
+    "top": "Close-up of the top shelf, its price label and the door sticker, close enough to read."
+  },
+  "crops": {
+    "top_shelf_and_sticker": [
+      140,
+      260,
+      960,
+      580
+    ]
+  },
+  "visits": [
+    {
+      "id": "01",
+      "setup": "Zero Sugar Summer built as specified",
+      "source": "images/generated/01-zero-summer-compliant.jpg",
+      "shows": "Lit FIZZWELL header. Top: full row of Zero cans, yellow '2 for £2'. Second: Cola cans £1.20. Third: Orange cans £1.20. Bottom: Cola bottles £1.80. 'ZERO SUGAR SUMMER' door sticker. No gaps, no other brands.",
+      "photos": [
+        {
+          "type": "cooler"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf_and_sticker"
+        }
+      ],
+      "expected": {
+        "A": "pass",
+        "B": "fail"
+      }
+    },
+    {
+      "id": "02",
+      "setup": "As 01 with a competitor product in the cooler",
+      "source": "images/generated/02-competitor-product.jpg",
+      "shows": "As 01, except the bottom shelf has five Fizzwell Cola bottles and four 'AQUAVALE' water bottles.",
+      "photos": [
+        {
+          "type": "cooler"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail"
+      }
+    },
+    {
+      "id": "03",
+      "setup": "As 01 with a gap on the second shelf",
+      "source": "images/generated/03-gap.jpg",
+      "shows": "As 01, except the second shelf has four Cola cans, an empty gap with the back of the cooler visible, then four Cola cans.",
+      "photos": [
+        {
+          "type": "cooler"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf_and_sticker"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail"
+      }
+    },
+    {
+      "id": "04",
+      "setup": "As 01 with the door sticker missing",
+      "source": "images/generated/04-door-sticker-missing.jpg",
+      "shows": "As 01, with no sticker on the door glass.",
+      "photos": [
+        {
+          "type": "cooler"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf_and_sticker"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail"
+      }
+    },
+    {
+      "id": "05",
+      "setup": "As 01 with the cooler lights switched off",
+      "source": "images/generated/05-lights-off.jpg",
+      "shows": "As 01, but the interior lights and header are off; products are dim but visible. The 'ZERO SUGAR SUMMER' sticker is still on the door.",
+      "photos": [
+        {
+          "type": "cooler"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail"
+      }
+    },
+    {
+      "id": "06",
+      "setup": "Orange Refresh built as specified",
+      "source": "images/generated/06-orange-refresh-compliant.jpg",
+      "shows": "Lit header. Top: Orange cans, yellow '3 for £3'. Second: Cola cans £1.20. Third: Zero cans £1.20. Bottom: Cola bottles £1.80. 'ORANGE REFRESH' door sticker. No gaps, no other brands.",
+      "photos": [
+        {
+          "type": "cooler"
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf_and_sticker"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "pass"
+      }
+    },
+    {
+      "id": "07",
+      "setup": "As 06, but the full cooler photo is blurred",
+      "source": "images/generated/06-orange-refresh-compliant.jpg",
+      "shows": "06 with the full-cooler photo heavily blurred; the top-shelf close-up is sharp.",
+      "photos": [
+        {
+          "type": "cooler",
+          "blur": 12
+        },
+        {
+          "type": "top",
+          "crop": "top_shelf_and_sticker"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "cannot_assess"
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+*
+!compliance/
+!web/
+!scenarios/
+scenarios/*/images/generated/
+**/__pycache__/
+**/*.local.*

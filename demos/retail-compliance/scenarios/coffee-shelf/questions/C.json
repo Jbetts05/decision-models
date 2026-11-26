@@ -1,0 +1,142 @@
+{
+  "campaign": "C",
+  "extraction": {
+    "model": "gpt-6-sol-2026-09-22",
+    "deployment_role": "extraction",
+    "reasoning_effort": "high",
+    "extracted_at": "2026-11-25T23:57:27+00:00",
+    "source_sha256_prefix": {
+      "brief": "1c5775228ff744fd"
+    },
+    "usage": {
+      "input_tokens": 1512,
+      "output_tokens": 2337
+    },
+    "latency_ms": 16607.8
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_on": "2026-11-25",
+    "notes": [
+      "Approved as extracted.",
+      "multibuy_header (changed after the first audit run): the original wording also failed when 'more than one' card was displayed, and the model counted the matching shelf-edge label below the packs as a second card. Reworded to identify the header card by position.",
+      "After GPT-6.2 Sol data review: removed no_single_pack_label: under the Price Marking Order 2004 the single-pack price must still be shown, so the brief no longer bans it."
+    ]
+  },
+  "checks": [
+    {
+      "id": "classic_top_shelf_only",
+      "rule": "Brief: Range and placement",
+      "requirement": "Hollin Classic is on the top shelf and is not split across shelves.",
+      "photos": [
+        "bay"
+      ],
+      "uses_reference": false,
+      "question": "Check which shelves hold Hollin Classic.",
+      "compliant": "Hollin Classic is on the top shelf only.",
+      "not_compliant": "Hollin Classic is missing from the top shelf or also appears on another shelf."
+    },
+    {
+      "id": "classic_four_facings",
+      "rule": "Brief: Range and placement",
+      "requirement": "At least four Hollin Classic red packs face forward side by side.",
+      "photos": [
+        "bay",
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Count the side-by-side, forward-facing Hollin Classic red packs.",
+      "compliant": "At least four Hollin Classic packs face forward in one continuous run.",
+      "not_compliant": "Fewer than four face forward, or their facings are separated."
+    },
+    {
+      "id": "classic_no_empty_facings",
+      "rule": "Brief: Store responsibilities",
+      "requirement": "The Hollin Classic display has no visibly empty facings.",
+      "photos": [
+        "bay",
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Look for empty spaces within the Hollin Classic run.",
+      "compliant": "The Hollin Classic run has no visibly empty facing or gap.",
+      "not_compliant": "An empty facing or gap is visible within the Hollin Classic run."
+    },
+    {
+      "id": "classic_block_only",
+      "rule": "Brief: Range and placement; Store responsibilities",
+      "requirement": "Other brands and products outside this campaign do not interrupt the Hollin Classic display.",
+      "photos": [
+        "bay",
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Check whether any other product occupies or interrupts the Hollin Classic block.",
+      "compliant": "The Hollin Classic block contains only Hollin Classic; other products are outside it.",
+      "not_compliant": "Another brand or a different product occupies or interrupts the Hollin Classic block."
+    },
+    {
+      "id": "multibuy_label",
+      "rule": "Brief: Pricing",
+      "requirement": "A yellow promotional shelf-edge label reading “2 for £7” is directly below the Hollin Classic facings.",
+      "photos": [
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Check the colour, wording and position of the shelf-edge label below Hollin Classic.",
+      "compliant": "A yellow label reading “2 for £7” is directly below the Hollin Classic facings.",
+      "not_compliant": "The label is absent, is not yellow, has different offer wording, or is not directly below those facings."
+    },
+    {
+      "id": "multibuy_header",
+      "rule": "Brief: Point-of-sale material",
+      "requirement": "One “2 for £7” header card is displayed above the Hollin Classic facings.",
+      "photos": [
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Check the header card clipped ABOVE the Hollin Classic packs. This is separate from the shelf-edge label below the packs, which is a different item and is not part of this check.",
+      "compliant": "A header card reading \"2 for £7\" is displayed above the Hollin Classic packs.",
+      "not_compliant": "There is no header card above the Hollin Classic packs, or the card above them shows different wording."
+    },
+    {
+      "id": "no_old_hollin_pos",
+      "rule": "Brief: Pricing; Point-of-sale material",
+      "requirement": "Earlier or unrelated Hollin promotional material is absent from the Hollin Classic display.",
+      "photos": [
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Look for Hollin promotional labels or cards at the Classic display that advertise an offer other than “2 for £7”.",
+      "compliant": "The Hollin Classic display shows no earlier or unrelated Hollin offer material.",
+      "not_compliant": "An earlier or unrelated Hollin offer label or card remains at the Hollin Classic display."
+    }
+  ],
+  "not_checkable": [
+    {
+      "rule": "Brief: Campaign period; Display set-up deadline",
+      "requirement": "The display was set up by 31 May 2027 and maintained during 1–30 June 2027.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Store responsibilities",
+      "requirement": "Hollin Classic stays stocked over time, including on Saturdays.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Store responsibilities",
+      "requirement": "Store teams do not move Hollin products to make room for other brands’ promotions.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Store responsibilities",
+      "requirement": "Week-two audit photographs are submitted and the £30 display incentive is awarded.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Objective",
+      "requirement": "Hollin Classic is easy to find and the multibuy is impossible to miss.",
+      "reason": "subjective"
+    }
+  ]
+}

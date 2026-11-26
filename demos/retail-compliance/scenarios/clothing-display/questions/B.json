@@ -1,0 +1,163 @@
+{
+  "campaign": "B",
+  "extraction": {
+    "model": "gpt-6-sol-2026-09-22",
+    "deployment_role": "extraction",
+    "reasoning_effort": "high",
+    "extracted_at": "2026-11-25T23:55:49+00:00",
+    "source_sha256_prefix": {
+      "brief": "e3ed0a737805b534",
+      "standards": "e12d3a76c4a20d93"
+    },
+    "usage": {
+      "input_tokens": 1960,
+      "output_tokens": 3069
+    },
+    "latency_ms": 22284.2
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_on": "2026-11-25",
+    "notes": [
+      "winter_sale_sign, no_old_or_extra_signs: also accept the table close-up, which shows the sign.",
+      "no_old_or_extra_signs, no_other_table_products: ignore the background clothing rails and store signs.",
+      "After GPT-6.2 Sol data review: mannequin_outfit, winter_sale_sign: styling and sign shape may differ from the lookbook.",
+      "After GPT-6.2 Sol data review: jumper_stack_order: also accepts the table close-up."
+    ]
+  },
+  "checks": [
+    {
+      "id": "mannequin_outfit",
+      "rule": "Standards 1.1, 1.4; Brief: The look",
+      "requirement": "The mannequin wears the Winter Sale lookbook outfit and nothing else.",
+      "photos": [
+        "display"
+      ],
+      "uses_reference": true,
+      "question": "Compare the mannequin with the approved lookbook. Its position may differ, but do the named outfit items match: a zipped navy quilted puffer jacket, grey knitted beanie, black slim jeans and black leather ankle boots, with no scarf, overcoat or other items? Styling details may differ from the lookbook: how a scarf is draped or tied, the sign's shape, size and stand, fixtures and positions. Do not judge fabric or material from appearance.",
+      "compliant": "The mannequin wears all four named items, including the zipped jacket, and no additional garments or accessories.",
+      "not_compliant": "A named item is missing or different, the jacket is unzipped, or an extra garment or accessory is present."
+    },
+    {
+      "id": "jumper_stack_order",
+      "rule": "Standards 1.2, 1.4; Brief: The look",
+      "requirement": "The table has three folded knitted-jumper stacks in the campaign's left-to-right colour order.",
+      "photos": [
+        "display",
+        "table"
+      ],
+      "uses_reference": true,
+      "question": "Compare the table arrangement with the approved lookbook. The table's position may differ, but do the three named jumper stacks match in left-to-right order: cream, navy, forest green?",
+      "compliant": "There are three folded knitted-jumper stacks, ordered cream, navy, then forest green from left to right.",
+      "not_compliant": "A stack is missing or added, a stack contains a different product or colour, or the left-to-right order differs."
+    },
+    {
+      "id": "stack_presentation",
+      "rule": "Standards 2.1",
+      "requirement": "Folded stacks are neat, with uniform folds, aligned edges and one colour per stack.",
+      "photos": [
+        "display",
+        "table"
+      ],
+      "uses_reference": false,
+      "question": "Are the garments in each stack folded to a similar size, with aligned edges and one colour per stack?",
+      "compliant": "The stacks have even folds and aligned edges, and each stack contains one colour.",
+      "not_compliant": "Folds or edges are visibly uneven, or colours are mixed within a stack."
+    },
+    {
+      "id": "no_loose_or_fallen_garments",
+      "rule": "Standards 2.2",
+      "requirement": "No garments are unfolded, crumpled, hanging off the table or on the floor.",
+      "photos": [
+        "display"
+      ],
+      "uses_reference": false,
+      "question": "Are there any unfolded or crumpled garments, garments hanging off the table, or garments on the floor around the display?",
+      "compliant": "No garments are unfolded, crumpled, hanging off the table or on the floor.",
+      "not_compliant": "At least one garment is unfolded, crumpled, hanging off the table or on the floor."
+    },
+    {
+      "id": "winter_sale_sign",
+      "rule": "Standards 1.3, 1.4; Brief: The look",
+      "requirement": "The display has the red WINTER SALE 30% OFF sign shown in the lookbook.",
+      "photos": [
+        "display",
+        "table"
+      ],
+      "uses_reference": true,
+      "question": "Compare the sign with the approved lookbook. Its position may differ, but does the named red \"WINTER SALE 30% OFF\" sign match, standing on the table or on a stand beside or behind it? Styling details may differ from the lookbook: how a scarf is draped or tied, the sign's shape, size and stand, fixtures and positions. Do not judge fabric or material from appearance.",
+      "compliant": "The matching red sign reads \"WINTER SALE 30% OFF\" and is in one of the permitted locations.",
+      "not_compliant": "The sign is missing, has different wording or colour, or is not in a permitted location."
+    },
+    {
+      "id": "no_old_or_extra_signs",
+      "rule": "Standards 1.3; Brief: The look",
+      "requirement": "The Autumn Edit sign and any other additional signs are absent.",
+      "photos": [
+        "display",
+        "table"
+      ],
+      "uses_reference": false,
+      "question": "Is the \"THE AUTUMN EDIT\" sign, or any other sign besides the Winter Sale sign, displayed on or around the mannequin and table? Ignore clothing rails, store signs and products in the background away from the mannequin and display table.",
+      "compliant": "No \"THE AUTUMN EDIT\" sign or other additional sign is displayed.",
+      "not_compliant": "The \"THE AUTUMN EDIT\" sign or another additional sign remains on display."
+    },
+    {
+      "id": "no_other_table_products",
+      "rule": "Standards 1.2; Brief: The look",
+      "requirement": "No non-campaign products or other brands' products are displayed on the table.",
+      "photos": [
+        "display",
+        "table"
+      ],
+      "uses_reference": false,
+      "question": "Are any products other than the three campaign knitted-jumper stacks displayed on the table, including visibly other-brand products? Ignore clothing rails, store signs and products in the background away from the mannequin and display table.",
+      "compliant": "The table displays only the three campaign knitted-jumper stacks.",
+      "not_compliant": "Another garment, accessory or visibly other-brand product is displayed on the table."
+    },
+    {
+      "id": "mannequin_stability",
+      "rule": "Standards 2.3",
+      "requirement": "The mannequin is fully dressed, upright and on its base.",
+      "photos": [
+        "display"
+      ],
+      "uses_reference": false,
+      "question": "Is the mannequin fully dressed, upright and standing on its base?",
+      "compliant": "The mannequin is fully dressed, upright and on its base.",
+      "not_compliant": "The mannequin is partly undressed, leaning or fallen, or off its base."
+    }
+  ],
+  "not_checkable": [
+    {
+      "rule": "Standards 2.4",
+      "requirement": "Price tickets are attached to every garment on the table.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Standards 3.1",
+      "requirement": "Each stack contains sizes S, M, L and XL, smallest at the top.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Standards 2.1",
+      "requirement": "Stacks are refolded throughout the day.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Store terms",
+      "requirement": "The display was changed overnight on 25 December, ready for opening on 26 December.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Store terms",
+      "requirement": "Sale prices are applied at the till.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Standards: Applies to",
+      "requirement": "The display is at the front of the clothing section.",
+      "reason": "not_visible_in_photos"
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "campaign": "A",
+  "extraction": {
+    "model": "gpt-6-sol-2026-09-22",
+    "deployment_role": "extraction",
+    "reasoning_effort": "high",
+    "extracted_at": "2026-11-25T23:55:27+00:00",
+    "source_sha256_prefix": {
+      "brief": "655d2babfbc160ce",
+      "standards": "e12d3a76c4a20d93"
+    },
+    "usage": {
+      "input_tokens": 1921,
+      "output_tokens": 2913
+    },
+    "latency_ms": 22041.0
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_on": "2026-11-25",
+    "notes": [
+      "autumn_edit_sign, no_previous_campaign_material: also accept the table close-up, which shows the sign.",
+      "no_previous_campaign_material, no_unrelated_merchandise: ignore the background clothing rails and store signs, which are not part of the display.",
+      "After GPT-6.2 Sol data review: mannequin_outfit, autumn_edit_sign: styling such as scarf drape and sign shape may differ from the lookbook; only garments and wording must match.",
+      "After GPT-6.2 Sol data review: neat_jumper_stacks: also accepts the display photo."
+    ]
+  },
+  "checks": [
+    {
+      "id": "mannequin_outfit",
+      "rule": "Standards 1.1, 1.4; Brief: The look",
+      "requirement": "The mannequin wears only the active lookbook outfit.",
+      "photos": [
+        "display"
+      ],
+      "uses_reference": true,
+      "question": "Compare the mannequin with the approved lookbook. Does it wear the open camel wool overcoat, cream roll-neck jumper, burgundy knitted scarf around the neck, dark indigo straight jeans and white leather trainers, with nothing extra? The mannequin's position may differ, but the named items must match. Styling details may differ from the lookbook: how a scarf is draped or tied, the sign's shape, size and stand, fixtures and positions. Do not judge fabric or material from appearance.",
+      "compliant": "All five named items match the lookbook and are worn as specified, with no additional garment or accessory.",
+      "not_compliant": "A named item is missing or a different garment, the coat is closed, or an additional garment or accessory is present."
+    },
+    {
+      "id": "table_range_and_order",
+      "rule": "Standards 1.2, 1.4; Brief: The look",
+      "requirement": "The table shows the lookbook's three jumper stacks in the specified order.",
+      "photos": [
+        "display",
+        "table"
+      ],
+      "uses_reference": true,
+      "question": "Compare the table with the approved lookbook. Are the folded knitted-jumper stacks cream, navy and forest green from left to right? The table's position may differ, but the named products, colours and order must match.",
+      "compliant": "Three folded knitted-jumper stacks appear in cream, navy and forest-green order, matching the lookbook.",
+      "not_compliant": "A stack is missing, an extra stack is present, a product or colour differs, or the left-to-right order is wrong."
+    },
+    {
+      "id": "autumn_edit_sign",
+      "rule": "Standards 1.3, 1.4; Brief: The look",
+      "requirement": "Display the active campaign's black THE AUTUMN EDIT sign.",
+      "photos": [
+        "display",
+        "table"
+      ],
+      "uses_reference": true,
+      "question": "Compare the campaign sign with the approved lookbook. Is the black sign worded “THE AUTUMN EDIT” and on the table or a stand beside or behind it? Its position may differ, but the named sign's wording and colour must match. Styling details may differ from the lookbook: how a scarf is draped or tied, the sign's shape, size and stand, fixtures and positions. Do not judge fabric or material from appearance.",
+      "compliant": "The black “THE AUTUMN EDIT” sign matches the lookbook and is in one of the permitted locations.",
+      "not_compliant": "The sign is missing, has different wording or colour, or is outside the permitted locations."
+    },
+    {
+      "id": "no_previous_campaign_material",
+      "rule": "Standards 1.3",
+      "requirement": "Remove earlier-campaign signs and other point-of-sale material.",
+      "photos": [
+        "display",
+        "table"
+      ],
+      "uses_reference": false,
+      "question": "Is the display free of signs and point-of-sale material from earlier campaigns? Ignore clothing rails, store signs and products in the background away from the mannequin and display table.",
+      "compliant": "No earlier-campaign sign or point-of-sale material is present.",
+      "not_compliant": "An earlier-campaign sign or other point-of-sale material remains on or around the display."
+    },
+    {
+      "id": "no_unrelated_merchandise",
+      "rule": "Standards 1.1, 1.2; Brief: The look",
+      "requirement": "Keep merchandise outside the specified outfit and jumper stacks off the display.",
+      "photos": [
+        "display"
+      ],
+      "uses_reference": false,
+      "question": "Apart from the specified mannequin outfit and three jumper stacks, is the display free of other products, including other brands' products? Ignore clothing rails, store signs and products in the background away from the mannequin and display table.",
+      "compliant": "No additional or other-brand products appear on the mannequin, table or elsewhere in the display.",
+      "not_compliant": "An additional product, including a product from another brand, appears in the display."
+    },
+    {
+      "id": "neat_jumper_stacks",
+      "rule": "Standards 2.1",
+      "requirement": "Keep folded stacks uniform, aligned and separated by colour.",
+      "photos": [
+        "display",
+        "table"
+      ],
+      "uses_reference": false,
+      "question": "Are the garments in each jumper stack folded to a consistent size, with aligned edges and one colour per stack?",
+      "compliant": "Each stack has consistently folded garments, aligned edges and a single colour.",
+      "not_compliant": "A stack has visibly uneven folds or edges, or mixes colours."
+    },
+    {
+      "id": "no_displaced_garments",
+      "rule": "Standards 2.2",
+      "requirement": "Leave no garments unfolded, crumpled, hanging off the table or on the floor.",
+      "photos": [
+        "display"
+      ],
+      "uses_reference": false,
+      "question": "Are all garments free of unfolded or crumpled presentation, with none hanging off the table or lying on the floor?",
+      "compliant": "No garment is unfolded, crumpled, hanging off the table or on the floor.",
+      "not_compliant": "A garment is unfolded, crumpled, hanging off the table or on the floor."
+    },
+    {
+      "id": "mannequin_stable",
+      "rule": "Standards 2.3",
+      "requirement": "Keep the mannequin upright and on its base.",
+      "photos": [
+        "display"
+      ],
+      "uses_reference": false,
+      "question": "Is the dressed mannequin upright and on its base?",
+      "compliant": "The mannequin stands upright on its base.",
+      "not_compliant": "The mannequin is leaning, fallen or off its base."
+    }
+  ],
+  "not_checkable": [
+    {
+      "rule": "Standards 2.4",
+      "requirement": "Attach a price ticket to every garment on the table.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Standards 3.1",
+      "requirement": "Put sizes S, M, L and XL in each stack, smallest at the top.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Brief: Store terms",
+      "requirement": "Dress the display by store opening on 1 September.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Standards 2.1; Brief: Store terms",
+      "requirement": "Refold the table throughout the day, at least three times daily.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Store terms",
+      "requirement": "Report sales weekly.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Standards: Background",
+      "requirement": "Place the display at the front of the clothing section so it is the first thing shoppers see.",
+      "reason": "not_visible_in_photos"
+    }
+  ]
+}

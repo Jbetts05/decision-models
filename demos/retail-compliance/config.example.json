@@ -1,0 +1,9 @@
+{
+  "endpoint": "https://YOUR-RESOURCE.cognitiveservices.azure.com",
+  "subscription": "",
+  "decision_deployment": "YOUR-DECISION-1.1-DEPLOYMENT",
+  "extraction_deployment": "YOUR-GPT-DEPLOYMENT",
+  "auth_mode": "azure_cli",
+  "timeout_seconds": 60,
+  "daily_max_calls": 2000
+}

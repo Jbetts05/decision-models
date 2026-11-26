@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shelf Check: retail campaign compliance with Decision-1.1</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="header">
+    <a class="wordmark" href="/">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 6h18M3 12h18M3 18h18M7 3v18M17 3v18"/><circle cx="12" cy="9" r="1.6" fill="currentColor"/></svg>
+      Shelf Check
+    </a>
+    <span class="connection"><span class="dot" id="connection-dot"></span><span id="connection">Loading catalogue</span></span>
+    <span class="header-note">Decision models / retail audit</span>
+  </header>
+  <main>
+    <section class="heading">
+      <div>
+        <span class="eyebrow">LIVE STORE AUDIT</span>
+        <h1>Does the store match the campaign?</h1>
+        <p class="intro">Each visit's photos are checked against every campaign in one Decision-1.1 request. When the campaign changes, only the questions change.</p>
+      </div>
+      <div class="dataset">
+        <span class="synthetic">GENERATED IMAGES · FICTIONAL BRANDS</span>
+        <p id="dataset-counts">&nbsp;</p>
+      </div>
+    </section>
+
+    <section class="case-panel" aria-label="Choose a visit">
+      <div class="picker">
+        <label>Scenario<select id="scenario"></select></label>
+        <label>Store visit<select id="visit"></select></label>
+        <div class="actions">
+          <button id="run-all" class="secondary" type="button">Audit all visits</button>
+          <button id="run" class="primary" type="button"><span id="run-label">Run audit</span><span aria-hidden="true">&#8599;</span></button>
+        </div>
+      </div>
+      <p id="visit-setup" class="setup"></p>
+      <div id="photos" class="photos" aria-label="Visit photos"></div>
+      <div class="case-bottom">
+        <details>
+          <summary>Campaign documents and extracted questions <span class="muted" id="question-count"></span></summary>
+          <div id="documents"></div>
+        </details>
+        <span class="muted">Only photos and approved questions are sent · expected verdicts withheld</span>
+      </div>
+    </section>
+
+    <div class="run-status"><span id="status">Choose a visit and run the audit.</span><span id="elapsed" class="mono"></span></div>
+
+    <section id="metrics" class="metrics-panel" hidden></section>
+    <section id="matrix" class="matrix-panel" hidden></section>
+    <section id="campaigns" class="campaigns" aria-live="polite"></section>
+
+    <section class="execution-panel">
+      <div class="execution-header"><h3>Key execution <span id="event-count" class="muted"></span></h3></div>
+      <ol id="events" class="execution-steps"><li class="empty-note">Events appear here as the audit runs.</li></ol>
+    </section>
+
+    <details class="expected-panel">
+      <summary>Expected output <span class="muted">/ evaluation only, never sent to the model</span></summary>
+      <div id="expected"></div>
+    </details>
+
+    <footer class="footer">
+      <span>Microsoft-Decision-1.1<span class="divider">/</span>Live Foundry inference<span class="divider">/</span>AI-generated store photos, fictional brands</span>
+      <button id="download" class="quiet" type="button" disabled>Download run JSON &#8595;</button>
+    </footer>
+    <p class="fine-print">Images are AI-generated and checked by hand; results on them demonstrate the pipeline, not accuracy on real store photographs. Costs are estimates from reported input tokens at the published Global Standard rate. Prices in the documents are those agreed with the retailer.</p>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

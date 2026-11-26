@@ -1,0 +1,264 @@
+{
+  "campaign": "B",
+  "extraction": {
+    "model": "gpt-6-sol-2026-09-22",
+    "deployment_role": "extraction",
+    "reasoning_effort": "high",
+    "extracted_at": "2026-11-25T23:57:10+00:00",
+    "source_sha256_prefix": {
+      "brief": "6a7e34a4b3466fc0",
+      "standards": "09dc4b3716d65755"
+    },
+    "usage": {
+      "input_tokens": 2533,
+      "output_tokens": 6435
+    },
+    "latency_ms": 43537.3
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_on": "2026-11-25",
+    "notes": [
+      "Approved as extracted.",
+      "After GPT-6.2 Sol data review: posm_does_not_cover_display: scoped to Brightmoor material and defined as hiding a product name or price; as written, Hollin's header card touching its own packs failed Campaign B.",
+      "After GPT-6.2 Sol data review: wobbler_limit, packs_faced_up, no_damaged_packs, clean_shelf: limited to Brightmoor."
+    ]
+  },
+  "checks": [
+    {
+      "id": "range_placement_facings",
+      "rule": "Standards 1.1; Brief: Range and placement",
+      "requirement": "All four campaign SKUs are on the eye-level middle shelf with at least two facings each.",
+      "photos": [
+        "bay"
+      ],
+      "uses_reference": false,
+      "question": "Check the middle shelf for at least two facings each of blue Original Roast, orange Hazelnut, black Dark Roast and green Decaf.",
+      "compliant": "All four SKUs are on the middle shelf, each with at least two facings.",
+      "not_compliant": "A listed SKU is missing, is on another shelf, or has fewer than two facings."
+    },
+    {
+      "id": "range_order",
+      "rule": "Brief: Range and placement",
+      "requirement": "The range runs left to right: Original Roast, Hazelnut, Dark Roast, Decaf.",
+      "photos": [
+        "bay"
+      ],
+      "uses_reference": false,
+      "question": "Check the left-to-right order of the four SKUs, including whether Hazelnut is immediately right of Original Roast.",
+      "compliant": "The order is Original Roast, Hazelnut, Dark Roast, Decaf, with Hazelnut immediately beside Original Roast.",
+      "not_compliant": "The SKUs are in a different order or Hazelnut is not immediately right of Original Roast."
+    },
+    {
+      "id": "brightmoor_block",
+      "rule": "Standards 3.1; Brief: Range and placement",
+      "requirement": "Brightmoor products form one block on the middle shelf, with no unlisted Brightmoor products elsewhere in the fixture.",
+      "photos": [
+        "bay"
+      ],
+      "uses_reference": false,
+      "question": "Check that all Brightmoor packs are together in one middle-shelf block and are limited to the four campaign SKUs.",
+      "compliant": "All Brightmoor packs are together in one middle-shelf block; no unlisted Brightmoor SKU or separate Brightmoor group is displayed.",
+      "not_compliant": "Brightmoor packs are split into separate groups or shelves, or an unlisted Brightmoor SKU is displayed."
+    },
+    {
+      "id": "block_gaps",
+      "rule": "Standards 1.2; Brief: Launch standards",
+      "requirement": "The Brightmoor block has no product-width empty gaps, including an empty Hazelnut facing.",
+      "photos": [
+        "bay"
+      ],
+      "uses_reference": false,
+      "question": "Look for spaces at least one pack wide within the Brightmoor block where the shelf base or back is visible, particularly among the Hazelnut facings.",
+      "compliant": "There are no product-width empty spaces within the block or among the Hazelnut facings.",
+      "not_compliant": "A product-width empty space is visible within the block or a Hazelnut facing is empty."
+    },
+    {
+      "id": "no_competitors_in_block",
+      "rule": "Standards 3.2",
+      "requirement": "No other brand's products sit inside or between Brightmoor packs.",
+      "photos": [
+        "bay"
+      ],
+      "uses_reference": false,
+      "question": "Check whether another brand's products interrupt the Brightmoor block.",
+      "compliant": "No other brand's products are inside or between Brightmoor packs; competitor products beside the block are acceptable.",
+      "not_compliant": "A product from another brand sits inside or between Brightmoor packs."
+    },
+    {
+      "id": "packs_faced_up",
+      "rule": "Standards 2.1–2.2",
+      "requirement": "Displayed packs are forward, upright and front-facing.",
+      "photos": [
+        "bay",
+        "detail"
+      ],
+      "uses_reference": false,
+      "question": "Check whether displayed packs are pulled to the front shelf edge and stand upright with their front labels facing shoppers. Consider only the Brightmoor packs and their shelf; ignore other brands and the jars.",
+      "compliant": "Packs are forward, upright and front-facing.",
+      "not_compliant": "A pack is set back, fallen, on its side, upside down or turned with its side panel facing out."
+    },
+    {
+      "id": "no_damaged_packs",
+      "rule": "Standards 2.3",
+      "requirement": "No visibly damaged packs remain on display.",
+      "photos": [
+        "bay",
+        "detail"
+      ],
+      "uses_reference": false,
+      "question": "Look for crushed, torn, opened or otherwise visibly damaged packs on display. Consider only the Brightmoor packs and their shelf; ignore other brands and the jars.",
+      "compliant": "Displayed packs have no visible damage.",
+      "not_compliant": "A crushed, torn, opened or otherwise visibly damaged pack is on display."
+    },
+    {
+      "id": "clean_shelf",
+      "rule": "Standards 2.4",
+      "requirement": "The shelf is free of litter, spillage and loose packaging.",
+      "photos": [
+        "bay",
+        "detail"
+      ],
+      "uses_reference": false,
+      "question": "Look for litter, spillage or loose packaging on the Brightmoor shelf. Consider only the Brightmoor packs and their shelf; ignore other brands and the jars.",
+      "compliant": "The shelf is free of litter, spillage and loose packaging.",
+      "not_compliant": "Litter, spillage or loose packaging is visible on the shelf."
+    },
+    {
+      "id": "original_roast_sel",
+      "rule": "Standards 4.1–4.3; Brief: Range and placement",
+      "requirement": "Original Roast has a visible white £4.00 shelf-edge label directly below it; its former £3.50 label is absent.",
+      "photos": [
+        "mid"
+      ],
+      "uses_reference": false,
+      "question": "Read the label below Original Roast and check for any remaining Original Roast £3.50 label.",
+      "compliant": "A fully visible white Original Roast £4.00 label is directly below its facings, with no Original Roast £3.50 label remaining.",
+      "not_compliant": "The label is missing, misplaced, covered, not white, or does not read £4.00, or an Original Roast £3.50 label remains."
+    },
+    {
+      "id": "hazelnut_sel",
+      "rule": "Standards 4.1–4.3; Brief: Range and placement",
+      "requirement": "Hazelnut has a visible yellow £3.00 introductory-price shelf-edge label directly below it.",
+      "photos": [
+        "mid"
+      ],
+      "uses_reference": false,
+      "question": "Read the shelf-edge label directly below the Hazelnut facings and check its colour.",
+      "compliant": "A fully visible yellow Hazelnut £3.00 label is directly below its facings.",
+      "not_compliant": "The Hazelnut label is missing, misplaced, covered, not yellow or does not read £3.00."
+    },
+    {
+      "id": "dark_roast_sel",
+      "rule": "Standards 4.1–4.3; Brief: Range and placement",
+      "requirement": "Dark Roast has a visible white £4.00 shelf-edge label directly below it.",
+      "photos": [
+        "mid"
+      ],
+      "uses_reference": false,
+      "question": "Read the shelf-edge label directly below the Dark Roast facings and check its colour.",
+      "compliant": "A fully visible white Dark Roast £4.00 label is directly below its facings.",
+      "not_compliant": "The Dark Roast label is missing, misplaced, covered, not white or does not read £4.00."
+    },
+    {
+      "id": "decaf_sel",
+      "rule": "Standards 4.1–4.3; Brief: Range and placement",
+      "requirement": "Decaf has a visible white £4.00 shelf-edge label directly below it.",
+      "photos": [
+        "mid"
+      ],
+      "uses_reference": false,
+      "question": "Read the shelf-edge label directly below the Decaf facings and check its colour.",
+      "compliant": "A fully visible white Decaf £4.00 label is directly below its facings.",
+      "not_compliant": "The Decaf label is missing, misplaced, covered, not white or does not read £4.00."
+    },
+    {
+      "id": "hazelnut_new_strip",
+      "rule": "Brief: Point-of-sale material",
+      "requirement": "One “NEW” shelf strip runs along the shelf edge beneath the Hazelnut facings.",
+      "photos": [
+        "mid"
+      ],
+      "uses_reference": false,
+      "question": "Check for one shelf strip reading “NEW” beneath the Hazelnut facings.",
+      "compliant": "One “NEW” shelf strip is positioned beneath the Hazelnut facings.",
+      "not_compliant": "The strip is absent, does not read “NEW”, is not beneath Hazelnut, or is duplicated."
+    },
+    {
+      "id": "no_old_or_extra_brightmoor_posm",
+      "rule": "Standards 5.1; Brief: Point-of-sale material",
+      "requirement": "No Summer Saver material or other unlisted Brightmoor point-of-sale material remains.",
+      "photos": [
+        "bay",
+        "mid",
+        "top"
+      ],
+      "uses_reference": false,
+      "question": "Look for Summer Saver material, including its wobbler, or any Brightmoor point-of-sale material other than the specified “NEW” shelf strip.",
+      "compliant": "No Summer Saver material or other unlisted Brightmoor point-of-sale material is displayed.",
+      "not_compliant": "A Summer Saver item or another unlisted Brightmoor point-of-sale item is displayed."
+    },
+    {
+      "id": "wobbler_limit",
+      "rule": "Standards 5.2",
+      "requirement": "No shelf level has more than two wobblers.",
+      "photos": [
+        "bay"
+      ],
+      "uses_reference": false,
+      "question": "Count the Brightmoor wobblers on each shelf level. Other brands' material is not part of this check.",
+      "compliant": "Each shelf level has no more than two wobblers.",
+      "not_compliant": "A shelf level has three or more wobblers."
+    },
+    {
+      "id": "posm_does_not_cover_display",
+      "rule": "Standards 4.2, 5.3",
+      "requirement": "Brightmoor point-of-sale material does not hide a Brightmoor product name or shelf-edge price.",
+      "photos": [
+        "bay",
+        "mid"
+      ],
+      "uses_reference": false,
+      "question": "Check whether Brightmoor point-of-sale material hides a Brightmoor product or price. Covering means hiding a Brightmoor product's name or a Brightmoor shelf-edge price. A wobbler hanging over the shelf below, or material touching a pack's edge, is not covering. Other brands' material is not part of this check.",
+      "compliant": "Every Brightmoor product name and shelf-edge price remains visible.",
+      "not_compliant": "Brightmoor point-of-sale material hides a Brightmoor product name or shelf-edge price."
+    }
+  ],
+  "not_checkable": [
+    {
+      "rule": "Standards 1.3",
+      "requirement": "Rotate stock so the shortest-dated packs are at the front.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Standards 4.4",
+      "requirement": "Confirm till prices by test purchase.",
+      "reason": "needs_hand_check"
+    },
+    {
+      "rule": "Brief: Campaign period; Display set-up deadline",
+      "requirement": "Set up the display before opening on 29 June 2027 and run it during the campaign period.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Launch standards",
+      "requirement": "Check the block every two hours and record replenishment on the launch checklist.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Brief: Commercial terms and reporting",
+      "requirement": "Invoice the launch listing fee, conduct audits within three days and in week four, and review rate of sale after six weeks.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Standards 6.1–6.2; Brief: Commercial terms and reporting",
+      "requirement": "Upload the required audit photographs and retake unusable photographs.",
+      "reason": "timing_or_process"
+    },
+    {
+      "rule": "Standards 6.3",
+      "requirement": "Have the store manager sign the visit report before the rep leaves.",
+      "reason": "timing_or_process"
+    }
+  ]
+}

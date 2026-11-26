@@ -1,0 +1,154 @@
+{
+  "scenario": "Clothing display",
+  "note": "Generated images (not camera photos), checked by hand. 'shows' records what each image actually contains. Each campaign supplies a lookbook reference image; checks compare the store photo with it.",
+  "campaigns": {
+    "A": {
+      "name": "Harlow & Pine The Autumn Edit",
+      "brief": "policies/campaign-a-autumn-edit.md",
+      "standards": "policies/visual-merchandising-standards.md",
+      "reference": "images/reference/lookbook-autumn-edit.jpg"
+    },
+    "B": {
+      "name": "Harlow & Pine Winter Sale",
+      "brief": "policies/campaign-b-winter-sale.md",
+      "standards": "policies/visual-merchandising-standards.md",
+      "reference": "images/reference/lookbook-winter-sale.jpg"
+    }
+  },
+  "photo_types": {
+    "display": "The mannequin and display table together, from where a shopper first sees them: outfit, table and sign.",
+    "table": "Close-up of the display table: folded stacks and anything standing on or behind the table."
+  },
+  "crops": {
+    "table": [
+      560,
+      280,
+      1360,
+      1000
+    ]
+  },
+  "visits": [
+    {
+      "id": "01",
+      "setup": "Autumn Edit dressed as specified",
+      "source": "images/generated/01-autumn-compliant.jpg",
+      "shows": "Mannequin: camel overcoat (open), cream roll-neck, burgundy scarf, indigo jeans, white trainers. Table: neat cream, navy and green stacks. Black 'THE AUTUMN EDIT' sign.",
+      "photos": [
+        {
+          "type": "display"
+        },
+        {
+          "type": "table",
+          "crop": "table"
+        }
+      ],
+      "expected": {
+        "A": "pass",
+        "B": "fail"
+      }
+    },
+    {
+      "id": "02",
+      "setup": "As 01 with the wrong coat",
+      "source": "images/generated/02-wrong-coat.jpg",
+      "shows": "As 01, except the mannequin wears a black leather biker jacket instead of the camel overcoat.",
+      "photos": [
+        {
+          "type": "display"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail"
+      }
+    },
+    {
+      "id": "03",
+      "setup": "As 01 with the scarf missing",
+      "source": "images/generated/03-scarf-missing.jpg",
+      "shows": "As 01, except the mannequin has no scarf.",
+      "photos": [
+        {
+          "type": "display"
+        },
+        {
+          "type": "table",
+          "crop": "table"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail"
+      }
+    },
+    {
+      "id": "04",
+      "setup": "As 01 with an untidy table",
+      "source": "images/generated/04-untidy-table.jpg",
+      "shows": "Mannequin as 01. Table: jumpers unfolded, colours mixed, one hanging over the edge. 'THE AUTUMN EDIT' sign.",
+      "photos": [
+        {
+          "type": "display"
+        },
+        {
+          "type": "table",
+          "crop": "table"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail"
+      }
+    },
+    {
+      "id": "05",
+      "setup": "Winter Sale dressed as specified",
+      "source": "images/generated/05-winter-compliant.jpg",
+      "shows": "Mannequin: navy puffer zipped to the collar, grey beanie, black jeans, black ankle boots; no other layer visible. Table: neat cream, navy and green stacks. Red 'WINTER SALE 30% OFF' sign.",
+      "photos": [
+        {
+          "type": "display"
+        },
+        {
+          "type": "table",
+          "crop": "table"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "pass"
+      }
+    },
+    {
+      "id": "06",
+      "setup": "Winter Sale sign put out, but the mannequin still in the Autumn Edit outfit",
+      "source": "images/generated/06-autumn-outfit-winter-sign.jpg",
+      "shows": "Mannequin as 01 (camel overcoat, scarf, trainers). Table neat. Red 'WINTER SALE 30% OFF' sign.",
+      "photos": [
+        {
+          "type": "display"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "fail"
+      }
+    },
+    {
+      "id": "07",
+      "setup": "As 05, but only a table close-up was uploaded",
+      "source": "images/generated/05-winter-compliant.jpg",
+      "shows": "Table close-up from 05: neat stacks and the red 'WINTER SALE 30% OFF' sign. The mannequin is not in the photo.",
+      "photos": [
+        {
+          "type": "table",
+          "crop": "table"
+        }
+      ],
+      "expected": {
+        "A": "fail",
+        "B": "cannot_assess"
+      }
+    }
+  ]
+}
