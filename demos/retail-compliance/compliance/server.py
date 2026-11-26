@@ -77,8 +77,7 @@ def public_catalog(scenarios, deployment_label):
                 "id": c["id"], "name": c["name"], "documents": docs, "reference": next(iter(images.values()), None),
                 "checks": [{k: check[k] for k in ("id", "rule", "requirement", "question", "photos", "uses_reference")}
                            for check in q["checks"]],
-                "not_checkable": q.get("not_checkable", []), "review_notes": q["review"]["notes"],
-                "reviewed_on": q["review"].get("reviewed_on"),
+                "not_checkable": q.get("not_checkable", []),
                 "extraction": {k: q["extraction"].get(k)
                                for k in ("model", "reasoning_effort", "usage", "latency_ms", "extracted_at")}})
         return {"id": sid, "name": s["name"], "note": s["note"], "store": s["demo"]["store"],

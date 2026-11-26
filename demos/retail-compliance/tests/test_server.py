@@ -25,6 +25,13 @@ def handler_for(app, wfile):
     return handler
 
 
+def closed(sock):
+    try:
+        return sock.recv(100) == b""
+    except ConnectionResetError:  # Windows may reset rather than close
+        return True
+
+
 def free_permits(app):
     return app.runs._value
 
@@ -145,9 +152,9 @@ class ServerTests(unittest.TestCase):
                 slow.sendall(b"GET /healthz HTTP/1.1\r\n")  # never finishes its headers
                 time.sleep(0.2)
                 extra = socket.create_connection(address, timeout=5)
-                self.assertEqual(extra.recv(100), b"")  # no free handler: closed at once
+                self.assertTrue(closed(extra))  # no free handler: closed at once
                 extra.close()
-                self.assertEqual(slow.recv(100), b"")  # dropped at the request deadline
+                self.assertTrue(closed(slow))  # dropped at the request deadline
                 slow.close()
                 time.sleep(0.2)
                 ok = socket.create_connection(address, timeout=5)

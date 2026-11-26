@@ -10,7 +10,7 @@ campaign, answered in one request per store visit.
 The web demo starts where a rep starts: with the **campaign documents** the store was
 sent, shown as documents rather than extracted rules. Below them are **three store
 visits per scenario** to audit. The extraction step that turned the documents into
-checks is in the **trace**, with every review edit and its reason.
+checks is in the **trace**.
 
 **[Run locally](#get-started)**
 

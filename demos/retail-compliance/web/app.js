@@ -337,10 +337,6 @@ function renderTrace() {
         el("p", { class: "muted", text: "Not checked from photos:" }),
         el("ul", { class: "check-list" }, c.not_checkable.map((k) => el("li", {}, `${k.requirement} `,
           el("span", { class: "mono", text: k.reason.replaceAll("_", " ") }))))));
-    add("REVIEW · BEFORE USE", `Checks for ${c.name} reviewed and approved`, `${c.review_notes.length} edits recorded, each with its reason; some followed test runs. In production the campaign owner signs these off`,
-      c.reviewed_on || "",
-      c.review_notes.length ? el("details", { class: "trace-details" }, el("summary", { text: "Show the review edits" }),
-        el("ul", { class: "check-list" }, c.review_notes.map((t) => el("li", { text: t })))) : null);
   }
   if (!state.events.length) steps.push(el("li", { class: "empty-note", text: "Run an audit to add the live Decision-1.1 steps." }));
   for (const e of state.events) add("AUDIT", e.title, e.detail, e.tMs === undefined ? "" : fmtMs(e.tMs));
