@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shelf Check: retail campaign compliance with Decision-1.1</title>
-  <link rel="stylesheet" href="/static/style.css?v=5">
+  <link rel="stylesheet" href="/static/style.css?v=6">
 </head>
 <body>
   <header class="header">
@@ -78,6 +78,12 @@
     </footer>
     <p class="fine-print">Images are AI-generated and checked by hand; results on them demonstrate the pipeline, not accuracy on real store photographs. These visits were chosen as clear examples; the repository's wider evaluation set includes cases the model gets wrong. Costs are estimates from reported input tokens at the published Global Standard rate. Prices in the documents are those agreed with the retailer.</p>
   </main>
-  <script src="/static/app.js?v=5"></script>
+  <dialog id="viewer" class="viewer" aria-label="Photo viewer">
+    <figure>
+      <img id="viewer-image" alt="">
+      <figcaption><span id="viewer-caption"></span><button id="viewer-close" class="quiet" type="button">Close &#10005;</button></figcaption>
+    </figure>
+  </dialog>
+  <script src="/static/app.js?v=6"></script>
 </body>
 </html>

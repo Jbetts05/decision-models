@@ -200,6 +200,13 @@ h3 { font-size: 11px; font-weight: 600; margin: 0; }
 .divider { color: var(--cp-border-strong); margin: 0 8px; }
 .quiet { background: none; border: none; padding: 0 4px; color: var(--cp-text-muted); font-size: 11px; }
 .fine-print { color: var(--cp-text-soft); font-size: 9px; line-height: 1.7; max-width: 1050px; margin: 7px 0 0; }
+.viewer { padding: 0; border: 0; background: transparent; max-width: 94vw; max-height: 94vh; overflow: visible; }
+.viewer::backdrop { background: rgba(36, 36, 36, .72); }
+.viewer figure { margin: 0; background: var(--cp-surface); border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, .35); }
+.viewer img { display: block; max-width: 94vw; max-height: calc(94vh - 48px); width: auto; height: auto; margin: auto; background: var(--cp-surface-soft); }
+.viewer figcaption { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 6px 8px 6px 14px; font-size: 11px; color: var(--cp-text-muted); }
+.viewer .quiet { min-height: 32px; }
+@media (prefers-reduced-motion: no-preference) { .viewer[open] { animation: arrive .18s ease both; } }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
 
 @keyframes arrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }

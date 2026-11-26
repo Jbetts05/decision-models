@@ -438,6 +438,22 @@ function downloadRun() {
   setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 }
 
+// Photos open in an in-page viewer; Esc or a click outside the photo closes it.
+// Ctrl, Shift or middle click still opens the image in a new tab.
+document.addEventListener("click", (event) => {
+  const link = event.target.closest('a[href^="/images/"]');
+  if (!link || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  const img = link.querySelector("img");
+  const caption = link.closest("figure")?.querySelector("figcaption");
+  $("viewer-image").src = link.getAttribute("href");
+  $("viewer-image").alt = img ? img.alt : link.textContent;
+  $("viewer-caption").textContent = caption && caption.children.length ? [...caption.children].map((c) => c.textContent.trim()).join(" · ") : (caption || link).textContent.trim();
+  $("viewer").showModal();
+});
+$("viewer").addEventListener("click", (event) => { if (event.target === $("viewer")) $("viewer").close(); });
+$("viewer-close").addEventListener("click", () => $("viewer").close());
+$("viewer").addEventListener("close", () => { $("viewer-image").removeAttribute("src"); });
 $("run").addEventListener("click", () => runAudit(false));
 $("run-all").addEventListener("click", () => runAudit(true));
 $("download").addEventListener("click", downloadRun);
