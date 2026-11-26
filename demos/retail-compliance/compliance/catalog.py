@@ -50,7 +50,32 @@ def validate_questions(data, photo_types, campaign):
     return data
 
 
-def load_scenario(scenario_id):
+def validate_demo(demo, campaigns, visit_ids):
+    if not isinstance(demo, dict) or not all(isinstance(demo.get(k), str) for k in ("store", "audit")):
+        raise CatalogError("The demo block needs a store and an audit description.")
+    live = demo.get("campaigns")
+    if not isinstance(live, list) or not live or len(set(live)) != len(live) or any(c not in campaigns for c in live):
+        raise CatalogError("Demo campaigns must be known, distinct campaign ids.")
+    cases = demo.get("cases")
+    if not isinstance(cases, list) or not cases or len({c.get("visit") for c in cases}) != len(cases):
+        raise CatalogError("Demo cases must name distinct visits.")
+    for case in cases:
+        if case.get("visit") not in visit_ids or not all(isinstance(case.get(k), str) for k in ("title", "summary")):
+            raise CatalogError(f"Demo case {case.get('visit')!r} needs a known visit, a title and a summary.")
+
+
+def demo_view(scenario):
+    """The scenario as the web demo shows it: only the live campaigns and the chosen cases, in order."""
+    demo = scenario["demo"]
+    by_id = {v["id"]: v for v in scenario["visits"]}
+    visits = [dict(by_id[c["visit"]], title=c["title"], summary=c["summary"],
+                   expected={k: by_id[c["visit"]]["expected"][k] for k in demo["campaigns"]})
+              for c in demo["cases"]]
+    return dict(scenario, campaigns={k: scenario["campaigns"][k] for k in demo["campaigns"]}, visits=visits)
+
+
+def load_scenario(scenario_id, demo=False):
+    """Load a scenario: the full evaluation set, or with demo=True the curated web demo view."""
     if scenario_id not in scenario_ids():
         raise CatalogError(f"Unknown scenario: {scenario_id}")
     folder = SCENARIOS / scenario_id
@@ -80,8 +105,10 @@ def load_scenario(scenario_id):
         if set(visit["expected"]) != set(campaigns) or any(v not in VERDICTS for v in visit["expected"].values()):
             raise CatalogError(f"Visit {visit['id']} needs an expected verdict for every campaign.")
         visits.append(dict(visit, photo_paths=photos))
-    return {"id": scenario_id, "name": manifest["scenario"], "folder": folder, "note": manifest["note"],
-            "photo_types": photo_types, "campaigns": campaigns, "visits": visits}
+    validate_demo(manifest.get("demo"), campaigns, {v["id"] for v in visits})
+    scenario = {"id": scenario_id, "name": manifest["scenario"], "folder": folder, "note": manifest["note"],
+                "photo_types": photo_types, "campaigns": campaigns, "visits": visits, "demo": manifest["demo"]}
+    return demo_view(scenario) if demo else scenario
 
 
 def find_visit(scenario, visit_id):

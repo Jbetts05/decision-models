@@ -1,6 +1,30 @@
 {
   "scenario": "Clothing display",
   "note": "Generated images (not camera photos), checked by hand. 'shows' records what each image actually contains. Each campaign supplies a lookbook reference image; checks compare the store photo with it.",
+  "demo": {
+    "store": "Larkfield Market",
+    "audit": "Changeover checks, 27 December 2027",
+    "campaigns": [
+      "B"
+    ],
+    "cases": [
+      {
+        "visit": "05",
+        "title": "Changed over correctly",
+        "summary": "Mannequin in the Winter Sale outfit, the jumper table unchanged and the red sale sign up."
+      },
+      {
+        "visit": "06",
+        "title": "Sign changed, mannequin not",
+        "summary": "The Winter Sale sign is out, but the mannequin still wears the Autumn Edit outfit."
+      },
+      {
+        "visit": "07",
+        "title": "Only a table close-up uploaded",
+        "summary": "The rep photographed the table and sign, but not the mannequin."
+      }
+    ]
+  },
   "campaigns": {
     "A": {
       "name": "Harlow & Pine The Autumn Edit",

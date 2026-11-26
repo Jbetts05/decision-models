@@ -1,6 +1,30 @@
 {
   "scenario": "Drinks fridge",
   "note": "Generated images (not camera photos), checked by hand. 'shows' records what each image actually contains. Close-ups are crops of the generated cooler image.",
+  "demo": {
+    "store": "Cornerstop Convenience",
+    "audit": "Week 1 audits, 10 June 2027",
+    "campaigns": [
+      "A"
+    ],
+    "cases": [
+      {
+        "visit": "01",
+        "title": "Built to the brief",
+        "summary": "Zero cans on top with the 2 for £2 label, the planogram below it and the door sticker on."
+      },
+      {
+        "visit": "02",
+        "title": "Competitor water in the cooler",
+        "summary": "Four bottles of another brand's water share the bottom shelf with Fizzwell Cola."
+      },
+      {
+        "visit": "04",
+        "title": "Door sticker missing",
+        "summary": "The cooler is stocked correctly, but the Zero Sugar Summer sticker is not on the door."
+      }
+    ]
+  },
   "campaigns": {
     "A": {
       "name": "Fizzwell Zero Sugar Summer",

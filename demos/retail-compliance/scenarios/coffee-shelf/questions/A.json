@@ -17,12 +17,13 @@
   },
   "review": {
     "status": "approved",
-    "reviewed_on": "2026-11-25",
+    "reviewed_on": "2026-11-26",
     "notes": [
       "no_other_pos: limited to Brightmoor material. As extracted it treated Hollin's legitimate header card (Campaign C) as a breach, which would fail every compliant shelf.",
       "summer_saver_wobbler: removed the 'does not cover a product' clause. A hanging wobbler always overlaps the shelf below; standards 5.3 is a judgement the photo cannot settle reliably.",
       "After GPT-6.2 Sol data review: added posm_does_not_hide_display for standards 5.3, scoped and defined as in Campaign B, so A and B apply 5.3 the same way.",
-      "After GPT-6.2 Sol data review: packs_faced_up, no_damaged_packs, clean_shelf: limited to Brightmoor packs and their shelf."
+      "After GPT-6.2 Sol data review: packs_faced_up, no_damaged_packs, clean_shelf: limited to Brightmoor packs and their shelf.",
+      "Removed posm_does_not_hide_display after testing: as worded, and reworded positively, Decision-1.1 split about 50/50 on every visit, including visits where nothing is covered. Label visibility is already required by each price-label check."
     ]
   },
   "checks": [
@@ -196,19 +197,6 @@
       "question": "Check the Brightmoor block and its shelf edge for Brightmoor point-of-sale material other than the Summer Saver wobbler, including material from earlier Brightmoor campaigns. Other brands' material elsewhere in the bay is not part of this check.",
       "compliant": "The Summer Saver wobbler is the only Brightmoor point-of-sale material on the Brightmoor shelf.",
       "not_compliant": "Other Brightmoor point-of-sale material, such as a \"NEW\" strip or earlier-campaign material, is displayed with the Brightmoor range."
-    },
-    {
-      "id": "posm_does_not_hide_display",
-      "rule": "Standards 5.3",
-      "requirement": "Brightmoor point-of-sale material does not hide a Brightmoor product name or shelf-edge price.",
-      "photos": [
-        "bay",
-        "mid"
-      ],
-      "uses_reference": false,
-      "question": "Check whether Brightmoor point-of-sale material hides a Brightmoor product or price. Covering means hiding a Brightmoor product's name or a Brightmoor shelf-edge price. A wobbler hanging over the shelf below, or material touching a pack's edge, is not covering. Other brands' material is not part of this check.",
-      "compliant": "Every Brightmoor product name and shelf-edge price remains visible.",
-      "not_compliant": "Brightmoor point-of-sale material hides a Brightmoor product name or shelf-edge price."
     }
   ],
   "not_checkable": [
@@ -251,6 +239,11 @@
       "rule": "Standards 6.1–6.3; Brief: Commercial terms and reporting",
       "requirement": "Conduct scheduled audits, upload or retake audit photographs, and obtain the store manager's sign-off.",
       "reason": "timing_or_process"
+    },
+    {
+      "rule": "Standards 5.3",
+      "requirement": "Brightmoor point-of-sale material does not hide a Brightmoor product name or shelf-edge price.",
+      "reason": "unreliable_in_testing"
     }
   ]
 }

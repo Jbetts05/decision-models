@@ -4,15 +4,20 @@
 
 Brands pay retailers for promotions and displays, then send field reps to photograph
 stores and check what was actually built. Shelf Check audits those photos against
-campaign policies with **Microsoft-Decision-1.1**: every check, for every campaign,
-answered in one request per store visit.
+campaign policies with **Microsoft-Decision-1.1**: every check, for every live
+campaign, answered in one request per store visit.
+
+The web demo starts where a rep starts: with the **campaign documents** the store was
+sent, shown as documents rather than extracted rules. Below them are **three store
+visits per scenario** to audit. The extraction step that turned the documents into
+checks is in the **trace**, with every human review edit.
 
 **[Run locally](#get-started)**
 
 Run your own instance using the instructions below. **Run audit** and **Audit all
 visits** call your Decision-1.1 deployment and incur (very small) charges.
 
-![Shelf Check: a store visit's photos go to Decision-1.1 with every campaign's checks; each campaign gets Pass, Fail or Review.](docs/overview.svg)
+![Shelf Check: a store visit's photos go to Decision-1.1 with the checks for every live campaign in one request; each campaign gets Pass, Fail or Review.](docs/overview.svg)
 
 *The animation illustrates the flow, not measured speed or a recorded run.*
 
@@ -43,9 +48,30 @@ questions change: no new model, labels or training.
   escalate low-confidence decisions.
 - **Campaign verdict:** *Fail* if any check fails; otherwise *Review* if any check
   could not be assessed; otherwise *Pass*.
-- **Every visit is checked against every campaign**, which mirrors a changeover
-  audit: on the day a campaign starts, auditors confirm the new set-up and that the
-  old campaign's material is gone. The same photos pass one campaign and fail the next.
+- **Each visit is checked against the campaigns live on the audit date.** On the
+  coffee bay that is two brands at once, Brightmoor and Hollin, answered in the
+  same request. The full evaluation set also checks every visit against every
+  campaign, including ones not yet running, which mirrors a changeover audit: the
+  same photos pass one campaign and fail the next.
+
+## The web demo
+
+Each scenario shows its live campaign documents and three visits, chosen as clear
+examples of a correct build, a real-world fault and, where possible, a visit the
+model must refer to a person:
+
+| Scenario | Live campaigns (audit date) | Visits |
+|---|---|---|
+| **Drinks fridge** | Fizzwell Zero Sugar Summer (10 June 2027) | Built to the brief · Competitor water in the cooler · Door sticker missing |
+| **Coffee shelf** | Brightmoor Summer Saver + Hollin 2 for £7 (3 June 2027) | Both built correctly · A Hollin pack inside the Brightmoor block · Wrong price, and no top-shelf close-up |
+| **Clothing display** | Harlow & Pine Winter Sale (27 December 2027) | Changed over correctly · Sign changed, mannequin not · Only a table close-up uploaded |
+
+All 12 campaign verdicts on these visits matched the expected output in three
+repeat runs, at about 0.6 to 1.1 s per request. **They were picked because they
+work**, and two of the questions were edited while choosing them (see
+[development](#how-the-questions-and-labels-were-developed)). The full evaluation
+set below includes the cases the model gets wrong. The live campaigns and visits are
+the `demo` block in each `visits.json`.
 
 ## Scenarios
 
@@ -70,7 +96,8 @@ Each scenario folder contains:
   order) and subjective wording ("inviting, premium"), to test the extraction step.
 - `questions/`: the extracted and reviewed checks per campaign. Each file records
   the extraction model and token usage, and every hand edit with its reason.
-- `visits.json`: each visit's photos, what they show, and the expected verdicts.
+- `visits.json`: each visit's photos, what they show, and the expected verdicts,
+  plus a `demo` block naming the live campaigns and the three visits the web demo shows.
 - `images/`: generated source images (`generated/`), each visit's ready-to-use photos
   (`visits/<id>/`), and the clothing lookbooks (`reference/`).
 
@@ -81,27 +108,27 @@ generated image, so they hold no more detail than the full photo; real close-ups
 Prices in the documents are those **agreed with the retailer** and funded by the
 brand: a UK supplier can recommend, but not set, a retailer's selling price.
 
-## Results
+## Results on the full evaluation set
 
-Measured on 2026-11-25 against a `Microsoft-Decision-1.1` Global Standard
-deployment; questions extracted with GPT-6 Sol (high reasoning effort).
+Measured on 2026-11-26 against a `Microsoft-Decision-1.1` Global Standard
+deployment, every visit against every campaign; questions extracted with GPT-6 Sol
+(high reasoning effort).
 
 | | Drinks fridge | Coffee shelf | Clothing display | Total |
 |---|---|---|---|---|
-| Campaign verdicts matching expected | 11/14 | 31/36 | 14/14 | **56/64** |
-| Median request latency per visit | 1.0 s | 2.2 s | 2.0 s | |
-| Questions per visit (median) | 29 | 38 | 16 | |
-| Input tokens per visit (median) | 4,025 | 5,775 | 3,592 | |
+| Campaign verdicts matching expected | 11/14 | 33/36 | 14/14 | **58/64** |
+| Median request latency per visit (two runs) | 1.0 s | 1.5 s (1.4–2.2) | 1.7 s | |
+| Questions per visit (median) | 29 | 37 | 16 | |
+| Input tokens per visit (median) | 4,059 | 5,595 | 3,592 | |
 
 | Expected verdict | Correct | Got instead |
 |---|---|---|
-| Pass (12) | 9 | 2 Review, 1 Fail |
+| Pass (12) | 10 | 1 Review, 1 Fail |
 | Fail (43) | 40 | 2 Review, **1 Pass** |
-| Review (9) | 7 | 2 Fail |
+| Review (9) | 8 | 1 Fail |
 
 All 26 visits cost about **$0.005** in total at $0.042 per million input tokens.
-Two complete repeat runs gave identical verdicts; individual probabilities varied
-slightly. A third run hit the deployment's rate limit on one visit.
+Two complete runs gave identical verdicts.
 
 **Read these numbers carefully:**
 
@@ -109,12 +136,13 @@ slightly. A third run hit the deployment's rate limit on one visit.
   off-campaign changeovers. The informative rows are expected *Pass* and *Review*.
 - **The one false pass is a real miss:** a gap in the fridge's second shelf was
   judged compliant at 70%.
-- **Three fails where pass or review was expected** came from answers between 51%
-  and 54%: a Hazelnut price label, and two checks on the photo with the top shelf
+- **Two fails where pass or review was expected** came from weak answers: a
+  Hazelnut price label at 51%, and Hollin checks on the photo with the top shelf
   cropped out.
-- **Four decisions went to review** instead of the expected pass or fail (lights
-  off, range on the wrong shelf, a sticker and a wobbler), each below the 50% gate.
-  That is the gate working: uncertain answers reach a person instead of being automated.
+- **Three decisions went to review** instead of the expected pass or fail (lights
+  off, range on the wrong shelf, and the Orange Refresh sticker), each below the 50%
+  gate. That is the gate working: uncertain answers reach a person instead of being
+  automated.
 - **This is not an accuracy benchmark.** It is 64 verdicts over 22 generated scenes,
   reused across campaigns and photo variants, with no per-check gold labels. Real
   store photos have glare, angles and clutter. Validate on your own photos before
@@ -138,8 +166,18 @@ The development history is part of the result, so it is recorded here:
    (an extra layer under the puffer jacket; regenerated), checks that read
    "500 ml" from a photo, a too-literal "covering" rule, and two policy points that
    conflicted with UK rules (single-pack price display and HFSS multibuys). All were fixed.
-5. **Final run: 56/64.** Tuning stopped there; further edits would fit the questions
-   to these 26 images rather than improve them.
+5. **Run: 56/64.** Tuning stopped there for the evaluation set.
+6. **Choosing the web demo's visits** exposed two weak questions, which were
+   edited, and the full set was rerun (58/64). Both edits were made while looking
+   at these images, so treat 58/64 as optimistic:
+   - Brightmoor's "point-of-sale material does not hide a product or price" check
+     sat at about 50/50 on every visit, including ones where nothing was covered,
+     both as extracted and when reworded. It was removed; each price-label check
+     already requires the label to be visible.
+   - The fridge door-sticker question began "check the sticker's number,
+     appearance and wording", which assumes a sticker exists. With the sticker
+     missing, the model answered *cannot assess*. Reworded to ask whether a sticker
+     is on the glass, it was correct on all seven fridge visits.
 
 ## Measured Decision-1.1 limits
 
@@ -192,17 +230,18 @@ API key.
 python -m compliance serve
 ```
 
-Open **http://127.0.0.1:8780**, choose a scenario and visit, and select **Run audit**.
-**Audit all visits** sends one request per visit in parallel and shows a matrix of
-verdicts against the expected output.
+Open **http://127.0.0.1:8780**, choose a scenario, read its campaign documents, pick
+a visit and select **Run audit**. **Audit all visits** sends the three visits'
+requests in parallel and shows a matrix of verdicts against the expected output.
 
 Command-line equivalents:
 
 ```powershell
-python -m compliance audit --scenario drinks-fridge --visit 03    # one visit
-python -m compliance audit --output results.local.json            # all 26 visits
-python -m compliance extract --scenario drinks-fridge --force     # re-extract (replaces reviewed files)
-python -m unittest discover -s tests                              # offline tests, no calls
+python -m compliance audit --demo                                  # the web demo's 9 visits
+python -m compliance audit --scenario drinks-fridge --visit 03     # one visit, every campaign
+python -m compliance audit --output results.local.json             # full evaluation set, 26 visits
+python -m compliance extract --scenario drinks-fridge --force      # re-extract (replaces reviewed files)
+python -m unittest discover -s tests                               # offline tests, no calls
 ```
 
 Re-extraction overwrites the reviewed question files; review them again before use.
@@ -239,6 +278,8 @@ are not counted against the limit.
 ## Limitations
 
 - Generated images and fictional policies; not evidence of accuracy on real stores.
+- The web demo's visits are hand-picked examples that work; see the full
+  evaluation set for misses.
 - Expected verdicts are per campaign, not per check.
 - The confidence gate and the campaign rule are demo choices; tune thresholds on
   labelled photos from your own workload.

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shelf Check: retail campaign compliance with Decision-1.1</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/style.css?v=2">
 </head>
 <body>
   <header class="header">
@@ -20,7 +20,7 @@
       <div>
         <span class="eyebrow">LIVE STORE AUDIT</span>
         <h1>Does the store match the campaign?</h1>
-        <p class="intro">Each visit's photos are checked against every campaign in one Decision-1.1 request. When the campaign changes, only the questions change.</p>
+        <p class="intro">A field rep photographs a display. Decision-1.1 checks the photos against every live campaign document in one request, and anything it cannot see clearly goes to a person.</p>
       </div>
       <div class="dataset">
         <span class="synthetic">GENERATED IMAGES · FICTIONAL BRANDS</span>
@@ -28,23 +28,31 @@
       </div>
     </section>
 
-    <section class="case-panel" aria-label="Choose a visit">
-      <div class="picker">
-        <label>Scenario<select id="scenario"></select></label>
-        <label>Store visit<select id="visit"></select></label>
+    <nav class="scenario-tabs" id="scenarios" aria-label="Scenario"></nav>
+
+    <section class="panel doc-panel" aria-labelledby="doc-heading">
+      <div class="panel-header">
+        <div><span class="eyebrow">1 · WHAT THE STORE WAS SENT</span><h2 id="doc-heading">Campaign documents</h2></div>
+        <p class="muted" id="doc-note"></p>
+      </div>
+      <div class="doc-viewer">
+        <div class="doc-list" id="doc-list" role="tablist" aria-label="Documents"></div>
+        <div class="doc-stage"><article class="doc-page" id="doc-page" role="tabpanel" tabindex="0"></article></div>
+      </div>
+    </section>
+
+    <section class="panel case-panel" aria-labelledby="case-heading">
+      <div class="panel-header">
+        <div><span class="eyebrow">2 · STORE VISITS</span><h2 id="case-heading">Store visits</h2></div>
         <div class="actions">
           <button id="run-all" class="secondary" type="button">Audit all visits</button>
           <button id="run" class="primary" type="button"><span id="run-label">Run audit</span><span aria-hidden="true">&#8599;</span></button>
         </div>
       </div>
-      <p id="visit-setup" class="setup"></p>
-      <div id="photos" class="photos" aria-label="Visit photos"></div>
-      <div class="case-bottom">
-        <details>
-          <summary>Campaign documents and extracted questions <span class="muted" id="question-count"></span></summary>
-          <div id="documents"></div>
-        </details>
-        <span class="muted">Only photos and approved questions are sent · expected verdicts withheld</span>
+      <div class="cases" id="cases" role="radiogroup" aria-label="Store visit"></div>
+      <div class="selected-visit">
+        <div id="photos" class="photos" aria-label="Photos the rep uploaded"></div>
+        <span class="muted">Only these photos and the approved checks are sent · expected verdicts withheld</span>
       </div>
     </section>
 
@@ -54,9 +62,9 @@
     <section id="matrix" class="matrix-panel" hidden></section>
     <section id="campaigns" class="campaigns" aria-live="polite"></section>
 
-    <section class="execution-panel">
-      <div class="execution-header"><h3>Key execution <span id="event-count" class="muted"></span></h3></div>
-      <ol id="events" class="execution-steps"><li class="empty-note">Events appear here as the audit runs.</li></ol>
+    <section class="execution-panel" aria-labelledby="trace-heading">
+      <div class="execution-header"><h3 id="trace-heading">Trace <span id="event-count" class="muted"></span></h3><span class="muted trace-note">Extraction ran once per campaign before any visit; the audit steps are live</span></div>
+      <ol id="events" class="execution-steps"></ol>
     </section>
 
     <details class="expected-panel">
@@ -68,8 +76,8 @@
       <span>Microsoft-Decision-1.1<span class="divider">/</span>Live Foundry inference<span class="divider">/</span>AI-generated store photos, fictional brands</span>
       <button id="download" class="quiet" type="button" disabled>Download run JSON &#8595;</button>
     </footer>
-    <p class="fine-print">Images are AI-generated and checked by hand; results on them demonstrate the pipeline, not accuracy on real store photographs. Costs are estimates from reported input tokens at the published Global Standard rate. Prices in the documents are those agreed with the retailer.</p>
+    <p class="fine-print">Images are AI-generated and checked by hand; results on them demonstrate the pipeline, not accuracy on real store photographs. These visits were chosen as clear examples; the repository's wider evaluation set includes cases the model gets wrong. Costs are estimates from reported input tokens at the published Global Standard rate. Prices in the documents are those agreed with the retailer.</p>
   </main>
-  <script src="/static/app.js"></script>
+  <script src="/static/app.js?v=2"></script>
 </body>
 </html>

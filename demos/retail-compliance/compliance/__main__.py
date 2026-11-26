@@ -38,7 +38,7 @@ def cmd_audit(args, config):
     for round_number in range(1, args.repeats + 1):
         results = []
         for scenario_id in args.scenario or catalog.scenario_ids():
-            scenario = catalog.load_scenario(scenario_id)
+            scenario = catalog.load_scenario(scenario_id, demo=args.demo)
             visits = [catalog.find_visit(scenario, v) for v in args.visit] if args.visit else scenario["visits"]
             results += audit.audit_many(client, scenario, visits, config["decision_deployment"])
         summary = audit.summarise(results)
@@ -70,6 +70,8 @@ def main(argv=None):
     p.add_argument("--scenario", action="append", choices=catalog.scenario_ids())
     p.add_argument("--visit", action="append", help="Visit id; requires exactly one --scenario.")
     p.add_argument("--repeats", type=int, default=1, choices=range(1, 6))
+    p.add_argument("--demo", action="store_true",
+                   help="Audit only the web demo's live campaigns and chosen cases, not the full evaluation set.")
     p.add_argument("--output", help="Write the full report to this JSON file.")
     p = sub.add_parser("serve", help="Serve the web demo.")
     p.add_argument("--host", default="127.0.0.1")

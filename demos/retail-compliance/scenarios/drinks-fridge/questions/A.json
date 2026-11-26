@@ -17,13 +17,14 @@
   },
   "review": {
     "status": "approved",
-    "reviewed_on": "2026-11-25",
+    "reviewed_on": "2026-11-26",
     "notes": [
       "summer_door_sticker: removed 'eye level on the handle side'. That positional detail is not reliably judged from a photo; the brief was amended to match.",
       "clean_door_glass: added that reflections and glare are not dirt.",
       "After GPT-6.2 Sol data review: bottom_cola_bottles: checks the bottle format, not '500 ml', which a photo cannot read.",
       "After GPT-6.2 Sol data review: forward_facing: a can hidden behind the sticker is not misorientation.",
-      "After GPT-6.2 Sol data review: top_promo_label, summer_door_sticker: also accept the full cooler photo, since the close-up is optional."
+      "After GPT-6.2 Sol data review: top_promo_label, summer_door_sticker: also accept the full cooler photo, since the close-up is optional.",
+      "summer_door_sticker: reworded so it no longer assumes a sticker exists. As extracted ('check the door sticker's number, appearance and wording'), Decision-1.1 answered cannot assess when the sticker was missing; reworded, it was correct on all seven visits."
     ]
   },
   "checks": [
@@ -156,7 +157,7 @@
         "top"
       ],
       "uses_reference": false,
-      "question": "Check the door sticker's number, appearance and wording.",
+      "question": "Is there exactly one round black-and-yellow ZERO SUGAR SUMMER sticker on the cooler's door glass? The cooler photo shows the whole door, so if no such sticker is on the glass, the sticker is missing.",
       "compliant": "Exactly one round black-and-yellow sticker reading ZERO SUGAR SUMMER is on the door glass.",
       "not_compliant": "The sticker is missing, duplicated, or has different artwork or wording."
     },

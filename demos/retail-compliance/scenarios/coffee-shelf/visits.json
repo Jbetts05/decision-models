@@ -1,6 +1,31 @@
 {
   "scenario": "Coffee shelf",
   "note": "Generated images (not camera photos), checked by hand. 'shows' records what each image actually contains. Close-ups are crops of the generated bay image; in a real audit they would be separate, more detailed photos.",
+  "demo": {
+    "store": "Larkfield Market",
+    "audit": "Week 1 audits, 3 June 2027",
+    "campaigns": [
+      "A",
+      "C"
+    ],
+    "cases": [
+      {
+        "visit": "01",
+        "title": "Both campaigns built correctly",
+        "summary": "Brightmoor's Summer Saver on the middle shelf and Hollin's 2 for £7 on the top shelf, both as briefed."
+      },
+      {
+        "visit": "03",
+        "title": "A Hollin pack inside the Brightmoor block",
+        "summary": "One misplaced pack: it splits the Brightmoor block and takes a Hollin facing off the top shelf."
+      },
+      {
+        "visit": "04",
+        "title": "Wrong price, and no top-shelf close-up",
+        "summary": "Original Roast has a white £4.00 label instead of the yellow £3.50 promotion, and the rep did not photograph the top shelf."
+      }
+    ]
+  },
   "campaigns": {
     "A": {
       "name": "Brightmoor Summer Saver",

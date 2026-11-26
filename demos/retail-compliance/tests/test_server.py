@@ -54,6 +54,28 @@ class ServerTests(unittest.TestCase):
         self.assertNotIn(CONFIG["endpoint"], text)
         self.assertEqual(len(json.loads(text)["scenarios"]), 3)
 
+    def test_demo_shows_only_live_campaigns_and_chosen_visits(self):
+        coffee = self.app.scenarios["coffee-shelf"]
+        self.assertEqual(list(coffee["campaigns"]), coffee["demo"]["campaigns"])
+        self.assertEqual([v["id"] for v in coffee["visits"]], [c["visit"] for c in coffee["demo"]["cases"]])
+        self.assertTrue(all(set(v["expected"]) == set(coffee["campaigns"]) for v in coffee["visits"]))
+        view = next(s for s in json.loads(self.app.catalog_json)["scenarios"] if s["id"] == "coffee-shelf")
+        files = [d["file"] for d in view["documents"]]
+        self.assertEqual(len(files), len(set(files)))  # shared standards appear once
+        self.assertEqual({d for c in view["campaigns"] for d in c["documents"]}, {d["id"] for d in view["documents"]})
+
+    def test_audit_rejects_visits_outside_the_demo(self):
+        hidden = next(v["id"] for v in server.catalog.load_scenario("coffee-shelf")["visits"]
+                      if v["id"] not in {c["id"] for c in self.app.scenarios["coffee-shelf"]["visits"]})
+        body = json.dumps({"scenario": "coffee-shelf", "visit": hidden}).encode("utf-8")
+        handler = handler_for(self.app, io.BytesIO())
+        handler.path, handler.rfile, handler.deadline = "/api/audit", io.BytesIO(body), mock.Mock()
+        handler.headers = {"Content-Length": str(len(body)), "Content-Type": "application/json"}
+        handler.send_json, handler.stream = mock.Mock(), mock.Mock()
+        handler.do_POST()
+        handler.stream.assert_not_called()
+        self.assertEqual(handler.send_json.call_args.args[0], 400)
+
     def test_disconnect_keeps_permit_until_calls_finish(self):
         app, release = server.App(CONFIG), threading.Event()
 

@@ -33,9 +33,10 @@ invokes your configured models and incurs charges; use fictional inputs only.
 
 Decisions about images: **Decision-1.1** audits store photos against retail
 campaign policies. GPT-6 Sol extracts checks from each campaign brief once; then
-every visit is judged against every campaign in one request. New campaign, new
-questions, no retraining. Three scenarios: a drinks fridge, a coffee shelf and a
-clothing display compared with a lookbook.
+every visit is judged against every live campaign in one request. New campaign, new
+questions, no retraining. Three scenarios, each with its campaign documents and three
+store visits: a drinks fridge, a coffee shelf shared by two brands, and a clothing
+display compared with a lookbook.
 
 **[Source and setup](demos/retail-compliance/README.md)**
 

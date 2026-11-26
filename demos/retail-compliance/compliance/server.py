@@ -49,26 +49,48 @@ class DailyBudget:
             return self.limit if today != self.day else self.limit - self.used
 
 
+def document_title(text):
+    first = text.lstrip().splitlines()[0] if text.strip() else ""
+    return first.lstrip("#").strip() or "Untitled document"
+
+
 def public_catalog(scenarios, deployment_label):
-    def campaign_view(sid, c):
-        q = c["questions"]
-        view = {"id": c["id"], "name": c["name"], "brief": c["brief_text"], "standards": c.get("standards_text"),
+    def scenario_view(s):
+        sid, documents, doc_ids = s["id"], [], {}
+
+        def document(relative, text, kind, images=None):
+            if relative not in doc_ids:
+                doc_ids[relative] = f"doc{len(documents) + 1}"
+                documents.append({"id": doc_ids[relative], "kind": kind, "file": relative.rsplit("/", 1)[-1],
+                                  "title": document_title(text), "text": text, "images": images or {}})
+            return doc_ids[relative]
+
+        campaigns = []
+        for c in s["campaigns"].values():
+            q, images = c["questions"], {}
+            if c.get("reference"):  # the brief links its lookbook relative to policies/
+                images["../" + c["reference"]] = f"/images/{sid}/{c['reference'].removeprefix('images/')}"
+            docs = [document(c["brief"], c["brief_text"], "Campaign brief", images)]
+            if c.get("standards"):
+                docs.append(document(c["standards"], c["standards_text"], "Standards"))
+            campaigns.append({
+                "id": c["id"], "name": c["name"], "documents": docs, "reference": next(iter(images.values()), None),
                 "checks": [{k: check[k] for k in ("id", "rule", "requirement", "question", "photos", "uses_reference")}
                            for check in q["checks"]],
                 "not_checkable": q.get("not_checkable", []), "review_notes": q["review"]["notes"],
-                "extraction": {k: q["extraction"].get(k) for k in ("model", "reasoning_effort", "usage")}}
-        if c.get("reference"):
-            view["reference"] = f"/images/{sid}/{c['reference'].removeprefix('images/')}"
-        return view
+                "reviewed_on": q["review"].get("reviewed_on"),
+                "extraction": {k: q["extraction"].get(k)
+                               for k in ("model", "reasoning_effort", "usage", "latency_ms", "extracted_at")}})
+        return {"id": sid, "name": s["name"], "note": s["note"], "store": s["demo"]["store"],
+                "audit": s["demo"]["audit"], "photo_types": s["photo_types"], "documents": documents,
+                "campaigns": campaigns,
+                "visits": [{"id": v["id"], "title": v["title"], "summary": v["summary"], "shows": v["shows"],
+                            "expected": v["expected"],
+                            "photos": [{"type": t, "url": f"/images/{sid}/visits/{v['id']}/{t}.jpg"}
+                                       for t in v["photo_paths"]]} for v in s["visits"]]}
 
     return {"model": deployment_label, "price_per_million_input": audit.INPUT_PRICE_PER_MILLION,
-            "scenarios": [{
-                "id": s["id"], "name": s["name"], "note": s["note"], "photo_types": s["photo_types"],
-                "campaigns": [campaign_view(s["id"], c) for c in s["campaigns"].values()],
-                "visits": [{"id": v["id"], "setup": v["setup"], "shows": v["shows"], "expected": v["expected"],
-                            "photos": [{"type": t, "url": f"/images/{s['id']}/visits/{v['id']}/{t}.jpg"}
-                                       for t in v["photo_paths"]]} for v in s["visits"]],
-            } for s in scenarios.values()]}
+            "scenarios": [scenario_view(s) for s in scenarios.values()]}
 
 
 class App:
@@ -77,7 +99,7 @@ class App:
         self.client = Foundry(config)
         ids = catalog.scenario_ids()
         ordered = [s for s in SCENARIO_ORDER if s in ids] + [s for s in ids if s not in SCENARIO_ORDER]
-        self.scenarios = {sid: catalog.load_scenario(sid) for sid in ordered}
+        self.scenarios = {sid: catalog.load_scenario(sid, demo=True) for sid in ordered}
         self.catalog_json = json.dumps(public_catalog(self.scenarios, "Microsoft-Decision-1.1")).encode("utf-8")
         self.budget = DailyBudget(config["daily_max_calls"])
         self.runs = threading.BoundedSemaphore(MAX_CONCURRENT_RUNS)
