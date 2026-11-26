@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-labelledby="t d">
   <title id="t">Shelf Check overview</title>
-  <desc id="d">A coffee-bay visit's photos go to Microsoft-Decision-1.1 with the checks for both live campaigns in one request. Brightmoor Summer Saver fails on a wrong price label; Hollin 2 for £7 goes to review because the top-shelf close-up is missing; the Hazelnut launch is not live, so it is not asked. Checks are extracted once per campaign by GPT-6 Sol and reviewed by a person.</desc>
+  <desc id="d">A coffee-bay visit's photos go to Microsoft-Decision-1.1 with the checks for both live campaigns in one request. Brightmoor Summer Saver fails on a wrong price label; Hollin 2 for £7 goes to review because the top-shelf close-up is missing; the Hazelnut launch is not live, so it is not asked. Checks are extracted once per campaign by GPT-6 Sol and reviewed before use.</desc>
   <style>
     .bg { fill: #f7f4ef; }
     .card { fill: #fff; stroke: #dedede; }
@@ -55,7 +55,7 @@
   <rect class="soft" x="408" y="300" width="176" height="80" rx="12"/>
   <text class="e" x="424" y="324">ONCE PER CAMPAIGN</text>
   <text class="s" x="424" y="346">GPT-6 Sol extracts checks</text>
-  <text class="s" x="424" y="364">a person reviews them</text>
+  <text class="s" x="424" y="364">reviewed before use</text>
   <path class="line" d="M496 300 V 256"/>
 
   <path class="line" d="M588 184 H 700"/>

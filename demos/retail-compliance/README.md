@@ -10,7 +10,7 @@ campaign, answered in one request per store visit.
 The web demo starts where a rep starts: with the **campaign documents** the store was
 sent, shown as documents rather than extracted rules. Below them are **three store
 visits per scenario** to audit. The extraction step that turned the documents into
-checks is in the **trace**, with every human review edit.
+checks is in the **trace**, with every review edit and its reason.
 
 **[Run locally](#get-started)**
 
@@ -27,7 +27,7 @@ visits** call your Decision-1.1 deployment and incur (very small) charges.
 Campaign briefs + standards (scenarios/*/policies/)
       │  GPT-6 Sol, once per campaign: extract checks; set aside what a photo can't show
       ▼
-Bounded checks (scenarios/*/questions/)  ──  reviewed and edited by a person
+Bounded checks (scenarios/*/questions/)  ──  reviewed and edited before use
       │
       ▼
 Microsoft-Decision-1.1, one request per visit: each check sees only the photos it needs
@@ -95,7 +95,7 @@ Each scenario folder contains:
   a photo can check with rules it cannot (deadlines, till prices, temperatures, size
   order) and subjective wording ("inviting, premium"), to test the extraction step.
 - `questions/`: the extracted and reviewed checks per campaign. Each file records
-  the extraction model and token usage, and every hand edit with its reason.
+  the extraction model and token usage, and every review edit with its reason.
 - `visits.json`: each visit's photos, what they show, and the expected verdicts,
   plus a `demo` block naming the live campaigns and the three visits the web demo shows.
 - `images/`: generated source images (`generated/`), each visit's ready-to-use photos
@@ -154,7 +154,10 @@ The development history is part of the result, so it is recorded here:
 
 1. GPT-6 Sol's first extraction produced 270 checks, many near-duplicate or about
    the photo itself. The prompt was tightened before any audit run: 83 checks.
-2. A person reviewed every check. Edits are listed in each question file's
+2. Every check was reviewed before use. In this repository the reviewer was the
+   demo's author working with an AI coding assistant (GitHub Copilot), not an
+   independent retail expert; in production, the campaign owner should sign the
+   checks off. Edits are listed in each question file's
    `review.notes`, for example removing a sticker-position detail and scoping a
    point-of-sale check so another brand's header card does not fail it.
 3. **First audit run: 48/64.** Diagnosis found a question that counted the shelf
